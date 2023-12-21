@@ -7,3 +7,10 @@ class Solution {
     }
 }
 
+LOGIC: Explanation 
+Example - Input: nums = [3,0,1]
+Output: 2
+
+Size of the array is 3, so the range will be [0, 3]. The missing number between 0 to 3 is 2.
+
+
