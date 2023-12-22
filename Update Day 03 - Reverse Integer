@@ -1,0 +1,19 @@
+class Solution {
+    public int reverse (int x) {
+        long ans = 0;
+        while (x != 0) {
+
+            ans = ans * 10 + x% 10;
+            x /=10;
+        }
+        
+        return (ans < Integer.MIN_VALUE || ans > Integer.MAX_VALUE) ? 0 : (int) ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - 
+Input: x = 123
+Output: 321
+This Java code reverses an integer by repeatedly extracting its last digit using the modulo operator (%), updating the result by multiplying it by 10 and adding the extracted digit.
+If the reversed integer exceeds the range, the function returns 0. 
