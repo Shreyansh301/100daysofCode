@@ -1,0 +1,25 @@
+public class Solution {
+    public int hammingWeight(int n){
+        int ans =0;
+
+        for(int i = 0; i < 32; ++i)
+        if(((n>>i) & 1) == 1)
+        ++ans;
+
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: n = 00000000000000000000000010000000
+Output: 1
+The input binary string 00000000000000000000000010000000 has a total of one '1' bit.
+
+The Java code counts the number of '1' bits in the binary representation of an integer n using a loop that iterates through each bit (from least significant to most significant). 
+It checks if the current bit is '1' using bitwise operations and increments the count accordingly. The final count is returned as the result.
+
+
+
+
+
+
