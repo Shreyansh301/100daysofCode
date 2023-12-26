@@ -1,0 +1,18 @@
+class Solution {
+    public String shortestPalindrome(String s) {
+        final String t = new StringBuilder(s).reverse().toString();
+
+        for(int i = 0; i< t.length(); ++i)
+        if (s.startsWith(t.substring(i)))
+        return t.substring(0, i) + s;
+
+        return t + s;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "aacecaaa"
+Output: "aaacecaaa"
+
+This Java code defines a class Solution with a method shortestPalindrome that takes a string s and returns the shortest palindrome by adding characters at the beginning of the string.
+
