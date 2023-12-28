@@ -1,0 +1,34 @@
+class Solution {
+    public String countAndSay(int n) {
+        StringBuilder sb = new StringBuilder("1"); 
+
+        while(--n > 0){
+            StringBuilder next = new StringBuilder();
+            for (int i = 0; i < sb.length(); ++i) {
+            int count = 1;
+                while ( i + 1 < sb.length() && sb.charAt(i) == sb.charAt(i+1)) {
+                ++count;
+                ++i;
+                }
+                next.append(count).append(sb.charAt(i));
+            }
+            sb = next;
+        }
+        return sb.toString();
+    }
+}
+
+LOGIC: Exlanation 
+Example - Input: n = 1
+Output: "1"
+Explanation: This is the base case.
+
+Initialization: Start with a StringBuilder sb initialized with the string "1".
+
+Loop for n-1 times: Enter a loop that iterates n-1 times (decrementing n in each iteration) to generate the desired sequence.
+
+Inner Loop: Inside the loop, create a new StringBuilder next to store the next sequence. Iterate through each character in the current sequence (sb). Initialize a count variable to 1.
+
+Count Consecutive Digits: Use a while loop to count consecutive occurrences of the current digit. Increase the count and increment the index (i) while the next digit is the same as the current one.
+
+Append Count and Digit: After counting consecutive digits, append the count and the digit to the next StringBuilder. Update the sb to be the next StringBuilder for the next iteration.
