@@ -1,0 +1,27 @@
+class Solution {
+    public int titleToNumber(String s) {
+        int ans = 0;
+        for ( final char c : s.toCharArray())
+        ans = ans * 26 + c - '@';
+
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+Input: columnTitle = "A"
+Output: 1
+
+This Java code defines a class named Solution that contains a method titleToNumber.
+The purpose of this method is to convert an Excel sheet column title represented as a string into its corresponding column number.
+
+
+
