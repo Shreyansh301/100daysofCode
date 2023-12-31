@@ -1,0 +1,21 @@
+class Solution {
+    public char findTheDifference(String s, String t) {
+    final char sXors = (char) s.chars().reduce(0, (a,b) -> a ^ b);
+    final char tXors = (char) t.chars().reduce(0, (a,b) -> a ^ b);
+    return (char) (sXors ^ tXors);  
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "abcd", t = "abcde"
+Output: "e"
+
+This Java code defines a class named Solution with a method findTheDifference that takes two strings, s and t, as input and returns a character.
+
+s.chars().reduce(0, (a,b) -> a ^ b): This part calculates the XOR (exclusive OR) of all the characters in the string s. 
+It uses the chars() method to get an IntStream of characters, then applies the reduce operation with an initial value of 0 and a lambda expression (a, b) -> a ^ b to perform the XOR operation on each pair of characters.
+
+t.chars().reduce(0, (a,b) -> a ^ b): Similarly, this part calculates the XOR of all the characters in the string t.
+
+sXors ^ tXors: Finally, it XORs the results obtained from steps 1 and 2. This is because XORing the XORs of two strings cancels out the common characters, leaving only the character that is different between the two strings.
+The result is then cast to char and returned.
