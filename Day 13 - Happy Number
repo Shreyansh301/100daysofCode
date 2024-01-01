@@ -1,0 +1,35 @@
+class Solution {
+    public boolean isHappy(int n) {
+    int slow = squaredSum(n);
+    int fast = squaredSum(squaredSum(n));
+
+    while (slow != fast) {
+        slow = squaredSum(slow);
+        fast = squaredSum(squaredSum(fast));
+    }
+    return slow ==1;
+    }
+
+    private int squaredSum(int n) {
+        int sum = 0;
+        while(n>0){
+            sum +=Math.pow(n% 10,2);
+            n /=10;
+        }
+        return sum; 
+    }
+}
+
+LOGIC : Explanation 
+Example - Input: n = 19
+Output: true
+Explanation:
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+
+This Java code defines a class Solution with a method isHappy that checks whether a given number is a "happy number." 
+A happy number is a number where, when you repeatedly replace the number by the sum of the squares of its digits, it eventually reaches 1. 
+The code uses two pointers (slow and fast) to detect cycles in this process. If a cycle is detected and the cycle contains the number 1, then the input number is considered a happy number. 
+The squaredSum method calculates the sum of the squares of the digits of a given number.
