@@ -1,0 +1,26 @@
+class Solution {
+    public String toLowerCase(String s) {
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            ans.append(c > 64 && c < 91 ? (char)(c + 32) : c);
+        }
+        return new String(ans);
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "Hello"
+Output: "hello"
+
+This Java code defines a class named Solution with a method toLowerCase, which takes a String s as input and converts all the uppercase letters in the string to lowercase. 
+The conversion is done by iterating through each character of the input string and checking if it is an uppercase letter. 
+If a character is an uppercase letter (ASCII value between 65 and 90), it is converted to lowercase by adding 32 to its ASCII value.
+
+StringBuilder Initialization: The code initializes a StringBuilder named ans to store the result of the lowercase conversion.
+
+Iteration Through Characters: It iterates through each character of the input string using a for loop.
+
+Uppercase to Lowercase Conversion: Inside the loop, it checks if the character is an uppercase letter (ASCII value between 65 and 90) and converts it to lowercase if necessary.
+
+Result Return: The final result is returned as a new string after converting all applicable characters to lowercase.
