@@ -1,0 +1,46 @@
+class Solution {
+    public List<List<Integer>> subsets(int [] nums) {
+        List<List<Integer>> ans =new ArrayList<>();
+        dfs(nums,0, new ArrayList<>(), ans);
+        return ans;
+    }
+
+    private void dfs(int[] nums, int s, List<Integer> path, List<List<Integer>> ans) {
+        ans.add(new ArrayList<>(path));
+
+        for (int i = s; i < nums.length; ++i) {
+            path.add(nums[i]);
+            dfs(nums, i + 1, path,ans);
+            path.remove(path.size() - 1);
+        }
+    }
+}
+
+LOGIC: Explanation 
+Example - 
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+This Java code generates all possible subsets of an array of integers using a recursive approach. The code defines a class named Solution with a method subsets and a helper method dfs (depth-first search).
+
+subsets method:
+Takes an array of integers (nums) as input.
+Initializes an empty list of lists of integers (ans) to store the generated subsets.
+Calls the dfs method to perform the depth-first search starting from index 0.
+Returns the final list of subsets (ans).
+
+dfs method:
+Takes four parameters:
+
+nums: the input array of integers.
+
+s: the starting index for the current recursive call.
+
+path: the current subset being constructed.
+
+ans: the list of lists to store all subsets.
+
+Adds a copy of the current subset (path) to the result list (ans).
+Iterates through the remaining elements of the input array starting from index s.
+Recursively calls the dfs method with the updated starting index (i + 1), the modified subset (path with the current element added), and the result list (ans).
+Backtracks by removing the last element from the current subset (path) to explore other possibilities.
