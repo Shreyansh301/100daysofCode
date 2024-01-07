@@ -1,0 +1,29 @@
+class Solution {
+    public int addDigits(int num) {
+        return 1 + (num - 1)% 9;
+    }
+} 
+
+LOGIC: Explanation 
+Example - Input: num = 38
+Output: 2
+The process is
+38 --> 3 + 8 --> 11
+11 --> 1 + 1 --> 2 
+Since 2 has only one digit, return it.
+
+
+The method addDigits takes an integer num as input and returns its digital root.
+
+The digital root of a number is the single-digit value obtained by repeatedly adding the digits of the number until a single-digit number is obtained.
+
+The formula used in the code is based on a mathematical property related to digital roots. The formula is:
+digitalRoot(num)=1+(num−1)mod9
+
+The expression (num - 1) % 9 computes the remainder when 
+(num−1) is divided by 9. This is a key step in the formula.
+
+Adding 1 to the result ensures that the final result is in the range of 1 to 9 (inclusive)
+which is the expected range for digital roots. The result is then returned.
+
+
