@@ -1,0 +1,30 @@
+select user_id,
+       concat(upper(left(name, 1)), lower(right(name, length(name) - 1))) as name
+from Users
+group by 1
+order by 1;
+
+LOGIC: Explanation
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| user_id        | int     |
+| name           | varchar |
++----------------+---------+
+user_id is the primary key for this table.
+
+select user_id,
+       concat(upper(left(name, 1)), lower(right(name, length(name) - 1))) as name
+from Users
+group by 1
+order by 1;
+
+This table contains the ID and the name of the user. The name consists of only lowercase and uppercase characters.
+This SQL code selects data from a table called "Users" and modifies the "name" column for each user. Here's a breakdown of the code:
+select user_id, concat(...): It selects the "user_id" column and creates a new column called "name" using the concat function. The concat function is used to combine two strings.
+upper(left(name, 1)): It takes the first character of the "name" column, converts it to uppercase using the upper function, and represents the first character of the modified "name."
+lower(right(name, length(name) - 1)): It takes the substring of the "name" column starting from the second character (index 1) to the end, converts it to lowercase using the lower function, and represents the rest of the characters of the modified "name."
+as name: Renames the newly created concatenated string as "name."
+from Users: Specifies that the data is retrieved from the "Users" table.
+group by 1: Groups the results by the first column, which is "user_id." This is usually used when you want to aggregate data based on a specific column.
+order by 1: Orders the results based on the first column, "user_id."
