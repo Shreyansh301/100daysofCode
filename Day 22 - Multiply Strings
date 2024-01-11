@@ -1,0 +1,44 @@
+class Solution {
+  public String multiply(String num1, String num2) {
+    final int m = num1.length();
+    final int n = num2.length();
+
+    StringBuilder sb = new StringBuilder();
+    int[] pos = new int[m + n];
+
+    for (int i = m - 1; i >= 0; --i)
+      for (int j = n - 1; j >= 0; --j) {
+        final int multiply = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+        final int sum = multiply + pos[i + j + 1];
+        pos[i + j] += sum / 10;
+        pos[i + j + 1] = sum % 10;
+      }
+
+    for (final int p : pos)
+      if (p > 0 || sb.length() > 0)
+        sb.append(p);
+
+    return sb.length() == 0 ? "0" : sb.toString();
+  }
+}
+
+LOGIC: Explanation 
+Example - Input: num1 = "2", num2 = "3"
+Output: "6"
+
+Initialization:
+m and n are the lengths of the input strings num1 and num2, respectively.
+A StringBuilder (sb) is initialized to build the result string.
+An array pos of size m + n is created to store the intermediate results of multiplication.
+
+Multiplication Loop:
+Two nested loops iterate over each digit of the input numbers, starting from the rightmost digit.
+Inside the loops, the code calculates the product of the current digits and adds it to the existing value in the pos array at the corresponding position.
+It updates the current and next positions in the pos array, considering the carry from the previous step.
+
+Result Construction Loop:
+After the multiplication loops, there is another loop to construct the final result string.
+It iterates over each element in the pos array, appending non-zero values to the StringBuilder sb.
+
+Return:
+The final result is obtained by converting the StringBuilder to a string. If the result is an empty string, it returns "0".
