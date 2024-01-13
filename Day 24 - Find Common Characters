@@ -1,0 +1,46 @@
+class Solution {
+    public List<String> commonChars(String[] A) {
+        List<String> ans = new ArrayList<>();
+        int[] commanCount = new int[26];
+        Arrays.fill(commanCount, Integer.MAX_VALUE);
+
+        for (String a : A) {
+            int[] count = new int[26];
+            for (char c : a.toCharArray())
+             ++count[c - 'a'];
+            for (int i = 0; i < 26; ++i)
+             commanCount[i] = Math.min(commanCount[i], count[i]);
+            
+        }
+
+        for (char c = 'a'; c <= 'z'; ++c)
+         for (int i = 0; i < commanCount[c - 'a']; ++i)
+         ans.add(String.valueOf(c));
+
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: words = ["cool","lock","cook"]
+Output: ["c","o"]
+
+This Java code defines a class Solution with a method commonChars that takes an array of strings A as input and returns a list of common characters across all strings in the array.
+List<String> ans = new ArrayList<>();: Initializes an ArrayList to store the common characters.
+int[] commanCount = new int[26];: Creates an array commanCount of size 26 to store the minimum count of each character across all strings.
+Arrays.fill(commanCount, Integer.MAX_VALUE);: Fills the commanCount array with Integer.MAX_VALUE to initialize it with large values.
+The code then iterates through each string in the input array A.
+
+a. Inside the loop, it initializes an array count of size 26 to store the count of each character in the current string.
+
+b. It then iterates through each character in the current string and increments the corresponding count in the count array.
+
+c. After processing each string, it updates the commanCount array with the minimum count of each character seen so far across all strings.
+
+After processing all strings, the code constructs the final list of common characters.
+
+a. It iterates through the characters from 'a' to 'z'.
+
+b. For each character, it adds the character to the final list as many times as its minimum count across all strings.
+
+Finally, the method returns the list of common characters.
