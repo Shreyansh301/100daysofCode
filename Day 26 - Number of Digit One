@@ -1,0 +1,41 @@
+class Solution {
+  public int countDigitOne(int n) {
+    int ans = 0;
+
+    for (long pow10 = 1; pow10 <= n; pow10 *= 10) {
+      final long divisor = pow10 * 10;
+      final int quotient = (int) (n / divisor);
+      final int remainder = (int) (n % divisor);
+      if (quotient > 0)
+        ans += quotient * pow10;
+      if (remainder >= pow10)
+        ans += Math.min(remainder - pow10 + 1, pow10);
+    }
+
+    return ans;
+  }
+}
+
+LOGIC: Explanation 
+Example - Input: n = 13
+Output: 6
+
+ -- > 1, 10, 11, 12, 13
+
+This Java code is implementing a solution to count the number of occurrences of the digit '1' in the decimal representation of numbers from 1 to the given integer n.
+The method countDigitOne takes an integer n as input and returns the count of digit '1' in the range from 1 to n.
+The variable ans is initialized to 0. This variable will store the final count of digit '1'.
+The code uses a loop that iterates through each power of 10 up to n. The loop variable pow10 represents the current power of 10 being considered.
+
+Inside the loop:
+divisor is set to pow10 * 10, representing the range of numbers within the current power of 10.
+quotient is calculated as the integer division of n by divisor, representing how many times the current power of 10 fits into n.
+remainder is calculated as the remainder when n is divided by divisor.
+If quotient > 0, it means there are multiples of the current power of 10 in the range. The code adds quotient * pow10 to the ans.
+
+If remainder >= pow10, it means there are additional digits in the current power of 10 range. The code adds the minimum of remainder - pow10 + 1 and pow10 to the ans. 
+This is because the count of digit '1' is limited by the smaller of these two values.
+The loop continues until the current power of 10 exceeds the given input n.
+
+The final result, stored in ans, is returned.
+
