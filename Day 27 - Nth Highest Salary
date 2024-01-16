@@ -1,0 +1,54 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  RETURN ( 
+      SELECT DISTINCT salary 
+      FROM (
+          SELECT salary,
+          DENSE_RANK () OVER (ORDER BY salary DESC) as r
+          FROM employee
+      ) result
+      WHERE r = N
+      );
+      END  
+
+LOGIC: Explanation 
+Example - Input: 
+Employee table:
++----+--------+
+| id | salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+n = 2
+Output: 
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| 200                    |
++------------------------+
+
+This code defines a SQL function named getNthHighestSalary that takes an integer parameter N and returns an integer value. The purpose of the function is to retrieve the Nth highest salary from the "employee" table.
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT: This line declares the creation of a function named getNthHighestSalary that takes an integer parameter N and returns an integer.
+
+BEGIN: Marks the beginning of the function's body.
+
+RETURN: Indicates that the function will return a value. The value to be returned is enclosed in parentheses.
+
+The inner query:
+sql
+Copy code
+SELECT DISTINCT salary 
+FROM (
+    SELECT salary,
+           DENSE_RANK () OVER (ORDER BY salary DESC) as r
+    FROM employee
+) result
+WHERE r = N
+
+The innermost query selects the salary column from the "employee" table and calculates the dense rank (DENSE_RANK()) of each salary in descending order (ORDER BY salary DESC).
+The result is aliased as "result."
+The outer query selects distinct salaries where the calculated rank (r) equals the input parameter N.
+
+END: Marks the end of the function's body.
