@@ -1,0 +1,78 @@
+class Solution {
+    private Map<Character, String> digitToLetters = new HashMap<>();
+    private List<String> resultList = new ArrayList<>();
+
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return resultList;
+        }
+
+        digitToLetters.put('2', "abc");
+        digitToLetters.put('3', "def");
+        digitToLetters.put('4', "ghi");
+        digitToLetters.put('5', "jkl");
+        digitToLetters.put('6', "mno");
+        digitToLetters.put('7', "pqrs");
+        digitToLetters.put('8', "tuv");
+        digitToLetters.put('9', "wxyz");
+
+        generateCombinations(digits, 0, new StringBuilder());
+
+        return resultList;
+
+
+    }
+
+
+    private void generateCombinations(String digits, int currentIndex, StringBuilder currentCombination) {
+        if (currentIndex == digits.length()) {
+            resultList.add(currentCombination.toString());
+            return;
+        }
+
+        char currentDigit = digits.charAt(currentIndex);
+        String letterOptions = digitToLetters.get(currentDigit);
+
+        if (letterOptions != null) {
+            for (int i = 0; i < letterOptions.length(); i++) {
+                char letter = letterOptions.charAt(i);
+                currentCombination.append(letter);
+                generateCombinations(digits, currentIndex + 1, currentCombination);
+                currentCombination.deleteCharAt(currentCombination.length() - 1);
+            }
+        }
+    }
+}
+
+LOGIC: Explanation
+Example - Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+This Java code defines a class named Solution that provides a method letterCombinations to generate all possible letter combinations for a given input string of digits. 
+The mapping of digits to letters on a phone keypad is used for the generation.
+
+Instance Variables:
+
+digitToLetters: A Map that stores the mapping of each digit to the corresponding letters on a phone keypad.
+resultList: A List to store the final result of all possible letter combinations.
+Constructor:
+
+Initializes the digitToLetters map with the mappings of digits to letters on a phone keypad.
+letterCombinations Method:
+
+Takes a string of digits as input.
+If the input string is null or empty, it returns an empty list.
+Calls the generateCombinations method to start generating letter combinations.
+Returns the final list of letter combinations.
+generateCombinations Method:
+
+Recursive method that generates all possible combinations of letters for the given digits.
+Takes three parameters:
+digits: The input string of digits.
+currentIndex: The current index being processed in the input string.
+currentCombination: The current combination of letters being formed.
+Base case: If currentIndex reaches the length of the input string, the current combination is added to the resultList.
+For each letter corresponding to the current digit, it appends the letter to the current combination, makes a recursive call for the next index, and then removes the last letter for backtracking.
+
+The primary idea is to explore all possible combinations by trying out different letters for each digit and recursively generating combinations. 
+The result is stored in the resultList.
