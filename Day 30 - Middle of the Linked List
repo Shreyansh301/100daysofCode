@@ -1,0 +1,25 @@
+class Solution {
+  public ListNode middleNode(ListNode head) {
+    ListNode slow = head;
+    ListNode fast = head;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow;
+  }
+}
+
+LOGIC: Explanation 
+Example - Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+
+The code defines a class named Solution with a method called middleNode.
+The method takes a ListNode head as input, where each node represents an element in a linked list.
+Two pointers, slow and fast, are initialized to the head of the linked list.
+A while loop continues until fast becomes null or fast.next becomes null.
+Inside the loop, slow moves one node at a time (slow = slow.next), and fast moves two nodes at a time (fast = fast.next.next).
+When the loop exits, the slow pointer is at the middle node of the linked list.
+
+The method returns the middle node using return slow.
+The algorithm is known as the "tortoise and hare" algorithm, utilizing two pointers moving at different speeds to efficiently find the middle of the linked list.
