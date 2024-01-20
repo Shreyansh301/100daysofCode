@@ -1,0 +1,43 @@
+class Solution {
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        for (int i = 0; i < flowerbed.length; i++) {
+            if (flowerbed[i] == 0 && 
+                (i == 0 || flowerbed[i - 1] == 0) && 
+                (i == flowerbed.length - 1 || flowerbed[i + 1] == 0)) {
+
+                flowerbed[i] = 1;
+                n--;
+            }
+
+            if (n <= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+LOGIC: Explanatiion 
+Example - Input: flowerbed = [1,0,0,0,1], n = 1
+Output: true
+
+The Java code defines a method canPlaceFlowers that iterates through a flowerbed array and attempts to plant flowers at suitable positions based on specified conditions, 
+returning true if it successfully plants the required number of flowers, and false otherwise.
+
+Iterating through Flowerbed:
+The for loop traverses each position in the flowerbed array.
+
+Conditions for Flower Planting:
+It checks if the current position is empty (flowerbed[i] == 0).
+Additionally, it checks if the previous position is empty or if the current position is the first in the flowerbed.
+Also, it checks if the next position is empty or if the current position is the last in the flowerbed.
+
+Planting a Flower:
+If all the conditions are met, it sets the current position to 1 (flowerbed[i] = 1), indicating the placement of a flower.
+It decrements the remaining number of flowers to be planted (n--).
+
+Checking for Completion:
+After each planting attempt, it checks if the required number of flowers (n) has been planted. If so, it returns true.
+
+Return Statement:
+If the loop completes and the required number of flowers has not been planted, the method returns false.
