@@ -1,0 +1,56 @@
+class Solution {
+    public String reverseVowels(String s) {
+
+        char[] chars = s.toCharArray();
+
+        int start = 0 ;
+
+        int end = s.length()-1;
+
+        while (start<end){
+            while (start < end && !isVowel(chars[start])) {
+                start++;
+            }
+
+            while (start < end && !isVowel(chars[end])) {
+                end--;
+            }
+
+            if (start < end) {
+                swap(chars, start, end);
+                start++;
+                end--;
+            }
+
+        }
+
+        return new String(chars);
+    }
+
+    private void swap(char[] word, int start, int end){
+        char temp = word[start];
+        word[start] = word[end];
+        word[end] = temp;
+    }
+
+    private boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
+                || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
+    }
+}
+
+LOGIC: Explanatiom 
+Example - Input: s = "hello"
+Output: "holle"
+
+This Java code defines a class Solution with a method reverseVowels that takes a string s as input and returns a new string with the vowels reversed.
+The method starts by converting the input string s into a character array called chars.
+Two pointers, start and end, are initialized to the beginning and end of the string, respectively.
+A while loop runs as long as start is less than end. Inside this loop, two inner while loops are used to find the next vowel from the start and end of the string, respectively.
+The isVowel method is used to check if a given character is a vowel.
+If vowels are found at both start and end positions, the swap method is called to swap the vowels.
+The swap method takes the character array (word) and the indices (start and end) as parameters, then swaps the characters at those indices.
+After the swap, both start and end are incremented and decremented, respectively.
+The outer while loop continues until start is no longer less than end.
+
+Finally, the modified character array is converted back to a string, and the result is returned.
