@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int i = 0;
+
+        for(int j=0; j<t.length() && i<s.length(); j++ )
+        if(t.charAt(j) == s.charAt(i))
+        i++;
+        return i == s.length();
+    }
+}
+
+LOGIC: Explanation 
+Exampple - Input: s = "abc", t = "ahbgdc"
+Output: true
+
+This Java code defines a class named Solution with a method called isSubsequence. This method takes two strings, s and t, as parameters and returns a boolean indicating whether s is a subsequence of t.
+Initialize two pointers, i and j, to 0. The pointer i will be used to traverse the string s, and the pointer j will be used to traverse the string t.
+Use a for loop to iterate through the characters of t (string t) using the index j. The loop continues as long as j is within the bounds of the length of t and i is within the bounds of the length of s.
+Inside the loop, check if the character at index j in string t is equal to the character at index i in string s. If they are equal, increment the pointer i.
+After the loop, check if the final value of pointer i is equal to the length of string s. If it is, then all characters of s have been found in order within t, and the method returns true, 
+indicating that s is a subsequence of t. Otherwise, it returns false.
