@@ -1,0 +1,36 @@
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        Arrays.sort(strs);
+        String s1 = strs[0];
+        String s2 = strs[strs.length-1];
+        int idx = 0;
+        while(idx < s1.length() && idx < s2.length()){
+            if(s1.charAt(idx) == s2.charAt(idx)){
+                idx++;
+            } else {
+                break;
+            }
+        }
+        return s1.substring(0, idx);
+    }
+}
+
+LOGIC: Explanation
+Example - Input: strs = ["flower","flow","flight"]
+Output: "fl"
+
+This Java code defines a class named Solution with a method longestCommonPrefix, which takes an array of strings (strs) as input and returns the longest common prefix among the strings.
+Arrays.sort(strs);: The input array of strings is sorted lexicographically. This ensures that the strings are arranged in ascending order.
+
+String s1 = strs[0];: The first string (lexicographically smallest after sorting) is assigned to the variable s1.
+
+String s2 = strs[strs.length-1];: The last string (lexicographically largest after sorting) is assigned to the variable s2.
+
+int idx = 0;: Initializes an index variable to 0. This index will be used to traverse the characters of s1 and s2 for finding the common prefix.
+while(idx < s1.length() && idx < s2.length()){: The code enters into a while loop as long as the index is within the bounds of both s1 and s2.
+if(s1.charAt(idx) == s2.charAt(idx)){: Checks if the characters at the current index in both strings (s1 and s2) are equal.
+idx++;: If the characters are equal, increments the index to move on to the next character in both strings.
+} else { break; }: If the characters are not equal, breaks out of the loop.
+return s1.substring(0, idx);: Returns the substring of s1 from the beginning up to the index idx. 
+
+This substring represents the longest common prefix among all the strings in the input array.
