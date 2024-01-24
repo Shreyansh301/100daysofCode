@@ -1,0 +1,31 @@
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int n=gain.length;
+        int max_so_far=0;
+        int max_final =0;
+        for(int i=0;i<n;i++)
+        {
+            max_so_far+=gain[i];
+            max_final=Math.max(max_final,max_so_far);
+        }
+        return max_final;
+    }
+}
+
+LOGIC: Explantion 
+Example - Input: gain = [-5,1,5,0,-7]
+Output: 1
+Explanation: The altitudes are [0,-5,-4,1,1,-6]. The highest is 1.
+
+The given Java code defines a class Solution with a method largestAltitude. This method takes an array of integers called gain as input and returns an integer representing the largest altitude.
+int n = gain.length;: Retrieves the length of the array gain and stores it in the variable n.
+int max_so_far = 0;: Initializes a variable max_so_far to 0. This variable will be used to keep track of the maximum altitude encountered so far.
+int max_final = 0;: Initializes a variable max_final to 0. This variable will store the final result, i.e., the largest altitude.
+
+for(int i = 0; i < n; i++): A loop that iterates over each element in the array gain.
+
+a. max_so_far += gain[i];: Updates max_so_far by adding the current element of gain to it. This represents the cumulative altitude gain as the loop progresses.
+b. max_final = Math.max(max_final, max_so_far);: Updates max_final by taking the maximum value between its current value and max_so_far. 
+This ensures that max_final always holds the maximum altitude encountered during the iteration.
+
+return max_final;: Returns the final result, which represents the largest altitude encountered during the entire journey.
