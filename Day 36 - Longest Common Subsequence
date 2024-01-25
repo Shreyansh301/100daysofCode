@@ -1,0 +1,43 @@
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        if (text1.length() < text2.length()) {
+            return LCS(text1, text2);
+        }
+        return LCS(text2, text1);
+    }
+
+    public int LCS(String s1, String s2) {
+        int[][] M = new int[2][s1.length() + 1];
+
+        for (int i = 1; i <= s2.length(); i++) {
+            M[i % 2][0] = 0;
+            for (int j = 1; j <= s1.length(); j++) {
+                if (s1.charAt(j - 1) == s2.charAt(i - 1)) {
+                    M[i % 2][j] = M[(i - 1) % 2][j - 1] + 1;
+                } else {
+                    M[i % 2][j] = Math.max(M[(i - 1) % 2][j - 1],
+                            Math.max(M[(i - 1) % 2][j], M[i % 2][j - 1]));
+                }
+            }
+        }
+        return M[s2.length() % 2][s1.length()];
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: text1 = "abcde", text2 = "ace" 
+Output: 3  
+The longest common subsequence is "ace" and its length is 3.
+
+The code is efficient and uses a 2D array to store the lengths of LCS for different prefixes of the input strings.
+The longestCommonSubsequence method is a wrapper that ensures the shorter string is used as the first parameter when calling the actual LCS method.
+The LCS method takes two strings, s1 and s2, and returns the length of their longest common subsequence.
+
+The code initializes a 2D array M of size [2][s1.length() + 1] to store the lengths of LCS for different prefixes of s1 and s2.
+
+The outer loop iterates through the characters of s2, and the inner loop iterates through the characters of s1.
+
+The algorithm fills the 2D array M based on the comparison of characters in the two strings. 
+If the characters are equal, the length of LCS is incremented by 1; otherwise, it considers the maximum length from the previous computations.
+
+The final result is stored in M[s2.length() % 2][s1.length()].
