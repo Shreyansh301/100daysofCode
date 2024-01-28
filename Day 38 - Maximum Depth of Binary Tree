@@ -1,0 +1,26 @@
+class Solution {
+    public int maxDepth(TreeNode root) {
+        // Base Condition
+        if(root == null) return 0;
+        // Hypothesis
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        // Induction
+        return Math.max(left, right) + 1;
+    }
+}
+
+Logic: Explanation 
+Example - Input: root = [3,9,20,null,null,15,7]
+Output: 3
+
+The code defines a method maxDepth that calculates the maximum depth of a binary tree.
+It uses recursion to traverse the tree.
+
+Base Condition: If the current node is null (empty or a leaf node), the depth is 0.
+
+Hypothesis: Recursively calculate the depth of the left and right subtrees.
+
+Induction: Return the maximum depth among the left and right subtrees, plus 1 for the current level.
+
+The method efficiently computes the maximum depth of the binary tree using a divide-and-conquer approach.
