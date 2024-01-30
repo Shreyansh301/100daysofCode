@@ -1,0 +1,39 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+       int cnt =0;
+       int no =0;
+
+       for(int i=0;i<nums.length;i++){
+           if(cnt==0){
+               no= nums[i];
+           }
+          
+          if(no == nums[i]){
+              cnt++;
+          }else{
+              cnt--;
+          }
+
+       }
+
+     return no;
+
+        }
+    }
+
+LOGIC: Explanation 
+Example - Input: nums = [3,2,3]
+Output: 3
+
+This Java code defines a class named Solution with a method majorityElement. The purpose of this method is to find the majority element in an array of integers. 
+The majority element is defined as the element that appears more than n/2 times in the array, where n is the length of the array.
+
+The method majorityElement takes an array of integers (nums) as its input parameter and returns an integer, which is the majority element.
+Two variables are declared: cnt to keep track of the count of the current candidate majority element, and no to store the current candidate majority element.
+The code uses a loop to iterate through the array elements.
+Inside the loop, there's a conditional statement to check if cnt is equal to 0. If it is, it means that we have encountered a new candidate majority element (no is updated to the current element).
+Another conditional statement checks whether the current element (nums[i]) is equal to the candidate majority element (no). If they are equal, the count (cnt) is incremented; otherwise, the count is decremented.
+This approach is based on the fact that the majority element, if it exists, will eventually have a count greater than 0 after going through the entire array.
+The final result is the candidate majority element stored in the variable no.
+
+The method returns the identified majority element.
