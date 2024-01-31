@@ -1,0 +1,66 @@
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> st = new Stack<>();
+
+        for(int val : asteroids) {
+            if(st.isEmpty() || val > 0) {
+                st.push(val);
+            }
+            else {
+                while(true) {
+                    int peek = st.peek();
+                    if(peek < 0) {
+                        st.push(val);
+                        break;
+                    }
+                    else if(peek == -val) {
+                        st.pop();
+                        break;
+                    }
+                    else if(peek > -val) {
+                        break;
+                    }
+                    else {
+                        st.pop();
+                        if(st.isEmpty()) {
+                            st.push(val);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        int i = st.size();
+        int ans[] = new int[i];
+        while(!st.isEmpty()) {
+            if(i > 0)
+                ans[i-1] = st.pop();
+                i--;
+        }
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: asteroids = [5,10,-5]
+Output: [5,10]
+The 10 and -5 collide resulting in 10. The 5 and 10 never collide.
+
+
+This Java code defines a class named Solution that contains a method asteroidCollision. 
+The purpose of this method is to simulate the collision of asteroids in space and return the state of the asteroids after the collisions.
+
+
+It looks like the provided code is an implementation of the "Asteroid Collision" problem. 
+The goal is to simulate the collisions between asteroids and determine the final state of the asteroids after the collisions.
+It uses a stack (st) to keep track of the asteroids' state.
+It iterates through each asteroid in the input array (asteroids).
+If the stack is empty or the current asteroid is moving to the right (positive value), it is simply pushed onto the stack.
+If the current asteroid is moving to the left (negative value), the code enters a loop to handle possible collisions.
+If the stack is empty or the top asteroid on the stack is also moving to the left, the current asteroid is pushed onto the stack.
+If the top asteroid on the stack has the same absolute value as the current asteroid, both asteroids are destroyed (popped from the stack).
+If the top asteroid has a greater absolute value than the current asteroid, the current asteroid is destroyed.
+If the top asteroid has a smaller absolute value, it is destroyed, and the process continues until a stable state is reached.
+
+Finally, the remaining asteroids on the stack are extracted to form the final result array.
