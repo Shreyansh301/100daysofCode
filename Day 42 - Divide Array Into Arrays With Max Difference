@@ -1,0 +1,77 @@
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        if (nums.length % 3 != 0) {
+            return new int[0][0];
+        }
+
+        int size = nums.length;
+
+        int max = 0;
+
+        for (int n : nums) {
+            max = Math.max(max, n);
+        }
+
+        int[] freqs = new int[max + 1];
+
+        for (int n : nums) {
+            ++freqs[n];
+        }
+
+        int[][] subs = new int[size / 3][3];
+
+        for (int n = 1, r = 0, c = 0; r < subs.length && n <= max;) {
+            if (freqs[n] == 0) {
+                ++n;
+            }
+            else if (c == subs[r].length) {
+                ++r;
+                c = 0;
+            }
+            else if (c == 0 || n - subs[r][0] <= k) {
+                subs[r][c] = n;
+                --freqs[n];
+                ++c;
+            }
+            else {
+                return new int[0][0];
+            }
+        }
+
+        return subs;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [1,3,4,8,7,9,3,5,1], k = 2
+Output: [[1,1,3],[3,4,5],[7,8,9]]
+We can divide the array into the following arrays: [1,1,3], [3,4,5] and [7,8,9].
+The difference between any two elements in each array is less than or equal to 2.
+Note that the order of elements is not important.
+
+----------------------------------------------------------------------------------
+
+This Java code attempts to divide an array nums into subarrays of size 3, where the difference between elements in each subarray is less than or equal to a given value k. 
+
+Input Validation:
+Check if the length of the input array nums is divisible by 3. If not, return an empty 2D array.
+
+Find Maximum Element:
+Find the maximum value in the array nums.
+
+Count Frequencies:
+Create an array freqs to store the frequency of each element in nums.
+Iterate through the elements of nums and update the frequency array.
+
+Create Subarrays:
+Initialize a 2D array subs to store the resulting subarrays.
+
+Fill Subarrays:
+Use nested loops to fill the 2D array subs.
+The outer loop (r) iterates over rows, and the inner loop (c) iterates over columns.
+Conditions are checked to determine whether the current element can be added to the subarray or not.
+
+Return Result:
+If all subarrays are successfully filled, return the resulting 2D array subs.
+If any condition is violated during the filling process, return an empty 2D array.
+
