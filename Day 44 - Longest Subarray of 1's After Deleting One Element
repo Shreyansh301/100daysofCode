@@ -1,0 +1,54 @@
+class Solution {
+    public int longestSubarray(int[] nums) {
+
+           int curr=0,prev=0,ans=0;
+
+           for(int i=0;i<nums.length;i++){
+                
+                 if(nums[i]==1){
+                     curr++;
+                 }else{
+                  
+                     ans = Math.max(ans,curr+prev);
+                     prev = curr;
+                     curr =0;
+
+                 }
+           
+               }   
+               ans = Math.max(ans,curr+prev); 
+              return ans == nums.length?ans-1:ans; 
+
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [1,1,0,1]
+Output: 3
+After deleting the number in position 2, [1,1,1] contains 3 numbers with value of 1's.
+----------------------------------------------------------------------------------------------------
+
+Key Variables:
+
+curr: Counts the consecutive 1s in the current subarray.
+prev: Stores the count of 1s in the previous subarray.
+ans: Stores the length of the longest subarray found so far.
+
+Iterate through the array:
+
+If the current element is 1:
+Increment curr to count the consecutive 1s.
+If the current element is 0:
+Check if the combined length of curr and prev is greater than ans:
+If so, update ans with the combined length.
+Set prev to curr to carry over the count of 1s.
+Reset curr to 0 to start counting 1s from the next element.
+
+After the loop:
+
+Check again if the combined length of curr and prev is greater than ans (in case the last subarray ends with 1s).
+Handle the edge case where the entire array consists of 1s (by subtracting 1 from ans).
+
+Return:
+Return the size of the longest non-empty subarray containing only 1's in the resulting array.
+
