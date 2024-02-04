@@ -1,0 +1,33 @@
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for (int i = 0; i < k; i++) {
+            minHeap.offer(nums[i]);
+        }
+        
+        for (int i = k; i < nums.length; i++) {
+            if (nums[i] > minHeap.peek()) {
+                minHeap.poll();
+                minHeap.offer(nums[i]);
+            }
+        }
+        
+        return minHeap.peek();
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+--------------------------------------------------------------------------
+
+This Java solution aims to find the kth largest element in an array using a PriorityQueue, which is implemented as a min-heap.
+
+A PriorityQueue named minHeap is created. By default, PriorityQueue in Java is a min-heap, meaning the smallest element is at the front.
+In the first loop (i = 0 to k-1), the first k elements of the array nums are added to the minHeap.
+After the initial k elements are added, the second loop (i = k to nums.length-1) iterates through the remaining elements in the array.
+For each element in the second loop, it compares with the smallest element (peek) in the minHeap. If the current element is greater, the smallest element in the minHeap is removed (poll), and the current element is added to the minHeap.
+After iterating through all elements, the minHeap contains the k largest elements, and the smallest among them (at the front of the minHeap) is the kth largest element in the array.
+
+Finally, the method returns the peek of the minHeap, which is the kth largest element.
+
