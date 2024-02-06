@@ -1,0 +1,66 @@
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        int n = word1.length();
+        if (n != word2.length())
+            return false;
+        int[] count1 = new int[26];
+        int[] count2 = new int[26];
+        if (word1.equals(word2))
+            return true;
+        byte[] bytes = new byte[n];
+        word1.getBytes(0, n, bytes, 0);
+        for (int b: bytes)
+            count1[b -'a'] += 1;
+        word2.getBytes(0, n, bytes, 0);
+        for (int b: bytes)
+            count2[b -'a'] += 1;
+        
+        int mxfreq = 0;
+        for (int i = 0; i < 26; i++)
+            mxfreq = Math.max(mxfreq, Math.max(count1[i], count2[i]));
+        
+        int[] freq = new int[mxfreq +1];
+        int count = 0;
+        for (int i = 0; i < 26; i++) {
+            int c1 = count1[i];
+            int c2 = count2[i];
+            if ((c1 == 0)^(c2 == 0))
+                return false;
+            if (c1 != 0) {
+                int f1 = freq[c1]++;
+                int f2 = freq[c2]--;
+                if (f1 == 0)
+                    count++;
+                else if (f1 == -1)
+                    count--;
+                if (f2 == 0)
+                    count++;
+                else if (f2 == 1)
+                    count--;
+            }
+        }
+        return count == 0;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: word1 = "abc", word2 = "bca"
+Output: true
+You can attain word2 from word1 in 2 operations.
+Apply Operation 1: "abc" -> "acb"
+Apply Operation 1: "acb" -> "bca"
+----------------------------------------------------------------------------------
+
+The closeStrings method takes two strings, word1 and word2, and determines if they are "close" strings.
+It first checks if the lengths of word1 and word2 are equal. If not, it returns false since strings with different lengths cannot be close.
+Two arrays, count1 and count2, are initialized to store the count of each character in the respective words. The arrays have a length of 26, corresponding to the lowercase English alphabet.
+If word1 is equal to word2, it means the strings are already close, so the method returns true.
+The code then converts each word into a byte array (bytes) to iterate through the characters easily.
+The frequencies of each character in both words are calculated and stored in count1 and count2 arrays.
+The maximum frequency (mxfreq) among the characters in both words is calculated.
+An array freq is created to store the frequencies of frequencies. It tracks how many characters have the same frequency.
+The code iterates through the counts of characters in both words, checking if they have different patterns. If a character is present in one word but not the other, it returns false.
+For characters present in both words, it updates the freq array and keeps track of the number of characters with different frequencies.
+
+The final check ensures that all characters in both words have the same frequency distribution, and the count of characters with different frequencies is zero. If true, it returns true; otherwise, it returns false.
+The code essentially checks if the two words can be made equal by performing only two operations: swapping two characters and changing a character to another character with the same frequency.
