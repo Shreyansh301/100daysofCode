@@ -1,0 +1,47 @@
+class Solution {
+    boolean[] visited;
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        visited = new boolean[rooms.size()];
+        visited[0] = true;
+        dfs(rooms , 0);
+        for(boolean b : visited) if(!b) return false;
+        return true;
+    }
+    public void dfs(List<List<Integer>> rooms , int ind) {
+        for(int i : rooms.get(ind)) {
+            if(!visited[i]) {
+                visited[i] = true;
+                dfs(rooms , i);
+            }
+        }
+    }
+} 
+
+Logic: Explanation 
+Example - Input: rooms = [[1],[2],[3],[]]
+Output: true
+We visit room 0 and pick up key 1.
+We then visit room 1 and pick up key 2.
+We then visit room 2 and pick up key 3.
+We then visit room 3.
+Since we were able to visit every room, we return true.
+-----------------------------------------------------------------
+This Java code defines a class Solution that contains a method canVisitAllRooms. 
+The goal of this method is to determine whether it is possible to visit all the rooms in a given set of rooms. The rooms are represented as a list of lists of integers, where each inner list contains the keys to other rooms.
+
+Class Variables:
+boolean[] visited: An array to keep track of whether a room has been visited or not.
+
+canVisitAllRooms Method:
+canVisitAllRooms(List<List<Integer>> rooms): This method takes a list of rooms as input and returns a boolean indicating whether all rooms can be visited.
+It initializes the visited array and marks the first room (index 0) as visited.
+Calls the dfs method to perform a depth-first search starting from the first room.
+Finally, it checks if all rooms have been visited. If any room is unvisited, the method returns false; otherwise, it returns true.
+
+dfs Method:
+dfs(List<List<Integer>> rooms, int ind): This method performs a depth-first search starting from a given room index (ind).
+It iterates through the keys in the current room and recursively calls dfs for each unvisited room.
+Marks each visited room in the visited array.
+
+The depth-first search explores the rooms and updates the visited array to keep track of visited rooms. 
+The canVisitAllRooms method then checks if all rooms have been visited to determine if it's possible to visit all rooms starting from the first room.
