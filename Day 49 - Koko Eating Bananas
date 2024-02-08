@@ -1,0 +1,47 @@
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+            long sum = 0;
+        for (int p : piles) {
+            sum += p;
+        }
+        int left = (int) ((sum - 1) / h) + 1;
+        int right = (int) ((sum - piles.length) / (h - piles.length + 1)) + 1;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int hours = 0;
+            for (int p : piles) {
+                hours += (p - 1) / mid + 1;
+            }
+            if (hours > h) left = mid + 1;
+            else right = mid;
+        }
+        return left;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: piles = [3,6,7,11], h = 8
+Output: 4
+
+This Java code defines a class Solution with a method minEatingSpeed that takes an array of integers piles representing the number of bananas in each pile and an integer h representing the maximum number of hours a person can spend eating bananas. 
+The goal is to find the minimum eating speed needed to eat all the bananas within the given time limit.
+
+Calculate the total sum of bananas in all piles:
+A variable sum is initialized to 0.
+A for-each loop is used to iterate through each element in the piles array, and the value of each element is added to the sum.
+
+Set initial search boundaries:
+Two variables left and right are initialized to set the initial search boundaries for the eating speed.
+left is calculated as (sum - 1) / h + 1, and right is calculated as (sum - piles.length) / (h - piles.length + 1) + 1.
+
+Binary search for the minimum eating speed:
+The code enters a while loop that continues until left is no longer less than right.
+Inside the loop, the mid-point mid is calculated using binary search logic.
+Another loop is used to calculate the total hours required to eat all bananas at the current eating speed (mid).
+If the total hours exceed the given time limit h, the search range is narrowed to the right half by updating left to mid + 1.
+Otherwise, the search range is narrowed to the left half by updating right to mid.
+
+Return the result:
+Once the while loop exits, the minimum eating speed is found and stored in the variable left.
+The method returns the minimum eating speed.
