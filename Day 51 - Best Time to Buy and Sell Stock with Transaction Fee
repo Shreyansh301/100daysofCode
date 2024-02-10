@@ -1,0 +1,45 @@
+class Solution {
+    public int maxProfit(int [] prices, int fee){
+        int n = prices.length;
+        if(prices == null || n ==0) return 0;
+
+        int buy = prices[0];
+        int profit = 0;
+        int sell = 0;
+        for (int i = 1;i<n;i++){
+            buy = Math.min(buy, prices[i] - profit);
+            sell = Math.max(profit, prices[i] - buy - fee);
+            profit = sell;
+        }
+        return profit;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: prices = [1,3,2,8,4,9], fee = 2
+Output: 8
+The maximum profit can be achieved by:
+- Buying at prices[0] = 1
+- Selling at prices[3] = 8
+- Buying at prices[4] = 4
+- Selling at prices[5] = 9
+The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
+-------------------------------------------------------------------
+This Java code is an implementation of a function maxProfit that calculates the maximum profit a person can make by buying and selling stocks with a transaction fee. 
+The function takes an array of stock prices (prices) and a transaction fee (fee) as parameters.
+
+Check if the input array prices is null or empty. If so, return 0, as there are no transactions to be made.
+
+Initialize variables buy, sell, and profit.
+buy represents the minimum cost to buy a stock at the current point.
+sell represents the maximum profit after selling a stock at the current point.
+profit represents the accumulated profit.
+
+Iterate through the array prices starting from index 1 (since we initialize buy with the first price).
+Update buy to be the minimum of the current buy and the difference between the current stock price and the accumulated profit.
+Update sell to be the maximum of the accumulated profit and the difference between the current stock price, buy, and the transaction fee.
+Update profit with the value of sell.
+
+After the loop, return the final accumulated profit, which represents the maximum profit achievable with the given transaction fee.
+
+
