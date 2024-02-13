@@ -1,0 +1,69 @@
+class Solution {
+    void merge(int[] a,int low,int mid,int high){
+        int temp[]=new int[high-low+1];
+        int i=low,j=mid+1,k=0;
+        while(i<=mid && j<=high){
+
+            long n= 10,m=10;
+            while(a[i] >= n)  n *= 10;
+            while(a[j] >= m)  m *= 10;
+            
+            long l=a[i]*m+a[j];
+            long h=a[j]*n+a[i];
+            if(l>h)temp[k++]=a[i++];
+            else temp[k++]=a[j++];
+        }
+        while(i<=mid)temp[k++]=a[i++];
+        while(j<=high)temp[k++]=a[j++];
+        k=0;
+        i=low;
+        while(i<=high){
+            a[i++]=temp[k++];
+        }
+    }
+    void divide(int[] nums,int st,int end){
+        if(st==end)return ;
+        int mid=st+(end-st)/2;
+        divide(nums,st,mid);
+        divide(nums,mid+1,end);
+        merge(nums,st,mid,end);
+    }
+    public String largestNumber(int[] nums) {
+        divide(nums,0,nums.length-1);
+        StringBuilder ans= new StringBuilder();
+        for(int i:nums){
+            ans.append(Integer.toString(i));
+        }
+        return nums[0]==0?"0":ans.toString();
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [3,30,34,5,9]
+Output: "9534330"
+----------------------------------------------------------------------
+merge method:
+Merges two sorted halves of the array in a sorted manner.
+low, mid, and high represent the indices for the two halves to be merged.
+It uses a temporary array temp to store the merged result.
+It compares pairs of elements using a custom comparison based on their concatenated values to determine their order.
+
+divide method:
+Recursively divides the array into halves until the base case (st == end) is reached.
+Calls merge method to merge the sorted halves.
+
+largestNumber method:
+The main method that orchestrates the sorting and merging.
+Calls divide to perform the sorting.
+Creates a StringBuilder to build the final result.
+Converts each element of the sorted array to a string and appends it to the StringBuilder.
+If the first element is 0, it returns "0"; otherwise, it returns the string representation of the sorted array.
+
+Sorting Logic:
+The sorting logic in this code is custom and based on comparing two numbers by concatenating them in different orders.
+For two numbers a and b, it compares a + b with b + a and places them in the order that results in a larger concatenated value.
+
+Result Handling:
+The result is handled in a way that if the first element after sorting is 0, the entire array is considered as [0], otherwise, it is converted to a string and returned.
+
+This code essentially implements a custom sorting algorithm to arrange the numbers in an order that results in the largest possible concatenated value. The sorted numbers are then concatenated to form the final result.
