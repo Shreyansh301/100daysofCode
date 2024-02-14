@@ -1,0 +1,55 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length <= 1) {
+            return 0; // Cannot make a profit with less than 2 prices
+        }
+
+        int maxProfit = 0;
+        int minPrice = prices[0];
+
+        for (int i = 1; i < prices.length; i++) {
+            int currentPrice = prices[i];
+            
+            // If the current price is lower than the minimum price, update the minimum price
+            if (currentPrice < minPrice) {
+                minPrice = currentPrice;
+            } else {
+                // Calculate the profit if selling at the current price
+                int currentProfit = currentPrice - minPrice;
+                // Update the maximum profit if the current profit is greater
+                maxProfit = Math.max(maxProfit, currentProfit);
+            }
+        }
+
+        return maxProfit;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+-----------------------------------------------------------------------------------------------------------
+Base Case Check:
+It checks if the input array prices is either null or has only one element. If so, it returns 0, as there's no opportunity to make a profit.
+
+Initialization:
+maxProfit is set to 0 initially.
+minPrice is set to the first element of the prices array.
+
+Iterating Through Prices:
+It loops through the array, starting from the second element.
+
+Updating Minimum Price:
+If the current price is lower than the minimum price, it updates the minimum price.
+
+Calculating and Updating Maximum Profit:
+If the current price is not lower than the minimum price, it calculates the profit obtained by selling at the current price.
+It updates the maximum profit if the calculated profit is greater than the current maximum profit.
+
+Returning Maximum Profit:
+The method returns the maximum profit obtained during the iteration.
+
+The algorithm scans through the prices, keeping track of the minimum price and updating the maximum profit whenever a higher profit can be achieved by selling at a later price. 
+The final result is the maximum profit achievable based on the given stock prices.
