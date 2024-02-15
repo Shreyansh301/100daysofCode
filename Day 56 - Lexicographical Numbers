@@ -1,0 +1,60 @@
+class Solution {
+
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> result = new ArrayList<>();
+        int curNum = 1;
+        while (true){
+            // add current
+            result.add(curNum);
+            // try to add 1 digit after
+            if (curNum * 10 <= n){
+                curNum *= 10;
+            } else { // if cannot, try increment current, see if exceed?
+                if (curNum % 10 != 9 && curNum + 1 <= n) {
+                    curNum += 1;
+                } else { // if cannot, pop last digit & increment prev digit
+                    while (curNum > 0 && (curNum % 10 == 9 || curNum + 1 > n)){
+                        curNum = curNum / 10;
+                    }
+                    if (curNum == 0) break;
+                    curNum += 1;
+                }
+            }
+        }
+        return result;
+    }
+
+}
+
+LOGIC: Explanation
+Example - Input: n = 13
+Output: [1,10,11,12,13,2,3,4,5,6,7,8,9]
+-------------------------------------------------------------------------------------
+Method Signature:
+public List<Integer> lexicalOrder(int n): The method takes an integer n as input and returns a list of integers.
+
+List Initialization:
+List<Integer> result = new ArrayList<>();: Initializes an ArrayList to store the resulting lexical order.
+
+Looping Process:
+int curNum = 1;: Initializes the current number to 1.
+while (true) { ... }: Infinite loop to generate lexical order.
+
+Adding Current Number:
+result.add(curNum);: Adds the current number to the result list.
+
+Handling Single-Digit Increment:
+if (curNum * 10 <= n) { curNum *= 10; }: If multiplying the current number by 10 is within the given range, it increments the current number by appending a digit.
+
+Handling Multi-Digit Increment or Pop:
+else { ... }: If single-digit increment is not possible, it checks for two scenarios:
+If the last digit is not 9 and incrementing the current number by 1 is within the range, it increments the current number by 1.
+If the above condition is not met, it pops the last digit and increments the previous digit until a valid number is found.
+
+Loop Termination:
+if (curNum == 0) break;: If the current number becomes 0, the loop is terminated.
+
+Result Return:
+return result;: Returns the generated lexical order list.
+
+This algorithm generates the lexical order of integers up to n by considering single-digit and multi-digit increments, ensuring that the order follows the lexical order rules.
