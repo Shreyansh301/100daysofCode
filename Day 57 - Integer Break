@@ -1,0 +1,46 @@
+class Solution {
+    public int integerBreak(int n) {
+        // Handle base cases
+        if (n == 2) return 1;
+        if (n == 3) return 2;
+
+        // Dynamic programming table to store maximum products
+        int[] maxProduct = new int[n + 1];
+
+        // Base cases for numbers 1, 2, and 3 -only for computing for the rest of the numbers-
+        maxProduct[1] = 1;
+        maxProduct[2] = 2;
+        maxProduct[3] = 3;
+
+        // Fill the dynamic programming table for larger numbers
+        for (int num = 4; num <= n; ++num) {
+            int maxProductForNum = 0;
+            // Iterate through smaller numbers to calculate the maximum product
+            for (int subNum = 1; subNum <= num / 2; ++subNum) {
+                maxProductForNum = Math.max(maxProductForNum, maxProduct[subNum] * maxProduct[num - subNum]);
+            }
+            // Update the maximum product for the current number
+            maxProduct[num] = maxProductForNum;
+        }
+
+        return maxProduct[n];
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: n = 2
+Output: 1
+Explanation: 2 = 1 + 1, 1 × 1 = 1.
+---------------------------------------------------------------------------------------------------------------------
+The code defines a class named Solution.
+Inside the class, there is a method integerBreak that takes an integer n as a parameter and returns an integer.
+The method starts by handling base cases for n equal to 2 or 3, returning 1 and 2, respectively.
+It creates an array maxProduct of size n + 1 to store the maximum products for different numbers.
+Sets initial values in the maxProduct array for base cases (1, 2, and 3).
+The code then uses dynamic programming to fill in the maxProduct array for larger numbers (4 to n).
+It iterates through each number (num) from 4 to n, and for each number, it iterates through smaller numbers (subNum) from 1 to num/2.
+Inside the inner loop, it calculates the product of maxProduct[subNum] and maxProduct[num - subNum] and keeps track of the maximum value.
+After the inner loop, it updates the maxProduct[num] with the maximum product obtained for the current number (num).
+
+Finally, the method returns the maximum product for the input number n.
+This Java code implements a dynamic programming approach to find the maximum product of breaking an integer n into smaller positive integers.
