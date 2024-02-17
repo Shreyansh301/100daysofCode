@@ -1,0 +1,45 @@
+class Solution {
+    public int findNthDigit(int n) {
+        int digits = 1;
+        long count = 9;
+        int start = 1;
+        
+        while (n > digits * count) {
+            n -= digits * count;
+            digits++;
+            count *= 10;
+            start *= 10;
+        }
+        
+        start += (n - 1) / digits;
+        String s = Integer.toString(start);
+        return Character.getNumericValue(s.charAt((n - 1) % digits));
+    }
+}
+
+LOGIC: Explanation
+Example - Input: n = 11
+Output: 0
+The 11th digit of the sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... is a 0, which is part of the number 10.
+
+Initialization:
+digits is initialized to 1, representing the number of digits in the current range of integers.
+count is initialized to 9, representing the count of integers with digits number of digits.
+start is initialized to 1, representing the starting integer of the current range.
+
+Loop:
+The code enters a while loop as long as n is greater than the product of digits and count.
+Inside the loop, n is adjusted by subtracting the product of digits and count.
+digits is incremented, and both count and start are updated accordingly to move to the next range of integers.
+
+Calculating the nth digit:
+After exiting the loop, the code calculates the starting integer of the specific range containing the nth digit.
+The starting integer is adjusted by adding (n - 1) / digits to it.
+Convert the starting integer to a String (s) for easier manipulation.
+
+Returning the result:
+The nth digit is then obtained by accessing the (n - 1) % digits position in the String s.
+The result is returned as an integer using Character.getNumericValue().
+
+The code works by iteratively narrowing down the range of integers and adjusting the starting point until it reaches the specific range containing the nth digit. 
+It then extracts the digit from the starting integer and returns it as an integer value.
