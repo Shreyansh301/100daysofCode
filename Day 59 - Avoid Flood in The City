@@ -1,0 +1,73 @@
+class Solution {
+    public int[] avoidFlood(int[] rains) {
+        HashMap<Integer, Integer> lastRain = new HashMap<>();
+        TreeSet<Integer> dry = new TreeSet<>();
+        int n = rains.length;
+        int[] ans = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int x = rains[i];
+
+            if (x == 0) {
+                dry.add(i);
+                ans[i] = 1;
+            } else {
+                Integer id = lastRain.get(x);
+
+                if (id == null) {
+                    lastRain.put(x, i);
+                } else {
+                    Integer dryingDay = dry.higher(id);
+
+                    if (dryingDay == null) {
+                        return new int[0];
+                    }
+                    ans[dryingDay] = x;
+                    dry.remove(dryingDay);
+
+                    lastRain.put(x, i);
+                }
+                ans[i] = -1;
+            }
+        }
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: rains = [1,2,3,4]
+Output: [-1,-1,-1,-1]
+After the first day full lakes are [1]
+After the second day full lakes are [1,2]
+After the third day full lakes are [1,2,3]
+After the fourth day full lakes are [1,2,3,4]
+There's no day to dry any lake and there is no flood in any lake.
+-----------------------------------------------------------------------------------------------
+Data Structures:
+HashMap<Integer, Integer> lastRain: Used to store the last occurrence index of each lake's rain.
+TreeSet<Integer> dry: Used to store indices of dry days in ascending order.
+
+Initialization:
+int n = rains.length: Get the length of the input array rains.
+int[] ans = new int[n]: Initialize the result array with zeros.
+
+Iterating through the input array:
+Use a loop to iterate through each element of the rains array.
+int x = rains[i]: Get the current lake number.
+
+Handling non-rainy days (x == 0):
+If x is 0, it means a dry day. Add the index i to the dry TreeSet and set ans[i] to 1.
+
+Handling rainy days (x != 0):
+Check if the lake x has rained before (lastRain.containsKey(x)).
+If not, update lastRain with the current index.
+If yes, find the next available dry day after the last rain day for lake x.
+If no such day exists (dryingDay == null), return an empty array.
+Otherwise, update ans[dryingDay] with the lake number and remove dryingDay from dry.
+Update lastRain with the current index.
+Set ans[i] to -1 to indicate a rainy day.
+
+Return the result array ans at the end of the loop.
+
+This code aims to simulate the process of avoiding flooding in lakes. 
+The algorithm ensures that each lake is filled only on specific dry days and avoids floods by using the dry set to keep track of available dry days and the lastRain map to store the last rainy day for each lake.
