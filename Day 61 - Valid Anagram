@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] sChars = s.toCharArray();
+        char[] tChars = t.toCharArray();
+        
+        Arrays.sort(sChars);
+        Arrays.sort(tChars);
+        
+        return Arrays.equals(sChars, tChars);
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "anagram", t = "nagaram"
+Output: true
+------------------------------------------------
+The code defines a class named Solution with a method isAnagram.
+The method takes two string parameters, s and t.
+It converts the input strings s and t into character arrays sChars and tChars.
+The character arrays sChars and tChars are sorted in ascending order using Arrays.sort.
+The code uses Arrays.equals to check if the sorted character arrays sChars and tChars are equal.
+If the arrays are equal, the method returns true, indicating that the input strings are anagrams. Otherwise, it returns false.
