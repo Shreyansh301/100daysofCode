@@ -1,0 +1,58 @@
+class Solution {
+    public int hIndex(int[] citations) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int num : citations) {
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
+        int[] bucket = new int[max - min + 1];
+        int move = min;
+        for (int num : citations) {
+            bucket[num - move]++;
+        }
+        int index = 1;
+        int ans = 0;
+        for (int i = bucket.length - 1; i >= 0; i--) {
+            while (bucket[i] > 0) {
+                if (i + move >= index) {
+                    ans++; 
+                    index++;
+                    bucket[i]--;
+                } else {
+                    return ans;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+LOGIC: Explanatiion 
+Example - Input: citations = [3,0,6,1,5]
+Output: 3
+[3,0,6,1,5] means the researcher has 5 papers in total and each of them had received 3, 0, 6, 1, 5 citations respectively.
+Since the researcher has 3 papers with at least 3 citations each and the remaining two with no more than 3 citations each, their h-index is 3.
+------------------------------------------------------------------------------------------------------------------------------------------------
+Initialization:
+Initialize min to Integer.MAX_VALUE and max to Integer.MIN_VALUE to keep track of the minimum and maximum values in the input array citations.
+
+Finding Min and Max:
+Iterate through the citations array to find the minimum and maximum values (min and max).
+
+Bucket Creation:
+Create a new array bucket to represent a bucket of citation counts. The size of the bucket is determined by the range between max and min in the citations.
+
+Bucket Filling:
+Iterate through the citations array again, and for each citation count, increment the corresponding bucket at the index num - move.
+
+H-Index Calculation:
+Initialize index to 1 and ans to 0. These variables are used to track the H-Index and the current index being considered in the bucket array.
+
+Bucket Iteration:
+Iterate through the bucket array from the highest index to the lowest index.
+For each non-zero element in the bucket, check if (i + move) is greater than or equal to index. If true, increment ans, increment index, and decrement the bucket count.
+If false, return the current value of ans.
+
+Return Result:
+After the loop, return the final value of ans, which represents the calculated H-Index.
