@@ -1,0 +1,34 @@
+UPDATE salary SET sex =
+CASE sex
+    WHEN 'm' THEN 'f'
+    ELSE 'm'
+END;
+
+LOGIC: Explanation 
+Example - Input: 
+Salary table:
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | m   | 2500   |
+| 2  | B    | f   | 1500   |
+| 3  | C    | m   | 5500   |
+| 4  | D    | f   | 500    |
++----+------+-----+--------+
+Output: 
++----+------+-----+--------+
+| id | name | sex | salary |
++----+------+-----+--------+
+| 1  | A    | f   | 2500   |
+| 2  | B    | m   | 1500   |
+| 3  | C    | f   | 5500   |
+| 4  | D    | m   | 500    |
++----+------+-----+--------+
+
+UPDATE salary: This part of the statement indicates that we want to update records in the 'salary' table.
+
+SET sex = ...: This specifies the column you want to update, in this case, the 'sex' column.
+
+CASE sex WHEN 'm' THEN 'f' ELSE 'm' END: This is a CASE statement that evaluates the current value of the 'sex' column. 
+If the current value is 'm' (presumably representing male), it will be updated to 'f' (presumably representing female). 
+If the current value is not 'm', it will be updated to 'm'. In essence, it appears to be swapping 'm' and 'f' values.
