@@ -1,0 +1,50 @@
+class Solution {
+    public int maxFrequencyElements(int[] nums) {
+        int result = 0;
+        int maxFrequency = 0;
+
+        // Count the frequency of each element using a HashMap
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+            maxFrequency = Math.max(maxFrequency, frequencyMap.get(num));
+        }
+
+        // Calculate the result by finding elements with the maximum frequency
+        for (int frequency : frequencyMap.values()) {
+            if (frequency == maxFrequency) {
+                result += frequency;
+            }
+        }
+
+        System.out.println(maxFrequency);
+        return result;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [1,2,2,3,1,4]
+Output: 4
+The elements 1 and 2 have a frequency of 2 which is the maximum frequency in the array.
+So the number of elements in the array with maximum frequency is 4.
+-----------------------------------------------------------------------------------------
+HashMap for Frequency Counting:
+A HashMap<Integer, Integer> named frequencyMap is used to store the frequency count of each element in the input array nums.
+The key is the element itself, and the value is the frequency count.
+
+Iterate Through Input Array:
+A loop iterates through each element of the input array nums.
+For each element, its frequency count in the frequencyMap is updated.
+
+Update Max Frequency:
+maxFrequency is maintained to keep track of the maximum frequency encountered while iterating through the input array.
+
+Calculate Result:
+After counting frequencies, a second loop iterates through the values in frequencyMap to calculate the result.
+For each frequency, if it matches the maxFrequency, add that frequency to the result.
+
+System.out.println:
+The code prints the maxFrequency to the console for debugging or informational purposes.
+
+Return Result:
+The final result, representing the sum of frequencies of elements with the maximum frequency, is returned.
