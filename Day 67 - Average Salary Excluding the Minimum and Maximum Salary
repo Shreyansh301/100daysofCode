@@ -1,0 +1,32 @@
+class Solution {
+    public double average(int[] salary) {
+       Arrays.sort(salary);
+       double sum=0;
+       for(int i=1;i<salary.length-1;i++)
+       sum+=salary[i];
+       return sum/(double)(salary.length-2); 
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: salary = [4000,3000,1000,2000]
+Output: 2500.00000
+Minimum salary and maximum salary are 1000 and 4000 respectively.
+Average salary excluding minimum and maximum salary is (2000+3000) / 2 = 2500
+------------------------------------------------------------------------------
+Method Signature:
+public double average(int[] salary): This method takes an array of integers (salary) as input and returns a double representing the average of the array elements.
+
+Sorting the Array:
+Arrays.sort(salary): The Arrays.sort method is used to sort the salary array in ascending order. This step is essential for calculating the average, as it helps in excluding the minimum and maximum values later.
+
+Calculating Sum:
+double sum = 0;: A variable sum is initialized to store the sum of the array elements.
+
+Loop for Summation:
+for (int i = 1; i < salary.length - 1; i++): A loop iterates over the array elements starting from index 1 (excluding the minimum, which is now at index 0) up to the second-to-last element (excluding the maximum).
+sum += salary[i];: Adds each element to the sum.
+
+Calculating Average:
+return sum / (double)(salary.length - 2);: The average is calculated by dividing the sum by the count of elements in the array excluding the minimum and maximum (hence, salary.length - 2). 
+The result is cast to double to ensure a floating-point division.
