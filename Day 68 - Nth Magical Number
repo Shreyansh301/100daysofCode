@@ -1,0 +1,56 @@
+class Solution {
+    public int nthMagicalNumber(int n, int a, int b) {
+
+        long A = a, B = b;
+        long mod = (long)(Math.pow(10,9)+7);
+
+
+        long left = Math.min(a,b), right = (long)n*Math.min(a,b);
+
+		// Finding GCD
+        while (B > 0) {
+            long tmp = A;
+            A = B;
+            B = tmp % B;
+        }
+
+        long lcm = (a*b)/A;     //(n1*n2)/GCD
+
+        while (left < right) {
+            long m = left+(right-left)/2;
+
+            if ((m / a) + (m / b) - (m / lcm) < n) left = m + 1;   
+
+            else right = m;
+        }
+        return (int)(left % mod);
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: n = 1, a = 2, b = 3
+Output: 2
+
+Initialization and Variable Declarations:
+A and B are initialized to the values of a and b, respectively.
+mod is set to the modulo value, which is 10^9 + 7.
+
+Setting Initial Range:
+left is initialized to the minimum of a and b.
+right is initialized to n times the minimum of a and b. This is an upper bound for the search space.
+
+Finding Greatest Common Divisor (GCD):
+The while loop calculates the Greatest Common Divisor (GCD) of a and b using the Euclidean algorithm. The result is stored in A.
+
+Calculating Least Common Multiple (LCM):
+lcm is calculated using the formula (a * b) / GCD(a, b). It represents the smallest common multiple of a and b.
+
+Binary Search Loop:
+The code enters a binary search loop to find the nth magical number.
+A binary search is performed between left and right.
+Inside the loop, the middle value m is calculated as the midpoint of left and right.
+The condition (m / a) + (m / b) - (m / lcm) < n checks if the number of magical numbers up to m is less than n. If true, the search range is adjusted to the right (left = m + 1).
+If false, the search range is adjusted to the left (right = m).
+
+Return Result:
+The final result is returned as (int)(left % mod), representing the nth magical number modulo the given value.
