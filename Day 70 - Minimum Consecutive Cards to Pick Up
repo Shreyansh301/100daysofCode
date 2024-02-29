@@ -1,0 +1,46 @@
+class Solution
+{
+    public int minimumCardPickup(int[] cards)
+    {
+        Map<Integer,Integer> map = new HashMap<>();
+        int min = Integer.MAX_VALUE;
+        for(int i = 0; i < cards.length; i++)
+        {
+            if(map.containsKey(cards[i]))
+                min = Math.min(i-map.get(cards[i])+1,min); // Check if the difference in indices is smaller than minimum
+            map.put(cards[i],i); // Update the last found index of the card
+        }
+        return min == Integer.MAX_VALUE?-1:min; // Repetition found or not
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: cards = [3,4,2,3,4,7]
+Output: 4
+We can pick up the cards [3,4,2,3] which contain a matching pair of cards with value 3. Note that picking up the cards [4,2,3,4] is also optimal.
+
+Class Definition:
+The code defines a class named Solution.
+
+Method: minimumCardPickup
+This method takes an array of integers named cards as input.
+It returns an integer, representing the minimum number of card picks needed to find a repeated card, or -1 if no repetition is found.
+
+Data Structure:
+The code uses a HashMap<Integer, Integer> named map to store the indices of previously encountered cards.
+
+Loop Through Cards:
+The code uses a for loop to iterate through each element in the cards array.
+
+Checking for Repetition:
+Inside the loop, it checks if the current card is already present in the map.
+If yes, it calculates the difference between the current index (i) and the last index where this card was found (map.get(cards[i])).
+It updates the minimum value (min) if the calculated difference plus 1 is smaller than the current minimum.
+
+Updating Map:
+The code updates the map with the current card and its index.
+
+Return:
+After the loop, it checks if any repetition was found by checking if min is still set to its initial maximum value.
+If no repetition is found, it returns -1; otherwise, it returns the minimum number of card picks needed to find a repeated card.
+The code assumes that the array cards is 0-indexed, and the indices represent the positions of the cards in a sequence.
