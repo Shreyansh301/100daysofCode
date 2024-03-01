@@ -1,0 +1,46 @@
+class Solution {
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
+        if(startFuel >= target) return 0;
+        int[][] dp = new int[stations.length + 1][stations.length + 1];
+        for (int i = 0; i < dp.length; i++) dp[i][0] = startFuel;
+        for (int j = 1; j < dp.length; j++) {
+            for (int i = j; i < dp.length; i++) {
+                dp[i][j] = Math.max(dp[i-1][j], stations[i-1][0] > dp[i-1][j-1] ?
+                        Integer.MIN_VALUE : dp[i-1][j-1] + stations[i-1][1]);
+                if(dp[i][j] >= target) return j;
+            }
+        }
+        return -1;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: target = 1, startFuel = 1, stations = []
+Output: 0
+We can reach the target without refueling.
+
+Method Signature:
+public int minRefuelStops(int target, int startFuel, int[][] stations): This method takes three parameters - target (the target distance to reach), startFuel (initial fuel level), and stations (an array representing fuel stations with their distances and fuel quantities).
+
+Base Case:
+if(startFuel >= target) return 0;: If the initial fuel is enough to reach the target, return 0 refueling stops.
+
+Dynamic Programming Array:
+int[][] dp = new int[stations.length + 1][stations.length + 1];: A 2D array dp is created to store the maximum distance that can be covered with a certain number of refueling stops.
+
+Initialization of DP Array:
+for (int i = 0; i < dp.length; i++) dp[i][0] = startFuel;: Initialize the first column of the DP array with the initial fuel level.
+
+DP Iteration:
+for (int j = 1; j < dp.length; j++): Loop over the refueling stops.
+for (int i = j; i < dp.length; i++): Loop over the stations.
+dp[i][j] = Math.max(dp[i-1][j], stations[i-1][0] > dp[i-1][j-1] ? Integer.MIN_VALUE : dp[i-1][j-1] + stations[i-1][1]);: Update the DP array to find the maximum distance that can be covered with the current number of refueling stops.
+
+Check if Target is Reached:
+if(dp[i][j] >= target) return j;: If the maximum distance with the current number of refueling stops is greater than or equal to the target, return the number of refueling stops.
+
+Return -1 if Target Not Reachable:
+If the loop completes and the target is not reached, return -1.
+
+This code uses dynamic programming to find the minimum number of refueling stops needed to reach the target distance, considering the fuel available at each station. 
+The DP array stores the maximum distance that can be covered with a certain number of refueling stops, and the function returns the minimum number of stops required or -1 if the target is not reachable.
