@@ -1,0 +1,50 @@
+class Solution {
+    public List<String> stringMatching(String[] words) {
+        List<String> ans = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            for (int j = 0; j < words.length; j++) {
+                if (i == j) {
+                    continue;
+                }
+                if (words[j].contains(words[i])) {
+                    ans.add(words[i]);
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: words = ["mass","as","hero","superhero"]
+Output: ["as","hero"]
+ "as" is substring of "mass" and "hero" is substring of "superhero".
+["hero","as"] is also a valid answer.
+
+Class Definition:
+The code is encapsulated within a class named Solution.
+
+Method stringMatching:
+This method takes an array of strings (words) as input and returns a list of strings.
+The purpose of this method is to find and return a list of strings that are substrings of other strings in the input array.
+
+List Initialization:
+The method initializes a List<String> named ans to store the result.
+
+Nested Loops:
+The method uses nested loops to iterate through each pair of strings in the words array.
+
+String Comparison:
+For each pair of strings (indexed by i and j), it checks if the string at index j contains the string at index i.
+The if (i == j) condition skips the comparison if the strings being compared are the same (avoid self-comparison).
+
+Substring Match:
+If the string at index j contains the string at index i, it implies that the string at index i is a substring of the string at index j.
+In such a case, the substring (string at index i) is added to the result list (ans), and the loop for the current i index is terminated using break.
+
+Result:
+The final result is a list of strings that are substrings of other strings in the input array.
+
+Return:
+The method returns the populated list ans as the final result.
