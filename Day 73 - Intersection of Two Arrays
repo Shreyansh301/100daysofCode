@@ -1,0 +1,57 @@
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        HashSet<Integer>set=new HashSet<>();
+         HashSet<Integer>set2=new HashSet<>();
+        int k=0;
+        
+        for(int i=0;i<nums1.length;i++)
+        {
+            set.add(nums1[i]);
+        }
+          for(int i=0;i<nums2.length;i++)
+        {
+         if(set.contains(nums2[i])){
+            set2.add(nums2[i]);
+    
+        }
+        }
+        int nums3[]=new int [set2.size()];
+        for(int e:set2)
+        {
+            nums3[k]=e;
+            k++;
+        }
+        return nums3;
+        
+    }
+}
+
+LOGIC: Explanation 
+Exampple - Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+
+Class Definition:
+The code defines a class named Solution.
+
+Method intersection:
+This method takes two arrays of integers, nums1 and nums2, as input.
+It returns an array containing the intersection of elements between nums1 and nums2.
+
+HashSet Initialization:
+Two HashSet objects, set and set2, are created to store unique elements.
+set is used to store elements from the first array, nums1.
+set2 will store the common elements between nums1 and nums2.
+
+Populating set with elements from nums1:
+A for loop iterates through each element in the nums1 array, adding each element to the set.
+
+Finding Intersection:
+Another for loop iterates through each element in the nums2 array.
+If the element is present in the set, it is added to the set2.
+
+Converting set2 to an array:
+An array nums3 is created with a size equal to the size of set2.
+A third for loop iterates through the elements of set2 and populates the nums3 array.
+
+Returning the Result:
+The method returns the nums3 array, which contains the intersection of elements between nums1 and nums2.
