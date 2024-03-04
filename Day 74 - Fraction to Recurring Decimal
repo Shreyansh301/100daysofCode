@@ -1,0 +1,53 @@
+class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        StringBuilder ans = new StringBuilder();
+        if ((numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0))
+            ans.append("-");
+        
+        long num = (long) Math.abs((long) numerator);
+        long den = (long) Math.abs((long) denominator);
+        
+        long quotient = num / den;
+        long remainder = num % den;
+        
+        ans.append(String.valueOf(quotient));
+        
+        if (remainder == 0)
+            return ans.toString();
+        
+        ans.append(".");
+        
+        Map<Long, Integer> map = new HashMap<>();
+        
+        while (remainder != 0) {
+            if (map.containsKey(remainder)) {
+                int pos = map.get(remainder);
+                ans.insert(pos, "(");
+                ans.append(")");
+                return ans.toString();
+            } else {
+                map.put(remainder, ans.length());
+                remainder *= 10;
+                quotient = remainder / den;
+                remainder %= den;
+                ans.append(String.valueOf(quotient));
+            }
+        }
+        
+        return ans.toString();
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: numerator = 1, denominator = 2
+Output: "0.5"
+
+The method fractionToDecimal converts a fraction to its decimal representation.
+It handles the sign of the result based on the signs of the numerator and denominator.
+Converts numerator and denominator to their absolute values using long to prevent overflow.
+Calculates the quotient and remainder of the division and appends the quotient to the result.
+If the remainder is zero, returns the result as there are no repeating decimals.
+Appends a decimal point to indicate the beginning of the fractional part.
+Utilizes a HashMap to detect repeating decimals by storing remainders and their positions in the result.
+If a repeating pattern is detected, inserts "(" at the start and ")" at the end of the repeating pattern.
+Returns the final decimal representation considering repeating decimals.
