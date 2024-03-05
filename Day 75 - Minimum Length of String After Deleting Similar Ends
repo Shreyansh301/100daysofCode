@@ -1,0 +1,36 @@
+class Solution {
+    public int minimumLength(String s) {
+        int l = 0, r = s.length() - 1;
+        while (l < r && s.charAt(l) == s.charAt(r)) {
+            char ch = s.charAt(l);
+            while (l <= r && s.charAt(l) == ch) l++;
+            while (l <= r && s.charAt(r) == ch) r--;
+        }
+        return r - l + 1;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "ca"
+Output: 2
+Explanation: You can't remove any characters, so the string stays as is.
+
+Method Signature:
+public int minimumLength(String s): This method takes a string s as input and returns an integer representing the minimum length of a non-empty string that can be obtained by removing characters from either end of the input string.
+
+Initialization:
+int l = 0, r = s.length() - 1;: Two pointers, l and r, are initialized at the beginning and end of the input string, respectively.
+
+While Loop:
+while (l < r && s.charAt(l) == s.charAt(r)) { ... }: This loop continues as long as the characters at positions l and r are equal, and l is less than r.
+
+Inner While Loops:
+char ch = s.charAt(l);: Saves the character at position l.
+while (l <= r && s.charAt(l) == ch) l++;: Moves the l pointer to the right as long as characters are equal to ch.
+while (l <= r && s.charAt(r) == ch) r--;: Moves the r pointer to the left as long as characters are equal to ch.
+
+Exit Conditions:
+The outer loop breaks when either l becomes greater than or equal to r or when characters at positions l and r are not equal.
+
+Return Statement:
+return r - l + 1;: Calculates and returns the minimum length of the non-empty string by subtracting the final positions of l and r and adding 1. 
