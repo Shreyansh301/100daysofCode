@@ -1,0 +1,50 @@
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+Logic: Explanation 
+1-->2-->1
+Example - Input: head = [1,2], pos = 0
+Output: true
+There is a cycle in the linked list, where the tail connects to the 0th node.
+
+Class Definition:
+The code defines a class named Solution.
+
+Method:
+The class has a method named hasCycle which takes a parameter head of type ListNode representing the head of a linked list.
+
+Base Case Check:
+The method starts by checking if the head is null or if there's only one node (head.next == null). In either case, it returns false since a cycle cannot exist in such scenarios.
+
+Two Pointers (Slow and Fast):
+Two pointers, slow and fast, both initially set to the head of the linked list.
+
+Cycle Detection Loop:
+The method uses a while loop to traverse the linked list.
+In each iteration, the fast pointer moves two nodes ahead (fast = fast.next.next), while the slow pointer moves one node ahead (slow = slow.next).
+
+Cycle Detection:
+Within the loop, there's a check to see if slow and fast pointers meet (slow == fast). If they do, it indicates the presence of a cycle, and the method returns true.
+
+Loop Termination Condition:
+The loop continues until either the fast pointer reaches the end of the linked list (fast.next == null) or the second-to-last node (fast.next.next == null). 
+If the loop terminates without finding a cycle, the method returns false.
