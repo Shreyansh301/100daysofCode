@@ -1,0 +1,23 @@
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode temp = new ListNode(0) , curr = temp;
+        temp.next = head;
+        while(curr.next != null ){
+            if(curr.next.val == val) curr.next = curr.next.next;
+            else curr = curr.next;
+        }
+        return temp.next;
+    }
+}
+
+LOGIC: Explanation 
+Example -Input: head = [1,2,6,3,4,5,6], val = 6
+Output: [1,2,3,4,5]
+
+The code defines a method removeElements in a class named Solution.
+It takes a linked list's head (ListNode head) and a value to remove (int val).
+A dummy node (temp) is created and linked to the original list to simplify removal.
+A pointer (curr) is initialized to the dummy node and used to iterate through the list.
+In a loop, it checks if the next node's value equals the specified value (val).
+If true, it skips the next node by adjusting pointers; otherwise, it moves to the next node.
+The modified list (without nodes containing val) is returned, starting from the node after the dummy node.
