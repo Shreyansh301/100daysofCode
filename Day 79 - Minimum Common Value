@@ -1,0 +1,44 @@
+class Solution {
+    public int getCommon(int[] nums1, int[] nums2) {
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        for (int num : nums1) {
+            mp.put(num, mp.getOrDefault(num, 0) + 1);
+        }
+        for (int num : nums2) {
+            if (mp.containsKey(num) && mp.get(num) > 0) {
+                return num;
+            }
+        }
+        return -1;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums1 = [1,2,3], nums2 = [2,4]
+Output: 2
+The smallest element common to both arrays is 2, so we return 2.
+
+Class Definition:
+The code is encapsulated within a class named Solution.
+
+Method Signature:
+The class contains a single public method named getCommon.
+This method takes two integer arrays, nums1 and nums2, as parameters.
+
+HashMap Usage:
+A HashMap named mp is declared to store the frequency of elements in the nums1 array.
+Key: Integer (element from nums1)
+Value: Integer (frequency of the corresponding element)
+
+Iterating Through nums1:
+A for-each loop is used to iterate through each element (num) in the nums1 array.
+The code increments the frequency count of the current element in the HashMap (mp).
+
+Checking Common Element:
+Another for-each loop is used to iterate through each element (num) in the nums2 array.
+It checks if the current element is present in the HashMap (mp) and if the frequency of the element is greater than 0.
+If these conditions are met, it means the current element is common between nums1 and nums2, and the method returns that element.
+
+Returning -1 if No Common Element:
+If no common element is found during the iteration of nums2, the method returns -1.
+The purpose of this method is to find and return the first common element between the two input arrays nums1 and nums2.
