@@ -1,0 +1,50 @@
+class Solution {
+    public String finalString(String s) {
+      StringBuilder sb=new StringBuilder();
+		 for(int i=0;i<s.length();i++) {
+			 if(s.charAt(i)=='i') {
+				 sb.reverse();
+			 }
+			 else {
+			 sb.append(s.charAt(i));
+			 }
+			 
+		 }
+         return String.valueOf(sb);   
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "string"
+Output: "rtsng"
+After typing first character, the text on the screen is "s".
+After the second character, the text is "st". 
+After the third character, the text is "str".
+Since the fourth character is an 'i', the text gets reversed and becomes "rts".
+After the fifth character, the text is "rtsn". 
+After the sixth character, the text is "rtsng". 
+Therefore, we return "rtsng".
+
+Class Declaration:
+The code defines a class named Solution.
+
+Method Declaration:
+The class contains a method named finalString that takes a string s as a parameter and returns a string.
+
+StringBuilder Initialization:
+Inside the method, a StringBuilder object named sb is created. StringBuilder is used for efficient string manipulation.
+
+Iterating Through the Input String:
+The code uses a for loop to iterate through each character of the input string s.
+
+Conditional Check:
+Inside the loop, there is an if statement checking if the current character at index i is equal to the character 'i'.
+
+StringBuilder Manipulation:
+If the current character is 'i', the StringBuilder is reversed using the reverse() method. This effectively reverses the content of the StringBuilder.
+
+Appending Characters:
+If the current character is not 'i', it is appended to the StringBuilder using the append() method.
+
+Returning the Result:
+After the loop completes, the content of the StringBuilder is converted to a string using String.valueOf(sb) and returned as the result of the method.
