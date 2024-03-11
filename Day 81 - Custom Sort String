@@ -1,0 +1,47 @@
+import java.util.HashMap;
+
+class Solution {
+    public String customSortString(String order, String s) {
+        StringBuilder result = new StringBuilder();
+        HashMap<Character, Integer> mp = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            mp.put(c, mp.getOrDefault(c, 0) + 1);
+        }
+        for (char c : order.toCharArray()) {
+            if (mp.containsKey(c)) {
+                result.append(String.valueOf(c).repeat(Math.max(0, mp.get(c))));
+                mp.remove(c);
+            }
+        }
+        for (char c : mp.keySet()) {
+            result.append(String.valueOf(c).repeat(Math.max(0, mp.get(c))));
+        }
+        return result.toString();
+    }
+}
+
+LOGIC: Explanation 
+Example - Input:  order = "cba", s = "abcd" 
+Output:  "cbad" 
+"a", "b", "c" appear in order, so the order of "a", "b", "c" should be "c", "b", and "a".
+Since "d" does not appear in order, it can be at any position in the returned string. "dcba", "cdba", "cbda" are also valid outputs.
+
+Method Signature:
+The code defines a method named customSortString that takes two parameters: order (a string representing the custom order) and s (a string to be sorted according to the custom order).
+
+Data Structures:
+It uses a StringBuilder named result to build the final sorted string.
+A HashMap<Character, Integer> named mp is used to store the frequency of each character in the input string s.
+
+Populating the Frequency Map:
+The code iterates through each character in the string s and populates the frequency map (mp) with the count of each character.
+
+Sorting According to Custom Order:
+It then iterates through each character in the order string.
+For each character in the custom order, if it exists in the frequency map (mp), it appends that character repeated by its count to the result string, and then removes it from the map.
+
+Appending Remaining Characters:
+After processing the characters in the custom order, the code appends the remaining characters (if any) from the frequency map to the result string.
+
+Returning the Result:
+The final sorted string is obtained by calling toString() on the StringBuilder object, and it is returned as the result of the customSortString method.
