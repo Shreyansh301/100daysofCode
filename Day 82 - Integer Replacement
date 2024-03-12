@@ -1,0 +1,66 @@
+class Solution {
+    Map<Integer, Integer> dp = new HashMap<>();
+    public int integerReplacement(int n) {
+        return helper(n);
+    }
+
+    // Recursive Approach
+    public int helper(int n){
+        if(n >= Integer.MAX_VALUE) return 32;
+        if(n == 1) return 0;
+        if(n < 3) return 1;
+        if(n < 5) return 2;
+        if(n % 2 == 0) return 1 + helper(n/2);
+        else return Math.min(1 + helper(n + 1), 1 + helper(n - 1));
+    }
+
+    // Memoization Approach using hashMap
+    public int helperMem(int n){
+        dp.put(Integer.MAX_VALUE, 32);
+        dp.put(1, 0);
+        if(dp.containsKey(n)) return dp.get(n);
+        if(n % 2 == 0) dp.put(n, helperMem(n/2) + 1);
+        else dp.put(n, Math.min(1 + helperMem(n + 1), 1 + helperMem(n - 1)));
+        return dp.get(n);
+    }
+
+}
+
+LOGIC: Explanation 
+Example - Input: n = 8
+Output: 3
+8 -> 4 -> 2 -> 1
+
+Class Definition:
+The code defines a class named Solution.
+
+Data Structure:
+The class uses a HashMap named dp to store previously computed results for certain inputs.
+
+integerReplacement Method:
+This method is the entry point for the solution.
+It calls the helper method with the given integer n and returns the result.
+
+helper Method (Recursive Approach):
+This method is a recursive function to solve the problem.
+It handles base cases for n being equal to 1, less than 3, and less than 5.
+If n is even, it calls itself with n/2.
+If n is odd, it compares the results of calling itself with n+1 and n-1 and returns the minimum.
+
+helperMem Method (Memoization Approach):
+This method is a modified version of the helper method, incorporating memoization using the dp HashMap.
+Base cases are stored in the dp HashMap.
+Before computing the result for a specific n, it checks if the result is already present in the dp HashMap.
+If not, it calculates the result and stores it in the dp HashMap before returning.
+
+Note on Integer.MAX_VALUE:
+There's a check for n >= Integer.MAX_VALUE in the recursive approach, which returns a default value of 32. However, this check might not be effective, as n is an integer, and Integer.MAX_VALUE is the maximum positive value for an integer. This condition might not be satisfied in practical scenarios.
+
+Usage of Integer Division:
+Integer division (n/2) is used, which discards the remainder and keeps only the quotient.
+
+Return Values:
+Both the helper and helperMem methods return the minimum number of replacements needed to reach 1 from the given integer n.
+
+Memoization Usage:
+Memoization is employed to store and retrieve previously computed results, reducing redundant calculations and improving the efficiency of the solution.
