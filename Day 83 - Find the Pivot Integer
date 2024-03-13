@@ -1,0 +1,26 @@
+class Solution {
+    public int pivotInteger(int n) {
+        int sum= n*(n+1)/2;
+        double a= Math.sqrt(sum);
+
+        if( a- Math.ceil(a)==0) return (int)a;
+        else return -1;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: n = 8
+Output: 6
+6 is the pivot integer since: 1 + 2 + 3 + 4 + 5 + 6 = 6 + 7 + 8 = 21.
+
+The Solution class contains a method named pivotInteger, which takes an integer n as input and returns an integer.
+
+Inside the pivotInteger method:
+It calculates the sum of integers from 1 to n using the formula sum = n * (n + 1) / 2.
+It calculates the square root of the sum using Math.sqrt() and stores it in variable a.
+
+The code then checks if the square root a is an integer or not:
+If the square root is an integer (i.e., the decimal part of a is 0), it returns a as an integer.
+If the square root is not an integer, it returns -1.
+The method checks if there exists an integer x such that the sum of integers from 1 to x equals the input n. If such an integer exists, it returns that integer; otherwise, it returns -1. 
+This function is commonly referred to as finding the "pivot integer" in the series of consecutive integers.
