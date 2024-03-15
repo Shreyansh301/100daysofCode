@@ -1,0 +1,34 @@
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> occurrenceMap = new HashMap<>();
+
+        // Count occurrences of each element in the array
+        for (int num : arr) {
+            occurrenceMap.put(num, occurrenceMap.getOrDefault(num, 0) + 1);
+        }
+
+        Set<Integer> occurrenceSet = new HashSet<>(occurrenceMap.values());
+
+        // Check if the number of occurrences is unique
+        return occurrenceMap.size() == occurrenceSet.size();
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: arr = [1,2,2,1,1,3]
+Output: true
+The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+
+The uniqueOccurrences method takes an integer array arr as input and returns a boolean value.
+
+It creates a HashMap named occurrenceMap to store the occurrences of each element in the array. The key represents the element, and the value represents its count.
+
+It iterates through the input array arr and updates the count of each element in the occurrenceMap.
+
+The code uses getOrDefault method to safely get the current count of an element or default to 0 if it doesn't exist yet, then increments the count by 1.
+
+After counting the occurrences, it creates a HashSet named occurrenceSet containing the values (occurrence counts) from the occurrenceMap. 
+A Set only contains unique elements, so this step filters out duplicate occurrence counts.
+
+Finally, it checks if the size of occurrenceMap (which represents the number of unique elements in the array) is equal to the size of occurrenceSet (which represents the number of unique occurrence counts). 
+If they are equal, it means each element has a unique number of occurrences, so it returns true; otherwise, it returns false.
