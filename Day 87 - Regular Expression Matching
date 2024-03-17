@@ -1,0 +1,40 @@
+class Solution {
+    public boolean isMatch(String text, String pattern) {
+        int m = text.length();
+        int n = pattern.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+
+        dp[0][0] = true;
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (j > 1 && pattern.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i][j - 2] || (i > 0 && (text.charAt(i - 1) == pattern.charAt(j - 2) ||
+                            pattern.charAt(j - 2) == '.') && dp[i - 1][j]);
+                } else {
+                    dp[i][j] = i > 0 && dp[i - 1][j - 1] && (text.charAt(i - 1) == pattern.charAt(j - 1) ||
+                            pattern.charAt(j - 1) == '.');
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "aa", p = "a"
+Output: false
+"a" does not match the entire string "aa".
+
+Create a 2D boolean array dp to store whether substrings of text and pattern match.
+
+Initialize dp[0][0] to true because an empty string matches an empty pattern.
+
+Iterate through the text and pattern using nested loops:
+
+For each cell (i, j) in dp, determine if the substrings up to i in text and j in pattern match.
+
+Handle '*' wildcard by considering zero or more occurrences of the preceding character.
+
+Return dp[m][n], where m and n are the lengths of the text and pattern, respectively, indicating whether they match completely.
