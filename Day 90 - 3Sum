@@ -1,0 +1,60 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        int target = 0;
+        Arrays.sort(nums);
+        Set<List<Integer>> s = new HashSet<>();
+        List<List<Integer>> output = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++){
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == target) {
+                    s.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    k--;
+                } else if (sum < target) {
+                    j++;
+                } else {
+                    k--;
+                }
+            }
+        }
+        output.addAll(s);
+        return output;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.
+----------------------------------------------------------------------------------------------
+public List<List<Integer>> threeSum(int[] nums): This method takes an array of integers as input and returns a list of lists containing triplets that sum up to zero.
+
+int target = 0;: The target sum that we want the triplets to add up to is set to zero.
+
+Arrays.sort(nums);: The input array nums is sorted in non-decreasing order. Sorting the array helps in efficiently finding triplets with the desired sum.
+
+Set<List<Integer>> s = new HashSet<>();: A set s is used to store unique triplets to avoid duplicates.
+
+List<List<Integer>> output = new ArrayList<>();: This list will hold the final output triplets.
+
+The code then iterates through the sorted array using a for loop starting from index 0 up to the second-to-last element.
+
+Within the loop, two pointers j and k are initialized. j starts from i + 1 (next element after i), and k starts from the end of the array.
+
+A while loop is used to find triplets by moving j and k pointers towards each other until they meet.
+
+Inside the while loop:
+int sum = nums[i] + nums[j] + nums[k];: Calculates the sum of the current triplet.
+If sum equals the target sum (sum == target), the triplet is added to the set s.
+If sum is less than the target sum (sum < target), j is incremented to consider larger numbers.
+If sum is greater than the target sum (sum > target), k is decremented to consider smaller numbers.
+Once all possible triplets are checked for the current i, the loop moves to the next i value and repeats the process.
+
+Finally, the unique triplets stored in s are added to the output list, and the output list is returned as the result containing all unique triplets that sum up to zero.
