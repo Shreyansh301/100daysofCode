@@ -1,0 +1,35 @@
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode nextNode = null;
+        while (curr != null) {
+            nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return prev;
+    }
+}
+
+LOGIC: Explantion 
+Example - Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+----------------------------------------------------------------------------
+ListNode is a custom class representing a node in a linked list.
+public ListNode reverseList(ListNode head) is a method that takes the head of a linked list as input and returns the head of the reversed linked list.
+Three pointers are used:
+prev: Points to the previous node during the reverse operation.
+curr: Points to the current node being processed.
+nextNode: Points to the next node to be processed.
+
+The main steps of the code are as follows:
+Initialize prev to null, curr to head, and nextNode to null.
+Iterate through the linked list using a while loop until curr becomes null.
+Inside the loop:
+Store the next node of curr in nextNode.
+Reverse the next pointer of curr to point to prev.
+Move prev, curr, and nextNode pointers one step forward.
+
+Finally, return prev, which is now the head of the reversed linked list.
