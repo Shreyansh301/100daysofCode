@@ -1,0 +1,41 @@
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        
+        while (head != null && head.next != null) {
+            ListNode first = head;
+            ListNode second = head.next;
+            
+            // Swapping nodes
+            prev.next = second;
+            first.next = second.next;
+            second.next = first;
+            
+            // Move to the next pair
+            prev = first;
+            head = first.next;
+        }
+        
+        return dummy.next;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: head = [1,2,3,4]
+Output: [2,1,4,3]
+--------------------------------------------------------------------
+1. Create a dummy node and set its next to the head.
+
+2. Initialize a pointer `prev` to the dummy node.
+
+3. While `head` and `head.next` are not null, swap the current pair of nodes by updating pointers: `prev.next = head.next`, `head.next = head.next.next`, and `prev.next.next = head`.
+
+4. Move `prev` and `head` pointers to the next pair of nodes.
+
+5. Return the modified dummy node's next as the new head of the swapped list.
