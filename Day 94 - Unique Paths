@@ -1,0 +1,41 @@
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[] dp = new int[n];  // Use a 1D array
+        Arrays.fill(dp, 1);
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[j] += dp[j-1];
+            }
+        }
+
+        return dp[n-1];
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: m = 3, n = 2
+Output: 3
+From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Down -> Down
+2. Down -> Down -> Right
+3. Down -> Right -> Down
+--------------------------------------------------------------------------------------------
+Create a 1D Array for DP:
+
+We create an integer array dp of size n to store the number of unique paths.
+dp[j] at any point represents the number of unique paths to reach cell (i, j) in the grid.
+
+Initialize First Row with 1:
+
+We fill the dp array with 1 initially because there is only one way to reach any cell in the first row or first column (moving either right or down).
+
+Calculate Unique Paths:
+
+Start a nested loop with i ranging from 1 to m-1 and j ranging from 1 to n-1. This loop iterates through all cells except those in the first row and first column.
+At each cell (i, j), we update dp[j] using the formula dp[j] += dp[j-1]. This means the number of unique paths to reach cell (i, j) is the sum of the unique paths to the cell above (i-1, j) and the cell to the left (i, j-1).
+By continuously updating dp[j] within this loop, we ensure that dp[j] holds the correct number of unique paths for each cell as we move through the grid.
+
+Return the Result:
+
+Finally, we return dp[n-1], which represents the number of unique paths to reach the bottom-right cell of the grid (m-1, n-1)
