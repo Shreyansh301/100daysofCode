@@ -1,0 +1,42 @@
+class Solution {
+    public boolean carPooling(int[][] trips, int capacity) {
+        // Because from and to is between 0 and 1000. Idea is to store counts in an array of size 1001.
+        int lengthOfTrip[] = new int[1001];
+        for (int trip[] : trips){
+            lengthOfTrip[trip[1]] += trip[0]; // Increment when passenger is on board
+            lengthOfTrip[trip[2]] -= trip[0]; // decrement when they depart
+        }
+		// Count total passenger for each bus top
+        int carLoad = 0;
+        // we have the count array, we perform a line sweep from 0 to 1000 and track its total
+        for (int i = 0; i < 1001; i++){
+            carLoad += lengthOfTrip[i];
+			// Reject when the car is overloaded somewhere
+            if(carLoad > capacity) return false;
+        }
+
+        return true; // Accept only if all trip is safe
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: trips = [[2,1,5],[3,3,7]], capacity = 5
+Output: true
+---------------------------------------------------------------------------------------------
+The code defines a class named Solution with a public method carPooling that takes in two parameters: trips (a 2D array representing trip details) and capacity (an integer representing the maximum capacity of a car).
+
+Inside the method, an integer array lengthOfTrip of size 1001 is created to store passenger counts for each trip stop. The index represents the trip stop number.
+
+It then iterates through each trip in the trips array using an enhanced for loop.
+
+For each trip, it updates lengthOfTrip array by incrementing the count at the arrival stop and decrementing at the departure stop based on the number of passengers.
+
+After processing all trips, it initializes a variable carLoad to track the total number of passengers in the car.
+
+It performs a line sweep from 0 to 1000, adding/subtracting passengers based on lengthOfTrip array values and checks if the car load exceeds the capacity at any point.
+
+If the car load exceeds the capacity at any stop, the method returns false (indicating the car cannot accommodate all passengers).
+
+If the loop completes without encountering an overload, the method returns true (indicating the car can safely accommodate all passengers for the trips).
+
+The code efficiently calculates the total passenger count at each trip stop and checks if the car's capacity is exceeded at any point during the trips.
