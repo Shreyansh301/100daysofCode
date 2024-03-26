@@ -1,0 +1,52 @@
+class Solution {
+    public int numDecodings(String s) {
+        if (s.charAt(0) == '0') {
+            return 0;
+        }
+
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = dp[1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int one = Character.getNumericValue(s.charAt(i - 1));
+            int two = Integer.parseInt(s.substring(i - 2, i));
+
+            if (1 <= one && one <= 9) {
+                dp[i] += dp[i - 1];
+            }
+            if (10 <= two && two <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+
+        return dp[n];        
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: s = "226"
+Output: 3
+"226" could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+----------------------------------------------------------------------------------------
+1. The code defines a class named `Solution` with a method `numDecodings` that takes a String `s` as input and returns an integer.
+
+2. The method first checks if the first character of the input string `s` is '0'. If it is, the method returns 0, indicating that there are no valid decodings possible.
+
+3. It initializes an integer variable `n` with the length of the input string `s`.
+
+4. It creates an integer array `dp` of size `n + 1` to store the number of ways to decode substrings of `s`.
+
+5. Initializes `dp[0]` and `dp[1]` to 1, as there is one way to decode a string of length 0 or 1 (an empty string or a single character string).
+
+6. It then enters a loop starting from index 2 up to `n`.
+
+7. Inside the loop, it calculates two variables `one` and `two` representing the last digit and the last two digits of the current substring being considered.
+
+8. It checks if the value of `one` falls between 1 and 9 (inclusive). If so, it adds the number of ways to decode the previous substring (`dp[i - 1]`) to `dp[i]`.
+
+9. It also checks if the value of `two` falls between 10 and 26 (inclusive). If so, it adds the number of ways to decode the substring two characters ago (`dp[i - 2]`) to `dp[i]`.
+
+10. Finally, the method returns `dp[n]`, which represents the number of ways to decode the entire input string `s` based on the calculations made in the loop.
+
+This code implements a dynamic programming approach to count the number of ways to decode a given string `s` using a bottom-up approach, considering single and double-digit combinations.
