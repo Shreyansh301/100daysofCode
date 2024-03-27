@@ -1,0 +1,49 @@
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if(k==0) return 0;
+        int count=0;
+        for(int i=0;i<nums.length;i++){
+            long product=1;
+            for(int j=i;j<nums.length;j++){
+                product*=nums[j];
+                if(product<k) count++;
+                else break;
+            }
+        }
+        return count;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [10,5,2,6], k = 100
+Output: 8
+The 8 subarrays that have product less than 100 are:
+[10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6]
+Note that [10, 5, 2] is not included as the product of 100 is not strictly less than k.
+------------------------------------------------------------------------------------------------------
+This code finds the number of contiguous subarrays within an array (`nums`) whose product is less than a given threshold `k`. 
+
+1. Input Parameters:
+   - `nums`: An array of integers.
+   - `k`: The threshold value that the product of subarrays must be less than.
+
+2. Variable Initialization:
+   - Initialize `count` to keep track of the number of valid subarrays.
+
+3. Edge Case Check:
+   - If `k` is zero (`k == 0`), it means no subarray can have a product less than zero. In this case, the function returns 0 immediately.
+
+4. Main Logic:
+   - The function uses two nested loops to iterate through all possible subarrays of `nums`.
+   - The outer loop (`for(int i=0;i<nums.length;i++)`) iterates through each starting index of a subarray.
+   - The inner loop (`for(int j=i;j<nums.length;j++)`) iterates through each ending index of the subarray starting from index `i`.
+   - Inside the inner loop, a variable `product` is initialized to 1 for each subarray. This `product` variable is updated by multiplying it with the elements of the subarray (`product*=nums[j]`).
+   - If the `product` is less than `k`, it means the subarray's product satisfies the condition. So, the `count` variable is incremented (`count++`).
+   - If the `product` exceeds or equals `k`, the inner loop breaks since further multiplication will not produce a valid subarray.
+
+5. Return Count:
+   - Finally, the function returns the `count` variable, which represents the number of subarrays with a product less than `k`.
+
+6. Data Types:
+   - The use of `long` data type for the `product` variable. This is to ensure that the product of elements doesn't overflow for large inputs, as `long` provides a larger range compared to `int`.
+   - The code employs a brute-force approach to count the number of subarrays with a product less than `k` by systematically checking each subarray's product and updating the count accordingly.
