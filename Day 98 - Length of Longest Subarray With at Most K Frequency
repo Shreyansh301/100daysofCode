@@ -1,0 +1,42 @@
+class Solution {
+    public int maxSubarrayLength(int[] nums, int k) {
+        int ans = 0;
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        int l = 0;
+
+        for (int r = 0; r < nums.length; r++) {
+            mp.put(nums[r], mp.getOrDefault(nums[r], 0) + 1);
+            while (mp.get(nums[r]) > k) {
+                mp.put(nums[l], mp.get(nums[l]) - 1);
+                l++;
+            }
+            ans = Math.max(ans, r - l + 1);
+        }
+
+        return ans;
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: nums = [1,2,3,1,2,3,1,2], k = 2
+Output: 6
+The longest possible good subarray is [1,2,3,1,2,3] since the values 1, 2, and 3 occur at most twice in this subarray. Note that the subarrays [2,3,1,2,3,1] and [3,1,2,3,1,2] are also good.
+It can be shown that there are no good subarrays with length more than 6.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The maxSubarrayLength method takes an array of integers nums and an integer k as parameters and returns an integer.
+
+It initializes variables ans (answer) to 0 and creates a HashMap named mp to store integer keys (numbers from the array) and their frequencies.
+
+It initializes variable l (left pointer) to 0.
+
+The code uses a sliding window technique to find the maximum subarray length such that the number of distinct elements in the subarray is at most k.
+
+It iterates through the array using a right pointer r from 0 to the length of the array.
+
+Inside the loop, it updates the frequency of the current number at index r in the HashMap mp and checks if the frequency of that number exceeds k.
+
+If the frequency exceeds k, it moves the left pointer l to the right and decreases the frequency of the number at index l until the frequency becomes less than or equal to k.
+
+During each iteration, it updates the ans variable to store the maximum subarray length found so far (maximum of ans and r - l + 1, where r - l + 1 represents the current subarray length).
+
+Finally, it returns the maximum subarray length (ans).
