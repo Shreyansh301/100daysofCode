@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isTreeSymmetric(TreeNode leftRoot, TreeNode rightRoot){
+        if(leftRoot == null && rightRoot == null)
+            return true;
+        if((leftRoot == null && rightRoot != null)  || (leftRoot != null && rightRoot == null))
+            return false;
+        if(leftRoot.val != rightRoot.val)
+            return false;
+        return isTreeSymmetric(leftRoot.left, rightRoot.right) && isTreeSymmetric(leftRoot.right, rightRoot.left);
+    }
+    public boolean isSymmetric(TreeNode root) {
+        return isTreeSymmetric(root.left, root.right);
+    }
+} 
+
+LOGIC: Explanation 
+Example - Input: root = [1,2,2,3,4,4,3]
+Output: true 
+--------------------------------------------------------------------------------------------------------------------------------
+The code defines a class named Solution.
+It contains two methods: isSymmetric and isTreeSymmetric.
+isSymmetric is a public method that takes a TreeNode called root as input and returns a boolean value.
+isSymmetric calls the isTreeSymmetric method with root.left and root.right as arguments.
+isTreeSymmetric is a public method that checks if a binary tree is symmetric.
+It takes two TreeNode parameters, leftRoot and rightRoot.
+It first checks if both leftRoot and rightRoot are null, returning true if so (base case for recursion).
+Then, it checks if one of leftRoot or rightRoot is null while the other is not, returning false if so.
+Next, it checks if the values of leftRoot and rightRoot are not equal, returning false if so.
+Finally, it recursively calls itself with leftRoot.left and rightRoot.right, as well as leftRoot.right and rightRoot.left, returning the logical AND of these recursive calls.
