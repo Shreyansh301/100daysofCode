@@ -1,0 +1,67 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int i=0;
+        int j=0;
+        int sum =0;
+        int res =Integer.MAX_VALUE;
+        while(j<nums.length)
+        {
+            sum=sum+nums[j];
+            if(sum<target)
+            {
+                j++;
+            }
+            else if(sum==target)
+            {
+                res=Math.min(res,j-i+1);
+                j++;
+            }
+            else if(sum>target)
+            {
+                while(sum>target)
+                {
+                    res=Math.min(res,j-i+1);
+                    sum=sum-nums[i];
+                    i++;
+                }
+                if(sum==target)
+                {
+                    res=Math.min(res,j-i+1);
+                }
+                j++;
+            }
+        }
+        if(res==Integer.MAX_VALUE)
+        {
+            return 0;
+        }
+        return res;
+        
+    }
+}
+
+LOGIC: Explanation 
+Example - Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+The subarray [4,3] has the minimal length under the problem constraint.
+------------------------------------------------------------------------------------
+The code defines a class named Solution with a public method minSubArrayLen, which takes an integer target and an array of integers nums as parameters.
+
+It initializes variables i and j to 0, sum to 0, and res to Integer.MAX_VALUE.
+
+It uses a while loop to iterate through the elements of the nums array using the index j.
+
+Inside the loop, it calculates the cumulative sum by adding nums[j] to sum.
+
+If the sum is less than the target, it increments j to include more elements from the array in the sum.
+
+If the sum is equal to the target, it updates the result (res) by taking the minimum of the current result and the length of the subarray (j - i + 1).
+
+If the sum exceeds the target, it enters another while loop to reduce the sum by subtracting elements starting from index i until the sum is less than or equal to the target.
+
+Inside this inner loop, it updates the result similarly to when the sum is equal to the target.
+
+After processing all elements in the array, it checks if the result is still Integer.MAX_VALUE, indicating that no subarray was found whose sum equals or exceeds the target, and returns 0 in such a case.
+
+Otherwise, it returns the calculated result.
+This code efficiently finds the minimum length of a contiguous subarray in the given array nums whose sum is greater than or equal to the given target.
