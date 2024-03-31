@@ -1,0 +1,33 @@
+class Solution {
+  private boolean isVowel(char c) {
+    return "AEIOUaeiou".indexOf(c) >= 0;
+  }
+  
+  public boolean halvesAreAlike(String s) {
+    var n = s.length();
+    var cnt = 0;
+    
+    for (var i=0; i < n/2; i++)
+      if (isVowel(s.charAt(i))) cnt++;
+    
+    for (var i = n/2; i < n; i++) {
+      if (isVowel(s.charAt(i))) cnt--;
+      if (cnt < 0) return false;
+    }
+    return cnt == 0;
+  }
+} 
+
+LOGIC: Explanation 
+Example - Input: s = "book"
+Output: true
+a = "bo" and b = "ok". a has 1 vowel and b has 1 vowel. Therefore, they are alike.
+-----------------------------------------------------------------------------------------------
+The code defines a class Solution that contains a private method isVowel and a public method halvesAreAlike.
+The isVowel method checks if a given character is a vowel by checking if it exists in the string "AEIOUaeiou".
+The halvesAreAlike method takes a string s as input and checks if the first half of the string (excluding middle character for odd-length strings) contains the same number of vowels as the second half.
+It initializes variables n (length of the input string) and cnt (count of vowels encountered).
+It loops through the first half of the string, counting the vowels encountered using the isVowel method.
+It then loops through the second half of the string, decrementing the cnt variable for each vowel encountered and checks if cnt becomes negative, returning false if it does.
+
+Finally, it returns true if cnt is equal to 0 (indicating an equal number of vowels in both halves), otherwise returns false.
