@@ -1,0 +1,28 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int j=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==nums[j]){
+                continue;
+            }
+            j++;
+            nums[j]=nums[i];
+        }
+        return ++j;
+    }
+}
+
+Level - Easy (26)
+LOGIC: Explanation
+Example - Input: nums = [1,1,2]
+Output: 2, nums = [1,2,_]
+Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+-----------------------------------------------------------------------------------------------------------
+This Java code defines a method `removeDuplicates` that takes an array of integers `nums` and removes duplicates in-place while maintaining the order of elements.
+
+1. Initialize a variable `j` to 0 to keep track of the new array length.
+2. Iterate through the array using index `i`.
+3. If the element at index `i` is equal to the element at index `j`, continue to the next iteration to skip duplicates.
+4. Increment `j` to move to the next position and copy the non-duplicate element `nums[i]` to `nums[j]`.
+5. Finally, return the incremented `j` as the new length of the array without duplicates.
