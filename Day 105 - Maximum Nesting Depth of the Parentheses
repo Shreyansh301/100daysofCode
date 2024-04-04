@@ -1,0 +1,51 @@
+class Solution {
+    public int maxDepth(String s) {
+        // Initializing variables to keep track of depth and count of open parentheses.
+        int depth = 0; // Represents the maximum depth of nested parentheses encountered.
+        int count = 0; // Keeps track of the number of open parentheses encountered.
+        
+        // Iterating through each character in the string.
+        for (int i = 0; i < s.length(); i++) {
+            // If the character is an open parenthesis '(',
+            // increment the count of open parentheses encountered.
+            if (s.charAt(i) == '(') {
+                count++;
+            }
+            
+            // Update the depth with the maximum of the current depth and the count of open parentheses.
+            depth = Math.max(depth, count);
+            
+            // If the character is a closing parenthesis ')',
+            // decrement the count of open parentheses encountered.
+            if (s.charAt(i) == ')') {
+                count--;
+            }
+        }
+        
+        // Return the maximum depth found.
+        return depth;
+    }
+}
+
+Level - Easy (1614)
+LOGIC: Explanation 
+Exampple - Input: s = "(1+(2*3)+((8)/4))+1"
+Output: 3
+Digit 8 is inside of 3 nested parentheses in the string.
+-----------------------------------------------------------------------------------------------------------------
+Class Definition: The code defines a class named Solution.
+
+maxDepth Method: The maxDepth method takes a string s as input and returns an integer representing the maximum depth of nested parentheses in the string.
+
+Variables Initialization: Inside the method, two integer variables depth and count are initialized to zero. depth keeps track of the maximum depth encountered, while count keeps track of the number of open parentheses encountered.
+
+Loop Through Characters: The method iterates through each character in the input string s using a for loop.
+
+Open Parenthesis Check: If the current character is an open parenthesis '(', the count variable is incremented to track the number of open parentheses.
+
+Update Depth: After encountering an open parenthesis, the depth variable is updated using Math.max(depth, count), ensuring that it always holds the maximum depth encountered so far.
+
+Close Parenthesis Check: If the current character is a closing parenthesis ')', the count variable is decremented as a corresponding open parenthesis has been closed.
+
+Return Maximum Depth: Finally, the method returns the maximum depth (depth) found during the traversal of the string.
+Code efficiently calculates the maximum depth of nested parentheses in a given string by maintaining a count of open parentheses and updating the depth as needed while traversing the string character by character.
