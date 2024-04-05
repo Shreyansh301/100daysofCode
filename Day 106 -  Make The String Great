@@ -1,0 +1,54 @@
+class Solution {
+    public String makeGood(String s) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(s);
+        int flag=0;
+        while(flag==0&&sb.length()>0){
+            flag=1;
+            for(int i=0;i<sb.length()-1;i++){
+                if(isGreat(sb,i)){
+                    sb.delete(i,i+2);
+                    flag=0;
+                }
+            }
+        }
+        return sb.toString();     
+    }
+    public static boolean isGreat(StringBuilder sb,int i){
+        if(Integer.valueOf(sb.charAt(i))==Integer.valueOf(sb.charAt(i+1))+32||Integer.valueOf(sb.charAt(i))==Integer.valueOf(sb.charAt(i+1))-32){
+        
+            return true;
+        } 
+        return false;
+    }
+}
+
+Level - Easy (1544)
+LOGIC: Explanation 
+Example - Input: s = "leEeetcode"
+Output: "leetcode"
+Explanation: In the first step, either you choose i = 1 or i = 2, both will result "leEeetcode" to be reduced to "leetcode".
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Create a StringBuilder sb and append the input string s to it.
+Initialize a flag flag to 0 for tracking whether any adjacent characters were removed in a pass.
+Use a while loop to iterate as long as flag is 0 and sb has a length greater than 0.
+Set flag to 1 initially, then iterate through sb checking adjacent characters using the isGreat method.
+If adjacent characters are found that meet the condition, delete them from sb and set flag back to 0 to indicate a change.
+Finally, return the modified sb as a string.
+--
+StringBuilder Usage: Instead of directly manipulating strings, a StringBuilder (sb) is used. 
+StringBuilder provides efficient ways to modify strings because strings in Java are immutable, meaning they cannot be changed once created. 
+StringBuilder allows for efficient appending, deleting, and modifying of characters in a mutable sequence.
+
+Flag for Looping: The flag variable is used to control the while loop. If no adjacent characters are found that meet the condition of being 'great', the flag remains 1, and the loop ends. 
+If changes are made (adjacent 'great' characters are found and removed), the flag is set back to 0, and the loop continues until no more changes are made in a pass.
+
+isGreat Method: This method checks if two characters at positions i and i+1 in the StringBuilder are 'great', meaning they are the same letter but in different cases (e.g., 'a' and 'A', 'b' and 'B'). 
+It converts the characters to integers and compares their ASCII values to determine if they are 'great'.
+Loop Logic: The main while loop iterates until no more adjacent 'great' characters are found in the StringBuilder. 
+The inner for loop iterates through the StringBuilder, checking adjacent characters and calling isGreat to determine if they should be deleted.
+
+Deletion of Characters: If adjacent characters are 'great', they are deleted from the StringBuilder using the delete method. 
+For example, if 'a' and 'A' are found adjacent, they are removed from the StringBuilder.
+
+Return Result
