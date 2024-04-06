@@ -1,0 +1,46 @@
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        int n = s.length();
+        boolean[] vis = new boolean[n];
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            if (Character.isLowerCase(s.charAt(i)))
+                continue;
+            if (s.charAt(i) == '(') {
+                st.push(i);
+            } else {
+                if (!st.isEmpty()) {
+                    st.pop();
+                } else {
+                    vis[i] = true;
+                }
+            }
+        }
+        while (!st.isEmpty()) {
+            vis[st.pop()] = true;
+        }
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            if (!vis[i])
+                ans.append(s.charAt(i));
+        }
+        return ans.toString();
+    }
+}
+
+Level - Medium (1249)
+LOGIC: Explanation 
+Example - Input: s = "lee(t(c)o)de)"
+Output: "lee(t(c)o)de"
+Explanation: "lee(t(co)de)" , "lee(t(c)ode)" would also be accepted.
+-------------------------------------------------------------------------------------------------
+Code defines a class named Solution with a public method minRemoveToMakeValid, which takes a string s as input and returns a modified string.
+It initializes variables including the length of the string n, a boolean array vis to keep track of characters to be removed, and a stack st to keep track of indices of opening parentheses.
+It iterates through each character of the input string using a for loop.
+If the character is lowercase, it skips to the next iteration.
+If the character is an opening parenthesis '(', it pushes its index onto the stack st.
+If the character is a closing parenthesis ')', it checks if the stack st is not empty. If so, it pops an index from the stack, indicating a matching pair of parentheses. 
+If the stack is empty, it marks the current index as a character to be removed by setting vis[i] to true.
+After processing all characters, it checks if there are any unmatched opening parentheses left in the stack. If so, it marks those indices as characters to be removed.
+Finally, it constructs the modified string by appending characters from the original string that are not marked for removal according to the vis array.
+The modified string is then returned as the result.
