@@ -1,0 +1,45 @@
+class Solution {
+    public boolean checkValidString(String s) {
+        int leftCount = 0, rightCount = 0;
+        
+        for (char c : s.toCharArray()) {
+            leftCount += c == '(' ? 1 : -1;
+            rightCount += c == ')' ? -1 : 1;
+            
+            if (rightCount < 0) {
+                break;
+            }
+            
+            leftCount = Math.max(leftCount, 0);
+        }
+
+        return leftCount == 0;
+    }
+}
+
+Level - Medium (678)
+LOGIC: Explanation 
+Exampple - Input: s = "()"
+Output: true
+
+Input: s = "(*)"
+Output: true
+----------------------------------------------------------------------
+Method Signature: The code defines a method checkValidString that takes a string s as input and returns a boolean indicating whether the string is valid.
+
+Variable Initialization: It initializes two integer variables leftCount and rightCount to keep track of the balance of parentheses.
+
+For Loop: The code iterates through each character in the input string s using a for-each loop.
+
+Parentheses Counting:
+If the current character is '(', leftCount is incremented by 1.
+If the current character is ')', rightCount is decremented by 1.
+For any other character, both counts are adjusted in a way that maintains the balance of parentheses.
+
+Checking for Invalid State:
+Inside the loop, it checks if rightCount becomes negative. If so, it means there are more ')' than '(', indicating an invalid string. In such cases, the loop is exited early using break.
+
+Adjusting Left Count:
+After each character, it updates leftCount to be at least 0 using Math.max(leftCount, 0). This step ensures that leftCount never goes negative, representing unmatched '('.
+
+Final Check: After processing all characters, the method checks if leftCount is equal to 0. If so, it means all '(' have been matched with ')' in the string, and the method returns true (indicating a valid string). Otherwise, it returns false.
