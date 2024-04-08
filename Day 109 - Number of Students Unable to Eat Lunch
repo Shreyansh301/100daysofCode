@@ -1,0 +1,49 @@
+class Solution {
+    public int countStudents(int[] students, int[] sandwiches) {
+        int len = students.length;
+        Queue<Integer> studentQueue = new LinkedList<>();
+        for (int student : students)
+            studentQueue.add(student);
+        Stack<Integer> sandwichStack = new Stack<>();
+        for (int i = len - 1; i >= 0; i--)
+            sandwichStack.push(sandwiches[i]);
+        int served = 0;
+        while (!studentQueue.isEmpty() && served < studentQueue.size()) {
+            if (sandwichStack.peek().equals(studentQueue.peek())) {
+                sandwichStack.pop();
+                studentQueue.poll();
+                served = 0;
+            } else {
+                studentQueue.add(studentQueue.peek());
+                studentQueue.poll();
+                served++;
+            }
+        }
+        return studentQueue.size();
+    }
+}
+
+Level - Easy (1700)
+LOGIC: Explanation
+Example - Input: students = [1,1,0,0], sandwiches = [0,1,0,1]
+Output: 0 
+- Front student leaves the top sandwich and returns to the end of the line making students = [1,0,0,1].
+- Front student leaves the top sandwich and returns to the end of the line making students = [0,0,1,1].
+- Front student takes the top sandwich and leaves the line making students = [0,1,1] and sandwiches = [1,0,1].
+- Front student leaves the top sandwich and returns to the end of the line making students = [1,1,0].
+- Front student takes the top sandwich and leaves the line making students = [1,0] and sandwiches = [0,1].
+- Front student leaves the top sandwich and returns to the end of the line making students = [0,1].
+- Front student takes the top sandwich and leaves the line making students = [1] and sandwiches = [1].
+- Front student takes the top sandwich and leaves the line making students = [] and sandwiches = [].
+Hence all students are able to eat.
+---------------------------------------------------------------------------------------------------------------------
+This Java code is for a method countStudents that takes in two arrays: students and sandwiches. 
+It simulates serving sandwiches to students in a queue and tracks how many students remain unserved after the process. 
+It initializes a queue studentQueue to hold student preferences and a stack sandwichStack to hold sandwich preferences.
+It populates the studentQueue with the student preferences and sandwichStack with the sandwich preferences in reverse order.
+It initializes a variable served to track how many times students have been served consecutively.
+It enters a loop that continues until either the student queue is empty or all students have been served (served < studentQueue.size()).
+Within the loop, it checks if the top sandwich preference (sandwichStack.peek()) matches the top student preference (studentQueue.peek()).
+If they match, it serves the student by popping from both the stack and the queue and resets served to 0.
+If they don't match, it temporarily removes the student from the queue, simulating that the student didn't get their preferred sandwich. It then adds this student back to the end of the queue and increments served.
+After the loop, it returns the remaining size of the studentQueue, which represents the number of students who didn't get their preferred sandwich.
