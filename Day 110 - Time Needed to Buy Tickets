@@ -23,7 +23,7 @@ Explanation:
 - In the first pass, everyone in the line buys a ticket and the line becomes [1, 2, 1].
 - In the second pass, everyone in the line buys a ticket and the line becomes [0, 1, 0].
 The person at position 2 has successfully bought 2 tickets and it took 3 + 3 = 6 seconds.
---------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 This Java code defines a public class named Solution with a method timeRequiredToBuy that takes an integer array v and an integer k as parameters and returns an integer.
 Inside the method, it initializes variables n as the length of the array v and t as 0 to track the time required to buy items.
 The method uses an infinite loop (while (true)) to repeatedly iterate over the array elements until a condition is met.
