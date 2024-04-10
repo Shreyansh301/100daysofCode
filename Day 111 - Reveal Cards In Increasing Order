@@ -1,0 +1,47 @@
+class Solution {
+    public int[] deckRevealedIncreasing(int[] deck) {
+        int n=deck.length;
+        Arrays.sort(deck);
+        Deque <Integer> st=new ArrayDeque<>();
+        st.addFirst(deck[n-1]);
+        for(int i=n-2;i>=0;i--){
+            st.addFirst(st.removeLast());
+            st.addFirst(deck[i]);
+        }
+        //we can either create a new array or change the existing since we dont need it right??but it is not recommended 
+
+        for(int i=0;i<n;i++){
+            deck[i]=(int)st.removeFirst();
+        }
+        return deck;
+    }
+}
+
+Level - Medium (950)
+LOGIC: Expplanation 
+Example - Input: deck = [17,13,11,2,3,5,7]
+Output: [2,13,3,11,5,17,7]
+We get the deck in the order [17,13,11,2,3,5,7] (this order does not matter), and reorder it.
+After reordering, the deck starts as [2,13,3,11,5,17,7], where 2 is the top of the deck.
+We reveal 2, and move 13 to the bottom.  The deck is now [3,11,5,17,7,13].
+We reveal 3, and move 11 to the bottom.  The deck is now [5,17,7,13,11].
+We reveal 5, and move 17 to the bottom.  The deck is now [7,13,11,17].
+We reveal 7, and move 13 to the bottom.  The deck is now [11,17,13].
+We reveal 11, and move 17 to the bottom.  The deck is now [13,17].
+We reveal 13, and move 17 to the bottom.  The deck is now [17].
+We reveal 17.
+Since all the cards revealed are in increasing order, the answer is correct.
+--------------------------------------------------------------------------------------------------------------------------------
+The deckRevealedIncreasing method takes an integer array deck as input and returns another integer array.
+It begins by sorting the input array deck in increasing order using Arrays.sort(deck).
+It initializes a Deque named st (short for stack) using ArrayDeque.
+The largest element of the sorted deck array is added to the front of the stack using st.addFirst(deck[n-1]).
+Then, starting from the second largest element of deck, the code performs a series of operations:
+a. Removes the last element from the stack and adds it to the front (st.addFirst(st.removeLast())).
+b. Adds the current element from deck to the front of the stack (st.addFirst(deck[i])).
+This process essentially simulates the "revealing" of cards in a deck.
+After the loop completes, the stack st contains the elements in the order they should be revealed.
+Finally, the elements are retrieved from the stack and stored back into the deck array, replacing its original content.
+
+The modified deck array is returned as the result.
+The code rearranges the input array deck in a specific way based on the described card revealing process and returns the modified array.
