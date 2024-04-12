@@ -1,0 +1,49 @@
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        int ans[] = new int[n];
+        int max = 0;
+        for(int i=n-1;i>=0;i--)
+        {
+            if(max<height[i]) max = height[i];
+            ans[i] = max;
+        }
+        max = 0;
+        int sol = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(max<height[i]) max = height[i];
+            sol+= Math.min(max,ans[i])-height[i];
+        }
+        return sol;
+    }
+}
+
+Level - Hard (42)
+LOGIC: Explanation 
+Exaample - Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Initialization: 
+   - `n` is set to the length of the input array `height[]`, which represents the number of bars.
+   - `ans[]` is initialized as an array of size `n` to store the maximum height encountered so far from the right for each position.
+   - `max` is initialized as 0, which will be used to track the maximum height encountered during iterations.
+
+2. Right to Left Scan:
+   - Starting from the rightmost bar (index `n-1`), the loop iterates backward (`i--` decrements `i` in each iteration) until reaching the leftmost bar (index 0).
+   - For each position `i`, it checks if the current height `height[i]` is greater than `max`. If so, it updates `max` to `height[i]`. This step ensures that `max` always holds the maximum height encountered from the right side up to position `i`.
+   - The maximum height encountered at each position is stored in the `ans[]` array. After this loop, `ans[i]` contains the maximum height encountered from the right for each position `i`.
+
+3. Reset `max` and Calculate Solution:
+   - After completing the right-to-left scan, `max` is reset to 0 for a new iteration.
+   - The loop iterates from the leftmost bar (index 0) to the rightmost bar (index `n-1`).
+   - For each position `i`, it again checks if the current height `height[i]` is greater than `max`. If so, it updates `max` to `height[i]`. This step ensures that `max` always holds the maximum height encountered from the left side up to position `i`.
+   - It calculates the trapped water for each bar using the formula `Math.min(max, ans[i]) - height[i]`, which represents the difference between the lesser of the maximum heights from the left and right (`Math.min(max, ans[i])`) and the current height `height[i]`. 
+    This difference represents the amount of water that can be trapped at that specific bar.
+   - The trapped water for each bar is accumulated in the variable `sol`, which represents the total trapped water after scanning all bars.
+
+4. Return Solution:
+   - Finally, the function returns the total trapped water amount `sol`, which represents the total water that can be trapped between the bars.
+
+This approach efficiently calculates the trapped water by scanning the heights from both the right and left sides, considering the maximum heights encountered from each side at each position.
