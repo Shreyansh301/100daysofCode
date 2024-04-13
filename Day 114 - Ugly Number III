@@ -1,0 +1,62 @@
+class Solution {
+    public int nthUglyNumber(int n, int a, int b, int c) {
+        int left = 1;
+        int right = Integer.MAX_VALUE;
+        int count = 0;
+        while (left < right) {
+            int middle = left + (right - left) / 2;
+            if (isUgly(middle, a, b, c, n)) {
+                right = middle;
+            }
+            else
+                left = middle + 1;
+        }
+        return left;
+    }
+    public boolean isUgly(long middle, long a, long b, long c, long n) {
+        return (int) (middle/a + middle/b + middle/c - middle/lcm(a, b) - middle/lcm(b, c) - middle/lcm(c, a) + middle/lcm(a, lcm(b, c))) >= n;
+    }
+    public long gcd(long a, long b) {
+        if (a == 0)
+            return b;
+        else return gcd(b%a, a);
+    }
+    public long lcm(long a, long b) {
+        return a * b / (gcd(a, b)); 
+    }
+}
+
+Level - Medium (1201)
+LOGIC: Explanation 
+Example - Input: n = 3, a = 2, b = 3, c = 5
+Output: 4
+The ugly numbers are 2, 3, 4, 5, 6, 8, 9, 10... The 3rd is 4.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+1. nthUglyNumber Method:
+   - Takes four parameters: `n` (which specifies the position of the ugly number to find), and three integers `a`, `b`, and `c` that are factors used to generate ugly numbers.
+   - Initializes `left` as 1 (the smallest possible ugly number) and `right` as the maximum possible integer value.
+   - Initiates a counter `count` at 0.
+   - Enters a while loop that continues until `left` is less than `right`.
+   - Inside the loop, it calculates the middle value as the average of `left` and `right`.
+   - Calls the `isUgly` method to check if the middle value is an ugly number based on the given factors.
+   - Adjusts the range (`left` or `right`) based on the result of `isUgly` to converge on the nth ugly number.
+   - Returns the `left` value, which represents the nth ugly number.
+
+2. isUgly Method:
+   - Takes five parameters: `middle` (the number to check), and `a`, `b`, `c`, and `n` (same as in `nthUglyNumber`).
+   - Checks if the number of ugly numbers less than or equal to `middle` is greater than or equal to `n`.
+   - Uses the formula `(middle/a + middle/b + middle/c - middle/lcm(a, b) - middle/lcm(b, c) - middle/lcm(c, a) + middle/lcm(a, lcm(b, c)))` to determine if `middle` is an ugly number.
+   - Returns `true` if the number of ugly numbers is greater than or equal to `n`, otherwise `false`.
+
+3. gcd Method** (Greatest Common Divisor):
+   - Takes two parameters `a` and `b`.
+   - Uses the Euclidean algorithm to find the greatest common divisor (GCD) of `a` and `b`.
+   - Returns the GCD.
+
+4. lcm Method** (Least Common Multiple):
+   - Takes two parameters `a` and `b`.
+   - Calculates the least common multiple (LCM) of `a` and `b` using the formula `a * b / gcd(a, b)`.
+   - Returns the LCM.
+
+This code finds the nth ugly number using binary search and checks whether a number is ugly based on its factors using the `isUgly` method. 
+The `gcd` and `lcm` methods are used to calculate the greatest common divisor and least common multiple, respectively.
