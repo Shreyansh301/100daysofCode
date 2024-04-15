@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int sumTree(TreeNode root,int sum){
+        if(root==null) return 0;
+        sum=sum*10+root.val;
+        if(root.left==null && root.right==null) return sum;
+        return sumTree(root.left,sum)+sumTree(root.right,sum);
+    }
+    public int sumNumbers(TreeNode root) {
+                return sumTree(root,0);
+    }
+
+}
+
+Level - Medium (129)
+LOGIC: Explanation 
+Example - Input: root = [1,2,3]
+Output: 25
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+-----------------------------------------------------------------------------------------
+1. TreeNode Definition: The code starts with a definition of a binary tree node called `TreeNode`. Each node has a value (`val`), a left child (`left`), and a right child (`right`).
+
+2. sumTree Method: This method calculates the sum of numbers formed by traversing paths from the root to leaf nodes. It takes two arguments: the current node (`root`) and the sum calculated so far (`sum`).
+
+3. Base Case Check: If the current node is `null`, meaning there's no node, the method returns 0.
+
+4. Sum Calculation: The method updates the `sum` by multiplying it by 10 and adding the value of the current node (`root.val`). This mimics how numbers are formed in a decimal system.
+
+5. Recursive Calls: It recursively calls itself for the left and right child nodes, passing the updated `sum` as an argument. If the current node is a leaf node (has no left or right child), it returns the final sum calculated for that path.
+
+6. sumNumbers Method: This is the entry point for the sum calculation. It calls `sumTree` with the root node and an initial sum of 0, which starts the recursive process of calculating the sum of numbers formed by paths in the binary tree.
