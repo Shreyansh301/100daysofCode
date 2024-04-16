@@ -1,0 +1,79 @@
+class Solution {
+
+    public TreeNode helper(TreeNode root,int val,int depth,int currdepth){
+        if(depth==1){
+            TreeNode zoo=new TreeNode(val);
+            zoo.left=root;
+            return zoo;
+        }
+
+        if(root==null){
+            return root;
+        }
+
+        if(currdepth==depth-1){
+            TreeNode leftman=root.left;
+            TreeNode rightman=root.right;
+
+            root.left=new TreeNode(val);
+            root.right=new TreeNode(val);
+
+            root.left.left=leftman;
+            root.right.right=rightman;
+            return root;
+            
+        }
+
+        helper(root.left,val,depth,currdepth+1);
+        helper(root.right,val,depth,currdepth+1);
+
+        return root;
+
+    }
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+     return  helper(root,val,depth,1);
+
+        
+    }
+}
+
+Level - Medium (623)
+LOGIC: Explanation 
+Example - Input: root = [4,2,6,3,1,5], val = 1, depth = 2
+Output: [4,1,1,2,null,null,6,3,1,5]
+--------------------------------------------------------------------------------
+Class Declaration: The code starts with the declaration of a class named Solution.
+
+Method helper: This method is used to help add a new row to a binary tree.
+
+Parameters:
+root: Represents the root of the current binary tree.
+val: The value to be added to the new nodes in the added row.
+depth: Represents the depth at which the new row should be added.
+currdepth: Tracks the current depth of traversal in the tree.
+
+Logic:
+Checks if depth is 1. If so, it creates a new node (TreeNode zoo) with the given value val. It then sets the left child of zoo to the current root and returns zoo.
+Checks if root is null. If so, it returns root.
+Checks if currdepth is one less than depth. If so, it performs the following steps:
+Stores the current left child of root in leftman and the current right child of root in rightman.
+Creates new left and right child nodes of root with the value val.
+Sets the left child of the new left node to leftman and the right child of the new right node to rightman.
+Returns root after adding the new row.
+
+Recursion:
+Calls helper recursively for the left subtree of root with the same val, depth, and currdepth+1.
+Calls helper recursively for the right subtree of root with the same val, depth, and currdepth+1.
+Return: Finally, returns root.
+
+Method addOneRow: This method is the entry point for adding a new row to the binary tree.
+Parameters:
+root: Represents the root of the binary tree to which the new row will be added.
+val: The value to be added to the new nodes in the added row.
+depth: Represents the depth at which the new row should be added.
+
+Logic:
+Calls the helper method with parameters root, val, depth, and 1.
+Returns the result obtained from helper, which is the modified binary tree with the new row added.
+
+Java code uses recursion to add a new row to a binary tree at a specified depth while maintaining the structure of the existing tree.
