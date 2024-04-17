@@ -1,0 +1,44 @@
+class Solution {
+     List<List<Integer>> l=new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+       help(0,target,new ArrayList<>(),candidates);
+       return l;
+    
+    }
+    void help(int i,int t,List<Integer> ll,int[] a){
+        if(t==0){
+            l.add(new ArrayList<>(ll));
+            return;
+        }
+        if(i>=a.length){
+           return;
+        }
+        
+        
+    if(t>=a[i]){
+    ll.add(a[i]);
+    help(i,t-a[i],ll,a);
+    ll.remove(ll.size()-1);
+    }
+    help(i+1,t,ll,a);
+    }
+}
+
+Level - Medium (39)
+LOGIC: Explanation 
+Example - Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
+7 is a candidate, and 7 = 7.
+These are the only two combinations.
+----------------------------------------------------------------------------------------------------------------
+The code defines a class named Solution that contains a method combinationSum which takes an array of integers candidates and an integer target as parameters.
+Inside the combinationSum method, a new ArrayList of ArrayLists of Integers called l is created. This list will store the combinations that add up to the target.
+The help method is defined within the Solution class. This method is used to recursively find combinations that add up to the target.
+The help method takes four parameters: an index i, the remaining target t, a list ll to store the current combination, and the array of candidates a.
+If the remaining target t becomes zero, it means we have found a valid combination that adds up to the target. In this case, the current combination ll is added to the main list l.
+If the index i exceeds the length of the candidates array a, the method returns without doing anything, as there are no more elements to consider.
+If the remaining target t is greater than or equal to the current candidate a[i], we add a[i] to the current combination ll and recursively call the help method with updated parameters (subtracting a[i] from the target). 
+After this recursive call, we remove the last element from the current combination ll (backtracking).
+Regardless of whether we add the current candidate or not, we also recursively call the help method with the next index (i+1) and the same target t.
+This code uses recursion to find all combinations of numbers from the candidates array that add up to the given target, and it stores these combinations in the list l.
