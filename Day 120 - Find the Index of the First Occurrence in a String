@@ -1,0 +1,27 @@
+class Solution {
+    public int strStr(String haystack, String needle) {
+        for(int i = 0, j = needle.length(); j<=haystack.length(); i++,j++){
+            if(haystack.substring(i,j).equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+Level - Easy (28)
+LOGIC: Explanation 
+Example - Input: haystack = "sadbutsad", needle = "sad"
+Output: 0
+Explanation: "sad" occurs at index 0 and 6.
+The first occurrence is at index 0, so we return 0.
+-------------------------------------------------------------------------------------
+public int strStr(String haystack, String needle) { ... }: This is a method declaration. It defines a method named strStr that takes two parameters: haystack (the main string) and needle (the substring to search for).
+
+for(int i = 0, j = needle.length(); j <= haystack.length(); i++, j++) { ... }: This is a for loop that iterates through the haystack string. It starts with i at 0 and j at the length of the needle string. 
+The loop continues as long as j is less than or equal to the length of the haystack string. In each iteration, i and j are incremented by 1 (i++ and j++).
+
+if(haystack.substring(i, j).equals(needle)) { ... }: Inside the loop, this if statement checks if the substring of haystack starting at index i and ending at index j is equal to the needle string. 
+If they are equal, it means we've found a match, and the method returns the starting index i.
+
+return -1;: If the loop completes without finding a match (i.e., the if condition is never true), the method returns -1, indicating that the needle substring is not present in the haystack string.
