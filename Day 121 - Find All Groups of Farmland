@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int[][] findFarmland(int[][] land) {
+        List<int[]> output = new ArrayList<>();
+        for (int i = 0; i < land.length; i++) {
+            for (int j = 0; j < land[0].length; j++) {
+                if (land[i][j] == 1) {
+                    int[] arr = {i, j, i, j};
+                    farmer(i, j, arr, land);
+                    output.add(arr);
+                }
+            }
+        }
+        int[][] result = new int[output.size()][4];
+        for (int i = 0; i < output.size(); i++) {
+            result[i] = output.get(i);
+        }
+        return result;
+    }
+
+    private void farmer(int i, int j, int[] arr, int[][] land) {
+        if (i < 0 || j < 0 || i > land.length - 1 || j > land[0].length - 1 || land[i][j] != 1) return;
+        land[i][j] = 0;
+        if (i < arr[0]) {
+            arr[0] = i;
+        }
+        if (j < arr[1]) {
+            arr[1] = j;
+        }
+        if (i > arr[2]) {
+            arr[2] = i;
+        }
+        if (j > arr[3]) {
+            arr[3] = j;
+        }
+        farmer(i + 1, j, arr, land);
+        farmer(i - 1, j, arr, land);
+        farmer(i, j + 1, arr, land);
+        farmer(i, j - 1, arr, land);
+    }
+}
+
+Level - Medium (1992)
+LOGIC: Explanation 
+Example - Input: land = [[1,0,0],[0,1,1],[0,1,1]]
+Output: [[0,0,0,0],[1,1,2,2]]
+The first group has a top left corner at land[0][0] and a bottom right corner at land[0][0].
+The second group has a top left corner at land[1][1] and a bottom right corner at land[2][2].
+-----------------------------------------------------------------------------------------------------------
+The code defines a Solution class with a method findFarmland that takes a 2D array (land) representing land with 1s indicating farmland patches.
+
+It initializes an empty list output to store the boundaries of farmland patches found.
+
+It iterates through the land array using nested loops to check each cell for farmland (value 1).
+
+When farmland is found, it creates an array arr to store the boundaries and calls the farmer method to determine the farmland boundaries.
+
+The farmer method recursively explores neighboring cells of a farmland patch, updating the boundaries in the arr array and marking visited cells as 0.
+
+After processing all farmland patches, the code constructs a 2D array result from the output list and returns it.
+
+The code identifies and records the boundaries of farmland patches within the input land array using a recursive algorithm.
