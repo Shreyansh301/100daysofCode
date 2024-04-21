@@ -1,0 +1,43 @@
+class Solution {
+    public boolean validPath(int n, int[][] edges, int source, int destination) {
+        if(edges.length == 0) return true;
+        boolean[] visited = new boolean[n];
+        boolean flag = true;
+        visited[source] = true;
+    while(flag){
+        flag = false;
+        for(int[] edge : edges){
+            if(visited[edge[0]] != visited[edge[1]]){
+                visited[edge[0]] = true;
+                visited[edge[1]] = true;
+                flag = true;
+            }
+            if(visited[destination]) return true;
+        }
+    }
+    return false;
+    }
+}
+
+Level - Easy (1971)
+LOGIC: Explanation 
+Example - Input: n = 3, edges = [[0,1],[1,2],[2,0]], source = 0, destination = 2
+Output: true
+There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+--------------------------------------------------------------------------------------
+It starts by checking if the array of edges is empty (edges.length == 0). If so, it returns true because there are no edges to consider, and any source can directly reach the destination.
+
+It initializes a boolean array visited of size n (number of nodes) to keep track of visited nodes and sets visited[source] to true since the traversal starts from the source node.
+
+The code then enters a while loop that runs until a certain condition (flag) is true. This flag is initially set to true to start the loop.
+
+Within the loop, it sets flag to false before iterating through each edge in the edges array using a for-each loop (for(int[] edge : edges)).
+
+For each edge, it checks if the source and destination nodes (edge[0] and edge[1]) have different visited statuses (visited[edge[0]] != visited[edge[1]]). 
+If so, it marks both nodes as visited (visited[edge[0]] = true and visited[edge[1]] = true) and sets flag to true to continue the loop.
+
+After processing all edges, it checks if the destination node is visited (if(visited[destination]) return true). If the destination node is visited, it means there's a valid path from the source to the destination, so it returns true.
+
+If the while loop completes without finding a valid path (flag remains false), the method returns false as there's no valid path from the source to the destination.
