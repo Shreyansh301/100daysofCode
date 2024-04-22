@@ -1,0 +1,50 @@
+class Solution {
+    public List<String> summaryRanges(int[] nums) {
+      List<String> list=new ArrayList();
+      if(nums.length==1){
+          list.add(nums[0]+"");
+          return list;
+      }
+      for(int i=0;i<nums.length;i++){
+          int a=nums[i];
+          
+          while(i+1<nums.length && (nums[i+1]-nums[i])==1){
+              i++;
+          }
+          if(a!=nums[i]){
+              list.add(a+"->"+nums[i]);
+          }
+          else{
+              list.add(a+"");
+          }
+      }
+        return list;
+    }
+}
+
+Level - Easy (228)
+LOGIC: Explanation 
+Example - Input: nums = [0,1,2,4,5,7]
+Output: ["0->2","4->5","7"]
+The ranges are:
+[0,2] --> "0->2"
+[4,5] --> "4->5"
+[7,7] --> "7"
+------------------------------------------------------------------------------------------------
+Input Parameter: The method summaryRanges takes an array of integers (int[] nums) as input.
+
+List Initialization: It initializes a new ArrayList called list to store the summary ranges.
+
+Handling Single Element: If the input array has only one element, it directly adds that element as a string to list and returns it.
+
+Iterating through the Array: It then loops through the input array using a for loop.
+
+Checking Consecutive Numbers:
+Inside the loop, it checks if the current number (nums[i]) and the next number (nums[i+1]) are consecutive (the difference between them is 1). It does this using a while loop.
+If they are consecutive, it increments the index i to move to the next number.
+
+Adding Ranges to the List:
+If the current number is not equal to the last number in the consecutive sequence (i.e., if there was a range), it adds the range from the first number (a) to the last number (nums[i]) as a string in the format "a->nums[i]" to the list.
+If there was no range (i.e., the numbers were not consecutive), it simply adds the current number as a string to the list.
+
+Returning the Result: Finally, it returns the list containing the summary ranges.
