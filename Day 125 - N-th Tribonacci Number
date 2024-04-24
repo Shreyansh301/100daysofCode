@@ -1,0 +1,40 @@
+class Solution {
+  public int tribonacci(int n) {
+    if (n < 2)
+      return n;
+
+    int[] dp = {0, 1, 1};
+
+    for (int i = 3; i <= n; ++i) {
+      final int next = dp[0] + dp[1] + dp[2];
+      dp[0] = dp[1];
+      dp[1] = dp[2];
+      dp[2] = next;
+    }
+
+    return dp[2];
+  }
+}
+
+Level - Easy (1137)
+LOGIC: Explanation 
+Example - Input: n = 4
+Output: 4
+T_3 = 0 + 1 + 1 = 2
+T_4 = 1 + 1 + 2 = 4
+----------------------------------------------------------
+Class Declaration: The code starts with declaring a class named Solution.
+
+Method Declaration: Inside the class, there's a method named tribonacci that takes an integer n as input and returns an integer as the result.
+
+Base Case Check: The first thing the method does is check if n is less than 2. If n is 0 or 1, it directly returns n. This is because the Tribonacci sequence starts with 0, 1, 1 for n = 0, 1, 2, respectively.
+
+Initialization of Array: An array dp is created with initial values {0, 1, 1}. This array will store the last three numbers of the Tribonacci sequence as the algorithm progresses.
+
+Loop for Calculating Tribonacci Sequence: The method then enters a loop starting from i = 3 and going up to n. This loop calculates the next number in the Tribonacci sequence by adding the last three numbers in the dp array.
+
+Updating the Array: Inside the loop, a new variable next is calculated by adding the three elements at indices 0, 1, and 2 of the dp array. 
+Then, the elements in the dp array are shifted to the left: dp[0] takes the value of dp[1], dp[1] takes the value of dp[2], and dp[2] takes the value of next.
+
+Returning the Result: After the loop finishes, the method returns the last element of the dp array, which is the n-th Tribonacci number.
+This code efficiently calculates the n-th number in the Tribonacci sequence by using dynamic programming and updating the array of the last three numbers iteratively until it reaches the desired index n.
