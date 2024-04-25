@@ -1,0 +1,27 @@
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null) return 0;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        return (left == 0 || right == 0) ? left + right + 1: Math.min(left,right) + 1;
+       
+    }
+}
+
+Level - Easy (111)
+LOGIC: Explanation 
+Example - Input: root = [3,9,20,null,null,15,7]
+Output: 2
+------------------------------------------------------------------------------------------
+public class Solution { ... }: Defines a public class named Solution.
+
+public int minDepth(TreeNode root) { ... }: Declares a public method minDepth that takes a TreeNode named root as input and returns an integer.
+
+if(root == null) return 0;: Checks if the root node is null. If so, it means the tree is empty, so it returns 0 as the minimum depth.
+
+int left = minDepth(root.left);: Recursively calculates the minimum depth of the left subtree by calling minDepth on the left child of the current node.
+
+int right = minDepth(root.right);: Recursively calculates the minimum depth of the right subtree by calling minDepth on the right child of the current node.
+
+return (left == 0 || right == 0) ? left + right + 1: Math.min(left,right) + 1;: Combines the minimum depths of the left and right subtrees to determine the minimum depth of the entire tree. 
+If either the left or right subtree has a depth of 0, it adds 1 to the non-zero depth and returns the sum. Otherwise, it calculates the minimum depth between the left and right subtrees and adds 1 to that minimum depth.
