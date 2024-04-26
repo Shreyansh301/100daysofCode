@@ -1,0 +1,52 @@
+class Solution {
+    public int minFallingPathSum(int[][] grid) {
+        int n = grid.length, res = Integer.MAX_VALUE;
+        int[][] dp = new int[n][n];
+        for(int row[] : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        for(int j = 0; j < n; ++j) {
+            dp[0][j] = grid[0][j];
+        }
+
+        for(int i = 1; i < n; ++i) {
+            for(int j = 0; j < n; ++j) {
+                int temp = Integer.MAX_VALUE;
+
+                for(int k = 0; k < n; ++k) {
+                    if(j != k) {
+                        temp = Math.min(temp, grid[i][j] + dp[i - 1][k]);
+                    }
+
+                    dp[i][j] = temp;
+                }
+            }
+        }
+
+        for(int j = 0; j < n; ++j) {
+            res = Math.min(res, dp[n - 1][j]);
+        }
+
+        return res;
+    }
+}
+
+Level - Hard (1289)
+LOGIC: Explanation 
+Example - Input: grid = [[1,2,3],[4,5,6],[7,8,9]]
+Output: 13
+The possible falling paths are:
+[1,5,9], [1,5,7], [1,6,7], [1,6,8],
+[2,4,8], [2,4,9], [2,6,7], [2,6,8],
+[3,4,8], [3,4,9], [3,5,7], [3,5,9]
+The falling path with the smallest sum is [1,5,7], so the answer is 13.
+-------------------------------------------------------------------------------------
+The code defines a class named Solution with a public method minFallingPathSum, which takes a 2D array grid as input and returns an integer.
+It initializes variables n as the length of the grid and res to store the minimum falling path sum, initially set to Integer.MAX_VALUE.
+It creates a 2D array dp to store intermediate results for dynamic programming, initially filled with -1.
+The first loop initializes the first row of dp with values from the first row of the input grid.
+The nested loops starting from i = 1 calculate the minimum falling path sum for each cell in the grid using dynamic programming.
+Within the nested loops, it calculates the minimum sum by considering the current cell's value in the grid plus the minimum of the previous row's adjacent cells (excluding the current cell's column).
+The minimum sum calculated for each cell is stored in the dp array.
+Finally, it finds the minimum sum in the last row of dp and returns it as the result.
