@@ -1,0 +1,73 @@
+class Solution {
+  public int myAtoi(String s) {
+    s = s.strip();
+    if (s.isEmpty())
+      return 0;
+
+    final int sign = s.charAt(0) == '-' ? -1 : 1;
+    if (s.charAt(0) == '+' || s.charAt(0) == '-')
+      s = s.substring(1);
+
+    long num = 0;
+
+    for (final char c : s.toCharArray()) {
+      if (!Character.isDigit(c))
+        break;
+      num = num * 10 + (c - '0');
+      if (sign * num <= Integer.MIN_VALUE)
+        return Integer.MIN_VALUE;
+      if (sign * num >= Integer.MAX_VALUE)
+        return Integer.MAX_VALUE;
+    }
+
+    return sign * (int) num;
+  }
+}
+
+Level - Medium (8)
+LOGIC: Explanation 
+Example - Input: s = "42"
+Output: 42
+The underlined characters are what is read in, the caret is the current reader position.
+Step 1: "42" (no characters read because there is no leading whitespace)
+         ^
+Step 2: "42" (no characters read because there is neither a '-' nor '+')
+         ^
+Step 3: "42" ("42" is read in)
+           ^
+The parsed integer is 42.
+Since 42 is in the range [-231, 231 - 1], the final result is 42.
+-----------------------------------------------------------------------------------------
+Method Declaration:
+The code defines a method called myAtoi inside a class named Solution.
+The method takes a single parameter, s, which is a string.
+
+String Trimming:
+s.strip() is used to remove any leading or trailing whitespace from the input string s.
+If the trimmed string is empty (s.isEmpty()), the method returns 0.
+
+Determining Sign:
+The code checks if the first character of the trimmed string is either '-' or '+'.
+If it's '-', the sign variable is set to -1 (indicating a negative number), otherwise, it's set to 1 (positive number).
+
+Removing Sign Character:
+If the first character of the trimmed string is a sign character ('+' or '-'), it's removed by taking a substring starting from index 1 (s = s.substring(1)).
+
+Conversion to Number:
+The code initializes a long variable num to store the converted number.
+It iterates through each character of the trimmed string using a for-each loop.
+
+Checking for Digits:
+For each character c, the code checks if it is a digit using Character.isDigit(c).
+If c is not a digit, the loop breaks, meaning the numeric part of the string has ended.
+
+Converting Characters to Numeric Value:
+The code converts the character c to its numeric value by subtracting '0' (the ASCII value of '0') from it (c - '0').
+It then updates the num variable by multiplying it by 10 and adding the numeric value of the current character.
+
+Overflow Check:
+Within the loop, there are checks to ensure that num does not exceed the limits of an integer (Integer.MIN_VALUE and Integer.MAX_VALUE).
+If the signed multiplication of num with sign exceeds these limits, the method returns the corresponding limit (either Integer.MIN_VALUE or Integer.MAX_VALUE).
+
+Final Result:
+After the loop, the method returns the calculated number, multiplied by the sign to preserve its sign, and casted to an int (since the method's return type is int).
