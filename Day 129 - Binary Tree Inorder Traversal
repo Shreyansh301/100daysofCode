@@ -1,0 +1,42 @@
+class Solution {
+    private List<Integer> res = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+        traverse(root);
+        return res;
+    }
+    
+    private void traverse(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        traverse(root.left);
+        res.add(root.val);
+        traverse(root.right);
+    }
+}
+
+Level - Easy (94)
+LOGIC: Explanation 
+Exampple - Input: root = [1,null,2,3]
+Output: [1,3,2]
+------------------------------------------------------------------------
+Class Definition:
+The code defines a class named Solution.
+It has a private field res of type List<Integer> initialized with an empty ArrayList.
+
+inorderTraversal Method:
+inorderTraversal is a public method that takes a TreeNode named root as its argument.
+It calls the traverse method passing root.
+Finally, it returns the res list, which contains the inorder traversal of the tree.
+
+traverse Method:
+traverse is a private method that takes a TreeNode named root.
+If root is null, it returns immediately (base case for recursion).
+Otherwise, it recursively calls traverse on root.left, then adds the value of root to the res list, and finally recursively calls traverse on root.right.
+
+Inorder Traversal:
+Inorder traversal means visiting nodes in the order: left child, current node, right child.
+The code implements this traversal recursively by first visiting the left subtree, then adding the current node's value, and finally visiting the right subtree.
+
+Result:
+After calling inorderTraversal with the root of a binary tree, the res list will contain the inorder traversal of that tree.
