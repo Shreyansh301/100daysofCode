@@ -1,0 +1,45 @@
+class Solution {
+    public long wonderfulSubstrings(String word) {
+        int[] count = new int[1024];
+        int mask = 0;
+        count[0] = 1;
+        long result = 0;
+        for (char c : word.toCharArray()) {
+            mask ^= 1 << (c - 'a');
+            result += count[mask];
+            for (int i = 0; i < 10; i++) {
+                result += count[mask ^ (1 << i)];
+            }
+            count[mask]++;
+        }
+        return result;
+    }
+}
+
+Level - Medium (1915)
+LOGIC: Explanation 
+Example - Input: word = "aba"
+Output: 4
+The four wonderful substrings are underlined below:
+- "aba" -> "a"
+- "aba" -> "b"
+- "aba" -> "a"
+- "aba" -> "aba"
+--------------------------------------------------------------
+The code defines a class named Solution with a method wonderfulSubstrings that takes a string word as input and returns a long.
+
+It initializes an integer array count of size 1024 to store counts and an integer variable mask initialized to 0.
+
+It sets count[0] to 1 and initializes result to 0.
+
+It iterates through each character c in the input word.
+
+Inside the loop, it updates mask by XORing it with 1 shifted left by (c - 'a') bits, effectively toggling a bit in mask for each character in word.
+
+It increments result by count[mask].
+
+It then iterates through numbers 0 to 9 and increments result by count[mask ^ (1 << i)] for each iteration, effectively checking for substrings where exactly one character has an odd count.
+
+Finally, it increments count[mask].
+
+After processing all characters in word, it returns the final value of result, which represents the number of "wonderful" substrings in the input string.
