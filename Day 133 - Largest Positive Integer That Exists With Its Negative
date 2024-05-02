@@ -1,0 +1,48 @@
+class Solution {
+    public int findMaxK(int[] nums) {
+        Arrays.sort(nums);
+        int left = 0, right = nums.length - 1;
+        int maxK = Integer.MIN_VALUE;
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum == 0) {
+                maxK = Math.max(maxK, nums[right]);
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxK != Integer.MIN_VALUE ? maxK : -1;  // If no such pair found
+    }
+}
+
+Level - Medium (2441)
+LOGIC: Explanation 
+Example -  Input: nums = [-1,2,-3,3]
+Output: 3
+Explanation: 3 is the only valid k we can find in the array.
+----------------------------------------------------------------------------------------
+Class and Method:
+The code defines a class named Solution with a public method findMaxK.
+This method takes an integer array nums as input and returns an integer.
+
+Sorting:
+The Arrays.sort(nums) line sorts the input array in ascending order.
+Initialization:
+Initializes two pointers left and right at the start and end of the sorted array, respectively.
+Initializes maxK to the smallest possible integer value.
+
+Loop:
+Enters a while loop that continues as long as left is less than right.
+Inside the loop, calculates the sum of elements at left and right indices.
+
+Sum Conditions:
+If the sum is 0, updates maxK to the maximum of maxK and the value at right index, and moves left pointer forward and right pointer backward.
+If the sum is less than 0, moves left pointer forward.
+If the sum is greater than 0, moves right pointer backward.
+
+Returning Result:
+Returns maxK if it has been updated during the loop, otherwise returns -1 indicating no such pair was found whose sum is zero.
