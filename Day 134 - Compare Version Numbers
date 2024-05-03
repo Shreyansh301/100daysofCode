@@ -1,0 +1,54 @@
+class Solution {
+    public int compareVersion(String version1, String version2) {
+        
+        String v1[] = version1.split("\\.");
+        String v2[] = version2.split("\\.");
+
+        for(int i = 0; i < Math.max(v1.length, v2.length); i++) {
+
+            int num1 = i < v1.length ? Integer.parseInt(v1[i]) : 0;
+            int num2 = i < v2.length ? Integer.parseInt(v2[i]) : 0;
+
+            if(num1 < num2) {
+                return -1;
+            }
+
+            if(num1 > num2) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
+
+Level - Medium (165)
+LOGIC: Explain 
+Example - Input: version1 = "1.01", version2 = "1.001"
+Output: 0
+Ignoring leading zeroes, both "01" and "001" represent the same integer "1".
+---------------------------------------------------------------------------------------------------
+Function Signature:
+public int compareVersion(String version1, String version2)
+public: This function is accessible from other classes.
+int: It returns an integer value (either -1, 0, or 1).
+compareVersion: The name of the function.
+(String version1, String version2): Parameters the function takes, which are two strings representing version numbers.
+
+Splitting Versions:
+String v1[] = version1.split("\\.") and String v2[] = version2.split("\\.")
+This line splits each version string at every '.' character and stores the parts in arrays v1 and v2.
+
+Comparison Loop:
+for(int i = 0; i < Math.max(v1.length, v2.length); i++) { ... }
+This loop goes through each part of the version numbers until it reaches the maximum length of either version1 or version2.
+
+Parsing Numbers:
+int num1 = i < v1.length ? Integer.parseInt(v1[i]) : 0;
+This line converts the part of version1 at index i into an integer (Integer.parseInt(v1[i])). If there is no part at that index (i.e., i >= v1.length), it assigns 0 to num1.
+
+Comparison:
+if(num1 < num2) { return -1; } and if(num1 > num2) { return 1; }
+It compares num1 and num2. If num1 is less than num2, it means version1 is older, so it returns -1. If num1 is greater than num2, version1 is newer, so it returns 1.
+
+Default Case:
+If no differences are found in the parts compared so far, it means the versions are equal up to that point. In that case, it returns 0, indicating both versions are equal.
