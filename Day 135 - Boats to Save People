@@ -1,0 +1,41 @@
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int boats = 0;
+        int l = 0, r = people.length - 1;
+
+        while (l <= r) {
+            if (people[l] + people[r] <= limit) {
+                l++;
+                r--;
+            } else {
+                r--;
+            }
+            boats++;
+        }
+
+        return boats;
+    }
+}
+
+Level - Medim (881)
+LOGIC: Explanation 
+Example - Input: people = [1,2], limit = 3
+Output: 1
+1 boat (1, 2)
+------------------------------------------------------------------
+Sorting: The code starts by sorting the array of people's weights (people) in ascending order. This makes it easier to manage and ensures that heavier people are paired with lighter ones later.
+
+Initializing Variables: It initializes some variables:
+boats to count the number of boats required.
+l (left) and r (right) pointers to keep track of two ends of the sorted array.
+
+Looping: It enters a loop that continues as long as the left pointer (l) is less than or equal to the right pointer (r). This loop iterates through the array, considering pairs of people from both ends.
+
+Checking Weight Limit: Inside the loop, it checks if the sum of weights of people at positions l and r is less than or equal to the given limit:
+If it's within the limit, both pointers (l and r) are moved towards the center (l++ and r--), indicating that these two people can be on the same boat.
+If it exceeds the limit, only the right pointer (r) is moved towards the center, indicating that only the heavier person at position r should be on a separate boat.
+
+Counting Boats: Regardless of whether people are paired or a single person goes on a boat, the boats variable is incremented in each iteration of the loop.
+
+Returning Result: Once the loop completes, the function returns the total number of boats required, which is stored in the boats variable.
