@@ -1,0 +1,60 @@
+class Solution {
+    public ListNode removeNodes(ListNode head) {
+        if(head.next == null){
+            return head;
+        }
+        ListNode prevNode = head;
+        ListNode currentNode = head.next;
+
+        while(currentNode != null){
+            ListNode nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+        head.next = null;
+        head = prevNode;
+
+        prevNode = head;
+        currentNode = head.next;
+        while(currentNode != null){
+            if(currentNode.val < prevNode.val){
+                currentNode = currentNode.next;
+            }
+            else{
+                ListNode nextNode = currentNode.next;
+                currentNode.next = prevNode;
+                prevNode = currentNode;
+                currentNode = nextNode;
+            }
+            
+        }
+        head.next = null;
+        head = prevNode;
+        return head;
+    }
+}
+
+Level - Medium (2487)
+LOGIC: Explanation 
+Example - Input: head = [5,2,13,3,8]
+Output: [13,8]
+The nodes that should be removed are 5, 2 and 3.
+- Node 13 is to the right of node 5.
+- Node 13 is to the right of node 2.
+- Node 8 is to the right of node 3.
+---------------------------------------------------------------
+Method Signature: The code defines a class named Solution with a method removeNodes that takes a ListNode named head as input and returns a ListNode.
+
+Initial Check: The method checks if the head node has no next node (head.next == null). If so, it returns the head node itself as there's nothing to remove.
+
+Pointer Initialization: It initializes two pointers, prevNode and currentNode, both initially pointing to the head node and its next node, respectively.
+
+Reversing the Linked List: The code then enters a while loop that continues until currentNode becomes null. Within this loop, it reverses the linked list by manipulating the next pointers of nodes.
+
+Setting New Head: After the reversal, it sets the head.next to null and updates head to point to the last node in the reversed list (which was the first node initially).
+
+Iterating and Removing Nodes: It initializes the pointers again for another iteration. This time, it iterates through the list, checking if the current node's value is less than the previous node's value. 
+If so, it skips this node; otherwise, it connects this node to the previous node, effectively removing nodes with smaller values.
+
+Finalization and Return: Finally, it sets head.next to null again, updates head to the correct node, and returns the modified head.
