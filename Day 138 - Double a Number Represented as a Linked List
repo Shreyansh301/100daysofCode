@@ -1,0 +1,39 @@
+class Solution {
+    public ListNode doubleIt(ListNode head) {
+        Pair<Integer, ListNode> result = func(head);
+        if (result.getKey() != 0) {
+            ListNode newHead = new ListNode(result.getKey());
+            newHead.next = result.getValue();
+            return newHead;
+        }
+        return result.getValue();
+    }
+
+    private Pair<Integer, ListNode> func(ListNode head) {
+        int a = head.val * 2;
+        if (head.next != null) {
+            Pair<Integer, ListNode> nextResult = func(head.next);
+            a += nextResult.getKey();
+        }
+        head.val = a % 10;
+        return new Pair<>(a / 10, head);
+    }
+}
+
+Level - Medium (2816)
+LOGIC: Explanation 
+Example - Input: head = [1,8,9]
+Output: [3,7,8]
+The figure above corresponds to the given linked list which represents the number 189. Hence, the returned linked list represents the number 189 * 2 = 378.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+The code defines a class named Solution, which contains a method doubleIt that takes a ListNode as input and returns another ListNode.
+The ListNode class is assumed to be a typical linked list node, containing a value (val) and a reference to the next node (next).
+The doubleIt method calls a private helper method func with the input ListNode and receives a Pair<Integer, ListNode> as a result.
+The func method performs a recursive operation on the linked list nodes. It doubles the value of each node (head.val * 2) and stores the result in a.
+If the current node has a next node (head.next != null), the func method is called recursively on the next node, and its result is added to a.
+The value of the current node is updated to a % 10, i.e., the last digit of a.
+The updated value of the current node and the carry-over value (a / 10) are returned as a Pair.
+In the doubleIt method, the result from func is checked. If the carry-over value is not zero (result.getKey() != 0), a new node with the carry-over value is created and linked to the result node. 
+Otherwise, only the result node is returned.
+
+Finally, the modified or new linked list is returned as the result of the doubleIt method.
