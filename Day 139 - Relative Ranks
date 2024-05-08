@@ -1,0 +1,64 @@
+class Solution {
+    public String[] findRelativeRanks(int[] score) {
+        int n = score.length; // store length of score
+        var res = new String[n]; // intialize string array with size n
+        
+        // creates a max heap of integers. lambda sorts the scores in decendining order
+        var pq = new PriorityQueue<Integer>((a, b) -> score[b] - score[a]);
+        
+        for(int i = 0; i < n; i++){
+            pq.add(i); // add values of score to the queue
+        }
+
+
+        int i = 1; // set starting rank to 1
+
+        while(!pq.isEmpty()){
+            
+            int idx = pq.poll(); // get first value from queue
+            
+            if(i > 3){
+                res[idx] = Integer.toString(i); // convert int to String
+            }
+            else if(i == 1){
+                res[idx] = "Gold Medal";
+            }
+            else if(i == 2){
+                res[idx] = "Silver Medal";
+            }
+            else if(i == 3){
+                res[idx] = "Bronze Medal";
+            }
+            i++; // counting relative order
+        }
+        
+        return res;
+    }
+}
+
+Level - Easy (506)
+LOGIC: Explanation 
+Example -  Input: score = [5,4,3,2,1]
+Output: ["Gold Medal","Silver Medal","Bronze Medal","4","5"]
+The placements are [1st, 2nd, 3rd, 4th, 5th].
+---------------------------------------------------------------------
+Class Definition: Defines a class named Solution.
+
+Method Definition: Defines a public method findRelativeRanks that takes an integer array score as input and returns a String array.
+
+Initialization: Initializes variables n as the length of the score array and res as a String array of size n.
+
+PriorityQueue Initialization: Creates a max heap PriorityQueue named pq. The heap uses a lambda function to sort integers in descending order based on their corresponding scores in the score array.
+
+Adding Elements to PriorityQueue: Adds indices of the score array to the PriorityQueue pq.
+
+Ranking Loop: Initializes a counter i to 1 and enters a loop until pq is not empty.
+
+
+Getting Index from PriorityQueue: Retrieves the index of the maximum score from pq using poll() and stores it in idx.
+
+Assigning Ranks: Checks the value of i to determine the rank of the current score. If i is greater than 3, it assigns the rank as a String representation of i. If i is 1, 2, or 3, it assigns "Gold Medal," "Silver Medal," or "Bronze Medal" respectively.
+
+Incrementing Rank Counter: Increments i after each iteration to keep track of the relative order/rank.
+
+Returning Result: Returns the res array containing the ranks or medal names corresponding to the scores in descending order.
