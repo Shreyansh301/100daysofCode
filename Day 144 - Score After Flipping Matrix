@@ -1,0 +1,50 @@
+class Solution {
+    public int matrixScore(int[][] grid) {
+        for(int i=0; i<grid.length; i++){
+            if(grid[i][0] == 0){
+                for(int j=0; j<grid[0].length; j++){
+                    grid[i][j] = 1 - grid[i][j];
+                }
+            }
+        }
+
+        for(int j=1; j<grid[0].length; j++){
+            int count = 0;
+            for(int i=0; i<grid.length; i++){
+                if(grid[i][j] == 1){
+                    count++;
+                }
+            }
+            if(count*2 < grid.length){
+                for(int i=0; i<grid.length; i++){
+                    grid[i][j] = 1 - grid[i][j];
+                }
+            }
+        }
+
+        int sum = 0;
+
+        for(int i=0; i<grid.length; i++){
+            int row = 0;
+            for(int j=0; j<grid[0].length; j++){
+                row = row*2 + grid[i][j];
+            }
+            sum += row;
+        }
+
+        return sum;
+    }
+}
+
+Level - Medium (861)
+LOGIC: Explanation 
+Example - Input: grid = [[0,0,1,1],[1,0,1,0],[1,1,0,0]]
+Output: 39
+0b1111 + 0b1001 + 0b1111 = 15 + 9 + 15 = 39
+--------------------------------------------------------------------------
+The code defines a class Solution with a public method matrixScore that takes a 2D integer array grid as input and returns an integer.
+The method first iterates through each row of the grid. If the first element of a row is 0, it flips all elements in that row (0 to 1, and 1 to 0).
+Next, it iterates through each column starting from the second column. 
+It counts the number of 1s in each column. If the count is less than half of the total rows, it flips the values in that column.
+After adjusting rows and columns, the method calculates the final sum by converting each row of binary digits in the grid to its decimal equivalent and adding it to the sum.
+The sum is then returned as the result of the matrixScore method.
