@@ -1,0 +1,96 @@
+import java.util.*;
+
+class Solution {
+    public int maximumSafenessFactor(List<List<Integer>> grid) {
+        int row = grid.size();
+        int col = grid.get(0).size();
+
+        if (grid.get(0).get(0) == 1 || grid.get(row - 1).get(col - 1) == 1) {
+            return 0;
+        }
+
+        int[][] safeness = new int[row][col];
+        for (int[] rowArr : safeness) {
+            Arrays.fill(rowArr, -1);
+        }
+
+        Deque<int[]> q = new ArrayDeque<>();
+
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < col; c++) {
+                if (grid.get(r).get(c) == 1) {
+                    safeness[r][c] = 0;
+                    q.offer(new int[]{0, r, c});
+                }
+            }
+        }
+
+        int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        while (!q.isEmpty()) {
+            int[] current = q.poll();
+            int dis = current[0], r = current[1], c = current[2];
+            for (int[] dir : direction) {
+                int nr = r + dir[0], nc = c + dir[1];
+                if (0 <= nr && nr < row && 0 <= nc && nc < col && safeness[nr][nc] == -1) {
+                    safeness[nr][nc] = dis + 1;
+                    q.offer(new int[]{dis + 1, nr, nc});
+                }
+            }
+        }
+
+        PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+        heap.offer(new int[]{safeness[0][0], 0, 0});
+        Set<String> seen = new HashSet<>();
+        seen.add(0 + "," + 0);
+
+        while (!heap.isEmpty()) {
+            int[] current = heap.poll();
+            int dis = current[0], r = current[1], c = current[2];
+            if (r == row - 1 && c == col - 1) {
+                return dis;
+            }
+
+            for (int[] dir : direction) {
+                int nr = r + dir[0], nc = c + dir[1];
+                if (0 <= nr && nr < row && 0 <= nc && nc < col && !seen.contains(nr + "," + nc)) {
+                    int safe = Math.min(dis, safeness[nr][nc]);
+                    heap.offer(new int[]{safe, nr, nc});
+                    seen.add(nr + "," + nc);
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+
+Level - Medium (2812)
+LOGIC: Explanation 
+Example - Input: grid = [[1,0,0],[0,0,0],[0,0,1]]
+Output: 0
+All paths from (0, 0) to (n - 1, n - 1) go through the thieves in cells (0, 0) and (n - 1, n - 1).
+----------------------------------------------------------------------------------------------------------------
+Initialization and Input Check:
+The code starts by getting the dimensions of the grid.
+It immediately returns 0 if the start or end positions contain a 1 (unsafe).
+
+Setting Up the Safeness Grid:
+An int[][] safeness grid is initialized to track the distance from any 1 in the grid, initially filled with -1.
+A queue is used to perform a BFS to fill the safeness grid.
+
+Breadth-First Search (BFS) to Calculate Safeness:
+All positions containing 1 are added to the queue with distance 0.
+BFS is performed to propagate the minimum distance from each 1 to all other cells in the grid.
+
+Priority Queue to Find Maximum Safeness Path:
+A max-heap (priority queue) is used to perform a modified Dijkstra's algorithm.
+The priority queue starts with the top-left corner of the grid and tracks the minimum safeness factor encountered so far.
+
+Dijkstra's Algorithm for Path Finding:
+The algorithm explores all 4 possible directions from each cell.
+It updates the safeness factor for each cell and adds it to the priority queue if it hasn't been visited yet.
+If it reaches the bottom-right corner, it returns the current safeness factor.
+
+Return Statement:
+If the bottom-right corner is reached, the safeness factor is returned.
+If it’s not reachable, the function returns -1.
