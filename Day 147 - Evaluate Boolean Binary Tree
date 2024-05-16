@@ -1,0 +1,41 @@
+class Solution {
+  public boolean evaluateTree(TreeNode node) {
+    if (node.val == 0) return false;
+    if (node.val == 1) return true;
+
+    var left = evaluateTree(node.left);
+    var right = evaluateTree(node.right);
+
+    if (node.val == 2) return left || right;
+    return left && right;
+  }
+}
+
+Level - Easy (2331)
+LOGIC: Explanation 
+Example - Input: root = [2,1,3,null,null,0,1]
+Output: true
+The above diagram illustrates the evaluation process.
+The AND node evaluates to False AND True = False.
+The OR node evaluates to True OR False = True.
+The root node evaluates to True, so we return true.
+--------------------------------------------------------------
+Class Definition:
+class Solution: Defines a class named Solution.
+
+Method Definition:
+public boolean evaluateTree(TreeNode node): Defines a public method evaluateTree that takes a TreeNode object named node and returns a boolean value.
+
+Base Cases:
+if (node.val == 0) return false;: If the value of the current node (node.val) is 0, return false.
+if (node.val == 1) return true;: If the value of the current node (node.val) is 1, return true.
+
+Recursive Evaluation:
+var left = evaluateTree(node.left);: Recursively evaluates the left child of the current node and stores the result in left.
+var right = evaluateTree(node.right);: Recursively evaluates the right child of the current node and stores the result in right.
+
+Logical OR Operation:
+if (node.val == 2) return left || right;: If the value of the current node is 2, return the logical OR (||) of the left and right evaluations.
+
+Logical AND Operation:
+return left && right;: If the value of the current node is not 0, 1, or 2 (assumed to be 3 based on context), return the logical AND (&&) of the left and right evaluations.
