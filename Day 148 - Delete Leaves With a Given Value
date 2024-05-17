@@ -1,0 +1,31 @@
+class Solution {
+    public TreeNode removeLeafNodes(TreeNode root, int target) {
+        if (root == null) return root;
+        root.left = removeLeafNodes(root.left, target);
+        root.right = removeLeafNodes(root.right, target);
+        return (root.left == null && root.right == null && root.val == target) ? null : root;
+    }
+}
+
+Level - Medium (1325)
+LOGIC: Explanation 
+Example - Input: root = [1,2,3,2,null,2,4], target = 2
+Output: [1,null,3,null,4]
+Leaf nodes in green with value (target = 2) are removed (Picture in left). 
+After removing, new nodes become leaf nodes with value (target = 2) (Picture in center).
+-------------------------------------------------------------------------------------------------
+Function Signature: The function removeLeafNodes takes a TreeNode root and an integer target as parameters.
+
+Base Case: If the root is null, return null immediately. This handles the case where the tree or subtree is empty.
+
+Recursive Calls:
+Recursively call removeLeafNodes on the left child of the current node and update root.left.
+Recursively call removeLeafNodes on the right child of the current node and update root.right.
+
+Check Leaf Node and Target:
+After updating the left and right children, check if the current node (root) is a leaf node (both left and right children are null).
+Also, check if the current node's value equals the target.
+
+Remove Leaf Node:
+If the current node is a leaf node and its value is equal to the target, return null (effectively removing this leaf node from the tree).
+Otherwise, return the current node (root).This recursive approach ensures that all leaf nodes with the specified target value are removed, and the process is repeated until no such leaf nodes remain.
