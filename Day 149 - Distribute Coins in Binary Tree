@@ -1,0 +1,55 @@
+class Solution {
+    public int distributeCoins(TreeNode root) {
+        TreeNode dummy = new TreeNode();
+        return dfs(root, dummy);
+    }
+
+    private int dfs(TreeNode cur_node, TreeNode parent) {
+        if (cur_node == null) {
+            return 0;
+        }
+        int moves = dfs(cur_node.left, cur_node) + dfs(cur_node.right, cur_node);
+        int from_this = cur_node.val - 1;
+        parent.val += from_this;
+        moves += Math.abs(from_this);
+        return moves;
+    }
+}
+
+Level - Medium (1979)
+LOGIC: Explanation 
+Example - Input: root = [3,0,0]
+Output: 2
+From the root of the tree, we move one coin to its left child, and one coin to its right child.
+----------------------------------------------------------------------------------------------------
+Class and Method Definition:
+The Solution class contains the distributeCoins method which is the main function to distribute coins in a binary tree.
+TreeNode is assumed to be a predefined class representing nodes in the binary tree, with fields for val, left, and right.
+
+Initial Setup:
+A dummy TreeNode is created to act as a temporary parent node for the root.
+The dfs (Depth-First Search) method is called with the root and the dummy node.
+
+Depth-First Search (DFS) Function:
+The dfs method is a recursive function that traverses the tree and calculates the number of moves required to balance the coins.
+
+Base Case:
+If the current node (cur_node) is null, the method returns 0 since no moves are needed for a nonexistent node.
+
+Recursive Traversal:
+The dfs method is called recursively for the left and right children of the current node. This accumulates the moves required for the subtrees.
+
+Calculate Excess Coins:
+from_this calculates the number of excess coins at the current node: cur_node.val - 1.
+If cur_node.val is greater than 1, there are excess coins that need to be moved.
+If cur_node.val is less than 1, it indicates a deficit and coins need to be moved in.
+
+Update Parent Node:
+The parent's val is updated by adding from_this to it. This effectively moves the excess coins from the current node to its parent.
+
+Accumulate Moves:
+The absolute value of from_this (the number of coins moved) is added to moves.
+
+Return Moves:
+The total number of moves required for the subtree rooted at the current node is returned.
+By the end of the DFS traversal, the distributeCoins method returns the total number of moves needed to ensure each node has exactly one coin.
