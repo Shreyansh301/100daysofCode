@@ -1,0 +1,55 @@
+class Solution {
+    public long maximumValueSum(int[] nums, int k, int[][] edges) {  
+        long sum = 0;
+        long minExtra = 1000000;
+        int count = 0;
+
+        for( int val : nums) {
+            if ((val ^ k) > val ) {
+                sum += val ^ k;
+                minExtra = Math.min(minExtra, (val ^ k)- val);
+                count++;
+            } else {
+                sum += val;
+                minExtra = Math.min(minExtra, val - (val ^ k));
+            }
+        }
+
+        if ( count %2 ==0 ) {
+            return sum;
+        } else {
+            return sum - minExtra;
+        }
+
+    }
+}
+
+Level - Hard (3068)
+LOGIC: Explanation 
+Example - Input: nums = [1,2,1], k = 3, edges = [[0,1],[0,2]]
+Output: 6
+Alice can achieve the maximum sum of 6 using a single operation:
+- Choose the edge [0,2]. nums[0] and nums[2] become: 1 XOR 3 = 2, and the array nums becomes: [1,2,1] -> [2,2,2].
+The total sum of values is 2 + 2 + 2 = 6.
+It can be shown that 6 is the maximum achievable sum of values.
+-----------------------------------------------------------------------------------------------------------------------
+Initialization:
+sum is initialized to 0.
+minExtra is initialized to a large value (1000000).
+count is initialized to 0.
+
+Iterate through nums:
+For each val in nums:
+Compute val ^ k.
+If (val ^ k) > val:
+Add (val ^ k) to sum.
+Update minExtra to the smaller of its current value or (val ^ k) - val.
+
+Increment count.
+Else:
+Add val to sum.
+Update minExtra to the smaller of its current value or val - (val ^ k).
+
+Final Computation:
+If count is even, return sum.
+If count is odd, return sum - minExtra.
