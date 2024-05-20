@@ -1,0 +1,52 @@
+class Solution {
+    public int subsetXORSum(int[] nums) {
+        // First create helper function, this function will help us to calculate
+        // when i'm including, when i'm not. The XOR of that array
+        return helper(nums, 0, 0); // nums, level, current XOR
+    }
+    public int helper(int nums[], int level, int currentXOR){
+        // base condition
+        if(level == nums.length) return currentXOR;
+        // creating include 
+        int include = helper(nums, level + 1, currentXOR^nums[level]);
+        // creating exclude
+        int exclude = helper(nums, level + 1, currentXOR);
+        
+        return include + exclude;
+    }
+}
+
+Level - Easy (1863)
+LOGIC: Explanation 
+Example - Input: nums = [1,3]
+Output: 6
+ The 4 subsets of [1,3] are:
+- The empty subset has an XOR total of 0.
+- [1] has an XOR total of 1.
+- [3] has an XOR total of 3.
+- [1,3] has an XOR total of 1 XOR 3 = 2.
+0 + 1 + 3 + 2 = 6
+------------------------------------------------------------------------------
+Class Definition
+Class Solution: Defines the main class Solution.
+
+Main Function
+public int subsetXORSum(int[] nums):
+This is the main function that calculates the sum of XORs of all subsets of the array nums.
+It calls a helper function with initial parameters: the array nums, starting level 0, and initial currentXOR value 0.
+
+Helper Function
+public int helper(int[] nums, int level, int currentXOR):
+This is a recursive function that calculates the XOR sum of subsets by either including or excluding the current element.
+
+Base Condition:
+If level equals the length of nums, it returns the currentXOR value. This signifies reaching the end of the array and forms the base case for recursion.
+
+Include Case:
+Calls itself recursively with the next level (level + 1) and includes the current element in the XOR calculation (currentXOR ^ nums[level]).
+
+Exclude Case:
+Calls itself recursively with the next level (level + 1) but excludes the current element, keeping currentXOR unchanged.
+
+Return:
+Sums the results of the include and exclude cases and returns the total XOR sum of all subsets.
