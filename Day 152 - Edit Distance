@@ -1,0 +1,74 @@
+class Solution {
+    int[][] dp ;
+    
+    public int solve(String word1, String word2, int wi1, int wi2){
+        if(wi1==0 || wi2==0)
+            return wi1==0 ? wi2 :wi1;
+        
+        if(dp[wi1][wi2]!=-1)
+            return dp[wi1][wi2];
+        
+        int store = 0;
+        if(word1.charAt(wi1-1) == word2.charAt(wi2-1)){
+            store =  solve(word1,word2, wi1-1,wi2-1);
+        }else{
+            int insert = solve(word1,word2,wi1,wi2-1);
+            int delete = solve(word1,word2,wi1-1,wi2);
+            int replace = solve(word1,word2,wi1-1,wi2-1);
+            store = Math.min(insert, Math.min(delete, replace))+1;
+        }
+        dp[wi1][wi2] = store;
+        return store;
+    }
+    
+    public int minDistance(String word1, String word2) {
+        dp = new int[word1.length()+1][word2.length()+1];
+        for(int i = 0;i<=word1.length();i++)
+            Arrays.fill(dp[i],-1);
+        
+        for(int i = 0;i<=word1.length();i++){
+            for(int j = 0;j<=word2.length();j++)
+                if(i==0||j==0)
+                    dp[i][j] = i==0 ? j :i;
+        }
+        int ans = solve(word1,word2, word1.length(),word2.length());
+        ans = dp[word1.length()][word2.length()];
+       
+        
+        return ans;
+    }
+}
+
+Level - Medium (72)
+LOGIC: Explanation 
+Example - Input: word1 = "horse", word2 = "ros"
+Output: 3
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+-------------------------------------------------------------------------------------------
+Initialization:
+Define a 2D array dp to store intermediate results for dynamic programming.
+The dp array dimensions are based on the lengths of word1 and word2.
+
+Base Cases:
+If either word1 or word2 is empty (wi1 == 0 or wi2 == 0), the edit distance is the length of the other word.
+Initialize the first row and first column of the dp array to handle these base cases.
+
+Recursive Function solve:
+This function computes the edit distance for the substrings of word1 and word2 up to indices wi1 and wi2.
+If the characters at the current positions of both words are the same, move to the next pair of characters.
+If the characters are different, compute the costs for insert, delete, and replace operations, then take the minimum of these costs plus one.
+
+Memoization:
+Use the dp array to store results of subproblems to avoid redundant computations.
+Check the dp array before computing the edit distance for any pair of indices.
+
+Compute Edit Distance:
+Initialize the dp array with -1 to signify uncomputed states.
+Fill in the base cases in the dp array.
+Call the solve function starting from the full lengths of word1 and word2.
+The result is stored in dp[word1.length()][word2.length()].
+
+Return Result:
+The final edit distance is returned from the minDistance method.
