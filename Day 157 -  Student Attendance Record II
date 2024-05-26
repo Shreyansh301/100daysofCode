@@ -1,0 +1,59 @@
+class Solution {
+    int MOD = 1000000007;
+
+    public int solve(int num, int absentCount, int lateCount, int n, int[][][] dp) {
+        // Base case: if num exceeds n, return 1
+        if (num > n)
+            return 1;
+        // Check if this state has already been computed
+        if (dp[num][absentCount][lateCount] != -1)
+            return dp[num][absentCount][lateCount];
+
+        // Calculate the number of valid sequences by adding an 'A'
+        int absent = absentCount < 1 ? solve(num + 1, absentCount + 1, 0, n, dp) : 0;
+        // Calculate the number of valid sequences by adding an 'L'
+        int late = lateCount < 2 ? solve(num + 1, absentCount, lateCount + 1, n, dp) : 0;
+        // Calculate the number of valid sequences by adding a 'P'
+        int present = solve(num + 1, absentCount, 0, n, dp);
+
+        // Sum the results and apply modulo
+        dp[num][absentCount][lateCount] = ((absent + late) % MOD + present % MOD) % MOD;
+        return dp[num][absentCount][lateCount];
+    }
+
+    public int checkRecord(int n) {
+        int[][][] dp = new int[n + 1][2][4];
+        // Initialize DP array with -1
+        for (int[][] twoD : dp) {
+            for (int[] oneD : twoD) {
+                Arrays.fill(oneD, -1);
+            }
+        }
+        // Start solving from day 1 with 0 absents and 0 lates
+        return solve(1, 0, 0, n, dp);
+    }
+}
+
+Level - Hard (552)
+LOGIC: Explanation 
+Example - Input: n = 2
+Output: 8
+There are 8 records with length 2 that are eligible for an award:
+"PP", "AP", "PA", "LP", "PL", "AL", "LA", "LL"
+Only "AA" is not eligible because there are 2 absences (there need to be fewer than 2).
+----------------------------------------------------------------------------------------------
+Class Definition: A Solution class is defined.
+Constant Declaration: MOD is set to 1000000007 for modulo operations to handle large numbers.
+Recursive Function: solve function is defined to compute the number of valid sequences.
+Base Case: If num exceeds n, return 1 (end of sequence).
+Memoization Check: If the current state has been computed (dp[num][absentCount][lateCount] != -1), return the stored value.
+Add 'A': If absentCount is less than 1, recursively solve for the next day with an incremented absentCount and reset lateCount.
+Add 'L': If lateCount is less than 2, recursively solve for the next day with an incremented lateCount.
+Add 'P': Recursively solve for the next day with absentCount unchanged and lateCount reset.
+Sum and Modulo: Sum the results of adding 'A', 'L', and 'P', apply modulo, and store in dp.
+Return Result: Return the computed value for the current state.
+Entry Function: checkRecord function initializes the 3D dp array with -1.
+Initialize DP: Iterate through the dp array to fill it with -1.
+Solve: Call solve starting from day 1 with 0 absents and 0 lates.
+Return Final Answer: Return the result from the solve function.
+
