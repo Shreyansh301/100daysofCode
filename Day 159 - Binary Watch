@@ -1,0 +1,51 @@
+class Solution {
+    public List<String> readBinaryWatch(int num) {
+        List<String> result = new ArrayList<>();
+        
+        //range 0-3 are hours and range 4-9 are minutes
+        int[] arr = {1, 2, 4, 8, 1, 2, 4, 8, 16, 32};
+        backtrack(arr, 0, 0, 0, num, result);
+        return result;
+    }
+
+    public void backtrack(int[] arr, int position, int hours, int minutes, int limit, List<String> result) {
+        //when num(limit) reaches to the zero, store hours and minutes into result list
+        if (limit == 0) {
+            //during recursion we might get e.g 4 + 8 = 12 hours which we must skip because max hour value could be 11
+            if(hours <= 11 && minutes <= 59) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(hours).append(":").append(minutes <= 9 ? "0" + minutes : minutes);
+                result.add(builder.toString());
+            }
+            return;
+        }
+
+        //standard backtracking solution add new value do recursion and then remove it
+        for (int i = position; i < arr.length; i++) {
+            if (isHour(i)) hours += arr[i];
+            else minutes += arr[i];
+
+            backtrack(arr, i + 1, hours, minutes, limit - 1, result);
+
+            if (isHour(i)) hours -= arr[i];
+            else minutes -= arr[i];
+        }
+    }
+
+    //Simple check by range: hours or minutes
+    public boolean isHour(int position) {
+        return position >= 0 && position <= 3;
+    }
+}
+
+Level - Easy (401)
+LOGIC: Explanation 
+Example - Input: turnedOn = 1
+Output: ["0:01","0:02","0:04","0:08","0:16","0:32","1:00","2:00","4:00","8:00"]
+-------------------------------------------------------------------------------------
+Main Function: readBinaryWatch(int num) initializes arr for binary digits, calls backtrack, and returns results.
+Backtracking Function: backtrack(int[] arr, int position, int hours, int minutes, int limit, List<String> result) recursively explores all combinations of num LEDs to form valid times.
+Base Case: When limit is 0, checks if hours and minutes form a valid time and adds to result.
+Recursive Step: Iterates through arr, updates hours or minutes, and recursively calls backtrack with decreased limit.
+Reversal: After recursion, reverts hours or minutes to explore other combinations.
+Helper Function: isHour(int position) checks if the position in arr corresponds to an hour LED.
