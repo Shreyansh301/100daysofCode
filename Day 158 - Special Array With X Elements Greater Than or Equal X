@@ -1,0 +1,27 @@
+class Solution {
+    public int specialArray(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i <= nums.length; i++) {
+            int count = 0;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[j] >= i)
+                    count++;
+            }
+            if (count == i)
+                return count;
+        }
+        return -1;
+    }
+}
+
+Level - Easy (1608)
+LOGIC: Explanation 
+Example - Input: nums = [3,5]
+Output: 2
+There are 2 values (3 and 5) that are greater than or equal to 2.
+----------------------------------------------------------------------------
+Sort the Array: The array nums is sorted in ascending order using Arrays.sort(nums);.
+Iterate Possible Values: Loop through all possible values of x from 0 to the length of the array (nums.length).
+Count Elements: For each x, count how many elements in nums are greater than or equal to x.
+Check Condition: If the count of elements equal to or greater than x matches x, return x.
+Return -1 if Not Found: If no such x is found by the end of the loop, return -1.
