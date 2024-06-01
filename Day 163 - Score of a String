@@ -1,0 +1,30 @@
+class Solution {
+    public int scoreOfString(String s) {
+        int[] array = new int[s.length()];
+        int ans = 0, index = 0;
+        for (char ch : s.toCharArray()) {
+            array[index++] = (int) ch;
+        }
+        for (int i = 1; i < s.length(); i++) {
+            ans += Math.abs(array[i - 1] - array[i]);
+        }
+        return ans;
+    }
+}
+
+Level - Easy (3110)
+LOGIC: Explanation 
+Example - Input: s = "hello"
+
+Output: 13
+The ASCII values of the characters in s are: 'h' = 104, 'e' = 101, 'l' = 108, 'o' = 111. 
+So, the score of s would be |104 - 101| + |101 - 108| + |108 - 108| + |108 - 111| = 3 + 7 + 0 + 3 = 13.
+-----------------------------------------------------------------------------------------------------------
+Method Definition: Defines a method scoreOfString that takes a string s and returns an integer.
+Array Initialization: Initializes an integer array array with the length of the string s.
+Variable Initialization: Initializes two integers, ans (answer) to 0 and index to 0.
+Character Loop: Iterates through each character ch in the string s.
+Array Population: Converts each character ch to its ASCII value and stores it in array, incrementing index.
+Difference Calculation Loop: Loops through the array starting from the second element.
+Difference Summation: Adds the absolute difference between consecutive ASCII values in array to ans.
+Return Result: Returns the accumulated result ans.
