@@ -1,0 +1,27 @@
+class Solution {
+    public void reverseString(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+        while (left < right) {
+            // Swap the characters at left and right indices
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            // Move the pointers towards the center
+            left++;
+            right--;
+        }
+    }
+}
+
+Level - Easy (344)
+LOGIC: Explanation 
+Example - Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+-------------------------------------------------------------------------
+Method Definition: The method reverseString takes a character array s as an argument.
+Initialize Pointers: Two pointers, left (starting at 0) and right (starting at the end of the array), are initialized.
+While Loop: A loop runs while left is less than right.
+Swap Characters: The characters at indices left and right are swapped.
+Move Pointers: The left pointer is incremented and the right pointer is decremented.
+End of Loop: The loop continues until left is no longer less than right, effectively reversing the array.
