@@ -1,0 +1,58 @@
+class Solution {
+    public int appendCharacters(String s, String t) {
+        if(s.equals(t))
+            return 0;
+        char chS[] = s.toCharArray();
+        char chT[] = t.toCharArray();
+
+        int i = 0, j = 0;
+        int m = chS.length, n = chT.length;
+        for(; i < m; i++)
+        {
+            if(chS[i] == chT[j])
+                j++;
+            
+            if(j == n)
+                return 0;
+        }
+        return n - j;
+        
+    }
+}
+
+Level - Medium (2486)
+LOGIC: Explanation 
+Example - Input: s = "coaching", t = "coding"
+Output: 4
+Append the characters "ding" to the end of s so that s = "coachingding".
+Now, t is a subsequence of s ("coachingding").
+It can be shown that appending any 3 characters to the end of s will never make t a subsequence.
+-------------------------------------------------------------------------------------------------------
+Class and Method Definition:
+Define a class Solution.
+Define a public method appendCharacters that takes two strings s and t and returns an integer.
+
+Check for Equality:
+If s is equal to t, return 0 immediately since no characters need to be appended.
+
+Convert Strings to Character Arrays:
+Convert s to a character array chS.
+Convert t to a character array chT.
+
+Initialize Indices and Length Variables:
+Initialize i (index for chS) to 0.
+Initialize j (index for chT) to 0.
+Store the length of chS in m.
+Store the length of chT in n.
+
+Iterate Through Character Array chS:
+Use a for loop to iterate through chS using index i.
+
+Check for Matching Characters:
+Inside the loop, if chS[i] is equal to chT[j], increment j to move to the next character in chT.
+
+Check if All Characters of t are Found:
+If j equals n (i.e., all characters of t are found in sequence within s), return 0 since no additional characters are needed.
+
+After Loop, Calculate and Return Remaining Characters:
+After the loop completes, return n - j, which represents the number of characters remaining in t that were not found in sequence in s.
