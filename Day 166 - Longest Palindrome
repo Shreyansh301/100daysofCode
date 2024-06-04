@@ -1,0 +1,56 @@
+class Solution {
+    public int longestPalindrome(String s) {
+        Map<Character, Integer> counts = new HashMap<>();
+        
+        for (char c : s.toCharArray()) {
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+        }
+        
+        int length = 0;
+        boolean hasOdd = false;
+        
+        for (int count : counts.values()) {
+            length += (count / 2) * 2;
+            if (count % 2 == 1) {
+                hasOdd = true;
+            }
+        }
+        
+        if (hasOdd) {
+            length += 1;
+        }
+        
+        return length;
+    }
+}
+
+Level - Easy (409)
+LOGIC: Explanation
+Example - Input: s = "abccccdd"
+Output: 7
+One longest palindrome that can be built is "dccaccd", whose length is 7.
+----------------------------------------------------------------------------------
+Class and Method Definition:
+The class Solution contains the method longestPalindrome(String s).
+
+Initialize a HashMap:
+A HashMap named counts is created to store the frequency of each character in the string s.
+
+Count Character Frequencies:
+A for loop iterates over each character c in the string s.
+For each character, the counts map is updated with the current count of that character, incrementing it by one.
+
+Initialize Variables:
+An integer variable length is initialized to 0 to keep track of the length of the longest palindrome that can be formed.
+A boolean variable hasOdd is initialized to false to check if there is any character with an odd frequency.
+
+Calculate Palindrome Length:
+A for loop iterates over the values (frequencies) in the counts map.
+For each frequency count, the length is increased by (count / 2) * 2. This adds the largest even number less than or equal to count to the length.
+If count is odd (count % 2 == 1), hasOdd is set to true.
+
+Adjust Length for Odd Frequency:
+After the loop, if hasOdd is true, it means there was at least one character with an odd frequency. In this case, 1 is added to the length to account for a central character in the palindrome.
+
+Return Result:
+The method returns the computed length which represents the length of the longest palindrome that can be constructed from the input string s.
