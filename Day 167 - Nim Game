@@ -1,0 +1,35 @@
+class Solution {
+    public boolean canWinNim(int n) {
+        if(n<=3){
+            return true;
+        }
+        if(n%4==0)  return false;
+        return true;
+    }
+}
+
+Level - Easy (292)
+LOGIC: Explanation 
+Example - Input: n = 4
+Output: false
+These are the possible outcomes:
+1. You remove 1 stone. Your friend removes 3 stones, including the last stone. Your friend wins.
+2. You remove 2 stones. Your friend removes 2 stones, including the last stone. Your friend wins.
+3. You remove 3 stones. Your friend removes the last stone. Your friend wins.
+In all outcomes, your friend wins.
+-------------------------------------------------------------------------------------------------------
+Class Definition:
+The code defines a public class named Solution.
+
+Method Definition:
+The class contains a public method canWinNim that takes an integer parameter n and returns a boolean value.
+
+Base Case:
+The method first checks if n is less than or equal to 3. If n is 3 or less, the method returns true. This is because if there are 1, 2, or 3 stones, the first player can take all of them and win.
+
+Divisibility Check:
+The method then checks if n is divisible by 4 using the condition n % 4 == 0.
+If n is divisible by 4 (i.e., the remainder when n is divided by 4 is 0), the method returns false. This is because if n is a multiple of 4, the player whose turn it is will always lose if both players play optimally.
+
+Default Return:
+If n is not divisible by 4 and is greater than 3, the method returns true. This implies that the first player can always force a win if n is not a multiple of 4.
