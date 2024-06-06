@@ -1,0 +1,54 @@
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        if (hand.length % groupSize != 0) return false;
+
+        // Frequency map
+        Map<Integer, Integer> count = new TreeMap<>();
+        for (int card : hand) {
+            count.put(card, count.getOrDefault(card, 0) + 1);
+        }
+
+        // Iterate over the map
+        for (int key : count.keySet()) {
+            if (count.get(key) > 0) {
+                for (int i = 1; i < groupSize; i++) {
+                    if (count.getOrDefault(key + i, 0) < count.get(key)) {
+                        return false;
+                    }
+                    count.put(key + i, count.get(key + i) - count.get(key));
+                }
+            }
+        }
+        return true;
+    }
+}
+
+Level - Medium (846)
+LOGIC: Explanation 
+Example - Input: hand = [1,2,3,6,2,3,4,7,8], groupSize = 3
+Output: true
+Alice's hand can be rearranged as [1,2,3],[2,3,4],[6,7,8]
+-----------------------------------------------------------------------------------
+Function Signature:
+public boolean isNStraightHand(int[] hand, int groupSize): This function takes an array of integers hand and an integer groupSize as input, and returns a boolean indicating whether the hand can be divided into groups of consecutive cards of size groupSize.
+
+Edge Case Check:
+if (hand.length % groupSize != 0) return false;: If the total number of cards in the hand is not divisible by the group size, it's impossible to form groups, so the function immediately returns false.
+
+Frequency Map Creation:
+Map<Integer, Integer> count = new TreeMap<>();: A TreeMap is used to store the frequency of each card, sorted by the card values.
+
+Populate Frequency Map:
+for (int card : hand) { count.put(card, count.getOrDefault(card, 0) + 1); }: This loop populates the frequency map with the count of each card in the hand.
+
+Iterate Over Map Keys:
+for (int key : count.keySet()) {: This loop iterates over each unique card value in the frequency map.
+
+Check and Form Groups:
+if (count.get(key) > 0) {: If there are cards of the current value remaining (i.e., their count is greater than 0).
+for (int i = 1; i < groupSize; i++) {: For each subsequent card needed to form a group (from key+1 to key+groupSize-1).
+if (count.getOrDefault(key + i, 0) < count.get(key)) { return false; }: Check if there are enough cards of the next required value. If not, return false.
+count.put(key + i, count.get(key + i) - count.get(key));: Reduce the count of the subsequent card by the count of the current card.
+
+Return True:
+return true;: If all groups are successfully formed, return true.
