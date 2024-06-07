@@ -1,0 +1,182 @@
+class Solution {
+    
+    public String replaceWords(List<String> dictionary, String sentence) {
+        
+        Dictionary dict = new Dictionary();
+        for(String word: dictionary) {
+            dict.addToDictionary(word);
+        }
+        
+        return updatedSentence(sentence, dict);
+    }   
+
+    private String updatedSentence(String sentence, Dictionary dictionary) {
+        StringBuilder sb = new StringBuilder();
+
+        for(String str : sentence.split(" ")) {
+            String newString  = getRootWord(dictionary, str);
+            sb.append(newString != null ? newString : str).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    private String getRootWord(Dictionary dictionary, String word) {
+        StringBuilder sb = new StringBuilder();
+        Letter[] letters = dictionary.letters;
+        Letter current = null;
+
+        for(char c : word.toCharArray()) {
+            current = letters[c-'a'];
+            if(current == null) {
+                return null;
+            } 
+            sb.append(c);
+            if(current.isWordEnd) {
+                return sb.toString();
+            }
+            letters = current.followers;
+        }
+        return sb.toString();
+    }
+
+    class Letter {
+        char c;
+        boolean isWordEnd;
+        Letter[] followers;
+
+        public Letter(char c) {
+            this.c = c;
+            followers = new Letter[26];
+        }
+
+        public void setWordEnd(boolean end) {
+            this.isWordEnd = end;
+        }
+
+        @Override
+        public String toString() {
+            return "" +c;
+        }
+    }
+
+    class Dictionary {
+
+        Letter[] letters;
+        public Dictionary() {
+            letters = new Letter[26];
+        }  
+
+        public void addToDictionary(String word) {
+
+            if(word != null && word.length() > 0) {
+
+                char c = word.charAt(0);
+
+                if(letters[c-'a'] == null) {
+                    letters[c-'a'] = addNewWord(word);
+                } else {
+                    Letter letter = letters[c-'a'];
+                    for(int i = 1; i < word.length(); i++) {
+                        c = word.charAt(i);
+                        if(letter.followers[c-'a'] != null) {
+                            letter = letter.followers[c-'a'];
+                        } else {
+                            Letter newLetter = new Letter(c);
+                            letter.followers[c-'a'] = newLetter;
+                            letter = newLetter;
+                        }
+                    }
+                    letter.isWordEnd = true;
+                }
+
+            }
+        }
+
+        private Letter addNewWord(String word) {
+
+            Letter root  = null;
+            if(word != null && word.length() > 0) {
+                
+                root = new Letter(word.charAt(0));
+                Letter current = root;
+
+                for(int i =1; i < word.length(); i++) {
+                    char ch = word.charAt(i);
+                    Letter newLetter = new Letter(ch);
+                    current.followers[ch-'a'] = newLetter;
+                    current = newLetter;
+                }
+                current.isWordEnd = true;
+                
+            }
+            return root;
+        }
+    }
+}
+
+Level - Medium (648)
+LOGIC: Explanation 
+Example - Input: dictionary = ["cat","bat","rat"], sentence = "the cattle was rattled by the battery"
+Output: "the cat was rat by the bat"
+------------------------------------------------------------------------------------------------------------
+### Class `Solution`
+1. **Encapsulates the main functionality for the problem solution.**
+
+### Method `replaceWords`
+2. **Parameters:** Takes a list of root words (`dictionary`) and a sentence (`sentence`).
+3. **Initializes `Dictionary` object:** Creates a `Dictionary` object which is a trie-based structure to store the root words.
+4. **Adds words to the dictionary:** Iterates over each word in the `dictionary` list and adds it to the `Dictionary` object.
+5. **Returns updated sentence:** Calls the `updatedSentence` method to replace words in the `sentence` with their root forms and returns the result.
+
+### Method `updatedSentence`
+6. **Parameters:** Takes the original sentence and the `Dictionary` object.
+7. **Splits sentence:** Splits the sentence into words based on spaces.
+8. **Builds new sentence:** Iterates over each word in the sentence, finds the root word using the `getRootWord` method, and appends either the root word or the original word (if no root is found) to a `StringBuilder`.
+9. **Returns the updated sentence:** Converts the `StringBuilder` to a string, trims any trailing spaces, and returns it.
+
+### Method `getRootWord`
+10. **Parameters:** Takes the `Dictionary` object and a word.
+11. **Initializes variables:** Uses a `StringBuilder` to construct the root word, gets the array of `Letter` objects (trie nodes) from the `Dictionary`.
+12. **Traverses trie:** Iterates over each character in the word, updates the current `Letter` node to the corresponding child node, and appends the character to the `StringBuilder`.
+13. **Checks for root word:** If the current `Letter` node marks the end of a root word, returns the constructed root word.
+14. **Returns original word:** If no root word is found, returns the original word.
+
+### Class `Letter`
+15. **Represents a node in the trie with three attributes:**
+    - `char c`: The character this node represents.
+    - `boolean isWordEnd`: Flag to indicate if this node marks the end of a word.
+    - `Letter[] followers`: An array of `Letter` objects representing child nodes for each possible subsequent character.
+
+### Constructor `Letter`
+16. **Initializes a letter node:** Sets the character and initializes the `followers` array for child nodes.
+
+### Method `setWordEnd`
+17. **Sets the word end flag:** Marks this node as the end of a word in the trie.
+
+### Class `Dictionary`
+18. **Represents the trie structure with a single attribute:**
+    - `Letter[] letters`: An array of `Letter` objects representing the root nodes of the trie.
+
+### Constructor `Dictionary`
+19. **Initializes the dictionary:** Creates an array of `Letter` objects to serve as the root nodes for each letter of the alphabet.
+
+### Method `addToDictionary`
+20. **Parameters:** Takes a word to be added to the dictionary.
+21. **Initial checks:** Ensures the word is not null and has a length greater than zero.
+22. **Adds the word to the trie:**
+    - **First character:** Checks if a `Letter` node for the first character exists. If not, creates a new `Letter` node and adds it.
+    - **Subsequent characters:** Iterates through the remaining characters of the word, navigating through or creating new `Letter` nodes as needed.
+    - **Marks word end:** Sets the `isWordEnd` flag on the final `Letter` node.
+
+### Method `addNewWord`
+23. **Parameters:** Takes a word to be added to the trie.
+24. **Initializes variables:** Creates the root `Letter` node for the first character of the word.
+25. **Builds the trie path:** Iterates over the characters of the word, creating and linking `Letter` nodes for each character.
+26. **Marks word end:** Sets the `isWordEnd` flag on the final `Letter` node.
+27. **Returns root:** Returns the root `Letter` node for the word.
+
+### Main Flow of Execution
+28. **Creates `Dictionary` object:** Initializes a new `Dictionary`.
+29. **Populates dictionary:** Adds each root word from the `dictionary` list to the `Dictionary` object using `addToDictionary`.
+30. **Processes sentence:** Splits the input sentence into words, replaces each word with its root form (if found in the dictionary) using `getRootWord`, and builds a new sentence.
+31. **Returns result:** Outputs the updated sentence with words replaced by their roots where applicable.
