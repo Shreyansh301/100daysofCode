@@ -1,0 +1,33 @@
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        Set<Integer> modSet=new HashSet();
+        int currSum = 0, prevSum=0; 
+		//when we add prevSum=0 in set it will actually check if currSum is divided by k 
+        for(int n : nums) {
+            currSum += n;
+            if(modSet.contains(currSum%k)) {
+                return true;
+            }
+            currSum %=k;
+            modSet.add(prevSum);
+            prevSum = currSum;
+        }
+        return false;
+    }
+}
+
+Level - Medium (523)
+LOGIC: Explanation 
+Example - Input: nums = [23,2,4,6,7], k = 6
+Output: true
+Explanation: [2, 4] is a continuous subarray of size 2 whose elements sum up to 6.
+-----------------------------------------------------------------------------------------------
+Initialize a HashSet modSet to keep track of the remainders.
+Initialize currSum and prevSum to 0 to store the current cumulative sum and the previous cumulative sum modulo k.
+Iterate through each element n in the input array nums:
+Add n to currSum.
+Check if the remainder of currSum divided by k is already in modSet; if true, return true.
+Update currSum to currSum % k.
+Add prevSum to modSet (where prevSum represents the cumulative sum before the current element modulo k).
+Update prevSum to the current currSum.
+Return false if no valid subarray sum that is a multiple of k is found.
