@@ -1,0 +1,64 @@
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
+        int prefix_sum=0;
+        int count=0;
+        for(int i=0; i<nums.length; i++){
+            prefix_sum+=nums[i];
+            int rem=prefix_sum % k;
+            if(rem<0){
+                rem=(rem+k);
+            }
+            if(map.containsKey(rem)){
+                count+=map.get(rem);
+                map.put(rem,map.get(rem)+1);
+            }else{
+                map.put(rem,1);
+            }
+
+        }
+        return count;
+    }
+}
+
+Level - Medium (974)
+LOGIC : Explanation 
+Example - Input: nums = [4,5,0,-2,-3,1], k = 5
+Output: 7
+Explanation: There are 7 subarrays with a sum divisible by k = 5:
+[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]
+-----------------------------------------------------------------------------------
+1. **Function Definition:**
+   - The function `subarraysDivByK` takes an array of integers `nums` and an integer `k` as input.
+   - It returns an integer representing the number of subarrays whose sum is divisible by `k`.
+
+2. **HashMap Initialization:**
+   - A `HashMap` named `map` is initialized to store the frequency of prefix sums' remainders when divided by `k`.
+   - `map.put(0,1)` initializes the map with a remainder `0` occurring once, which handles the case where the subarray itself is divisible by `k`.
+
+3. **Variable Initialization:**
+   - `prefix_sum` is initialized to 0, which will store the cumulative sum of elements as the array is traversed.
+   - `count` is initialized to 0, which will store the count of subarrays whose sum is divisible by `k`.
+
+4. **Iterating through the Array:**
+   - A `for` loop iterates over each element in the array `nums`.
+
+5. **Updating Prefix Sum:**
+   - In each iteration, the current element `nums[i]` is added to `prefix_sum`.
+
+6. **Calculating Remainder:**
+   - The remainder `rem` of `prefix_sum` when divided by `k` is calculated using `prefix_sum % k`.
+   - If `rem` is negative, it is adjusted to be positive by adding `k`.
+
+7. **Checking and Updating HashMap:**
+   - If `rem` is already a key in the `map`, it means there are subarrays ending at the current index with a sum that is divisible by `k`.
+     - `count` is incremented by the value associated with `rem` in `map`.
+     - The frequency of `rem` is incremented in `map` by 1.
+   - If `rem` is not a key in `map`, it is added with a value of 1, indicating the first occurrence of this remainder.
+
+8. **Returning the Result:**
+   - After the loop ends, `count` contains the number of subarrays whose sum is divisible by `k`, and this value is returned.
+
+This code efficiently counts subarrays with sums divisible by `k` using a prefix sum and hashmap approach, achieving a time complexity of \(O(n)\).
