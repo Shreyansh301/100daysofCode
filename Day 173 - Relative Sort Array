@@ -1,0 +1,49 @@
+class Solution {
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int length = 0;
+        for(int i=0;i<arr1.length;i++){
+            length = Math.max(length,arr1[i]);
+        }
+        int[] count = new int[length+1];
+        for(int i=0;i<arr1.length;i++){
+            count[arr1[i]]++;
+        }
+        int[] ans = new int[arr1.length];
+        int index=0;
+        for(int i=0;i<arr2.length;i++){
+            while(count[arr2[i]]>0){
+                ans[index] = arr2[i];
+                index++;
+                count[arr2[i]]--;
+            }
+        }
+        for(int i=0;i<count.length;i++){
+            while(count[i]>0){
+                ans[index] = i;
+                index++;
+                count[i]--;
+            }
+        }
+        return ans;
+    }
+}
+
+Level - Easy (1122)
+LOGIC: Explanation 
+Example - Input: arr1 = [2,3,1,3,2,4,6,7,9,2,19], arr2 = [2,1,4,3,9,6]
+Output: [2,2,2,1,4,3,3,9,6,7,19]
+----------------------------------------------------------------------------------------
+Find the maximum element in arr1 and create a count array: This step determines the size of the count array needed to store the frequency of each element in arr1. 
+The code iterates through arr1 and keeps track of the largest element encountered. It then creates a count array of size length + 1, where length is the maximum element found.
+
+Count the frequency of each element in arr1: This step populates the count array with the frequency of each element in arr1. The code iterates through arr1 and increments the corresponding element's count in the count array.
+
+Create an output array to store the sorted elements: This step creates an output array ans to store the elements of arr1 in the desired relative order. The size of the output array is the same as the length of arr1.
+
+Fill the output array with elements from arr2 according to their frequency: This step iterates through arr2 and fills the output array ans with elements from arr2 based on their frequency in the count array. 
+For each element in arr2, the code repeatedly adds the element to ans until its count in the count array becomes zero.
+
+Fill the remaining output array with elements not present in arr2: This step fills the remaining elements in the output array ans with elements that are not present in arr2. 
+The code iterates through the count array and adds elements (indices) to ans if their count is greater than zero. This ensures that all elements in arr1 are included in the output array according to their frequency.
+
+Return the sorted array: This step returns the output array ans, which contains the elements of arr1 sorted based on their relative order with respect to the elements in arr2.
