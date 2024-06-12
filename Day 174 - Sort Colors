@@ -1,0 +1,42 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int zeros=0;
+        int twos=nums.length;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0){
+                zeros++;
+            }
+            if(nums[i]==2){
+                twos--;
+            }
+        }
+        int i=0;
+        while(i!=nums.length && i<zeros){
+            nums[i]=0;
+            i++;
+        }
+        while(i!=nums.length && i<twos){
+            nums[i]=1;
+            i++;
+        }
+        while(i!=nums.length){
+            nums[i]=2;
+             i++;
+        }
+        return;
+
+    }
+}
+
+Level - Medium (75)
+LOGIC: Explanation 
+Example - Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+------------------------------------------------------------
+Define zeros to count the number of zeros and twos to mark the end position for non-two elements.
+Iterate through the array to count the number of zeros and decrement twos for each two encountered.
+Initialize i to 0.
+Fill the array with zeros until the count of zeros is reached.
+Fill the array with ones until the index reaches the twos position.
+Fill the remaining part of the array with twos.
+The method ends, having sorted the array in place.
