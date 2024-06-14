@@ -1,0 +1,63 @@
+class Solution {
+    public int minIncrementForUnique(int[] nums) {
+        int n=nums.length;
+        int p1=0;
+        int p2=0;
+        int ans=0;
+        int ct[]=new int[1000000];
+        for(int i:nums) ct[i]++;
+
+        for(int i=1;i<1000000;i++){
+            if(ct[i]==0){
+                p2=i;
+                break;
+            }
+        }
+        for(int i=0;i<1000000;i++){
+            if(p2<i) p2=i+1;
+            while(ct[i]>1){
+                while(p2<100000 && ct[p2]>0){
+                    p2++;
+                }
+                ans+=p2-i;
+                ct[p2]++;
+                ct[i]--;
+                if(p2<=i) p2=i+1;
+            }
+        }
+        return ans;
+    }
+}
+
+Level - Medium (945)
+LOGIC: Explanation 
+Example - Input: nums = [1,2,2]
+Output: 1
+Explanation: After 1 move, the array could be [1, 2, 3].
+------------------------------------------------------------------------------
+Initialization:
+Prepare to count occurrences of each number in nums.
+Create an array ct to hold these counts.
+Set up pointers p1 and p2, and a result variable ans.
+
+Count Frequencies:
+Traverse nums and fill ct with how many times each number appears.
+
+Identify First Free Slot:
+Find the first index p2 in ct that is zero (no occurrences).
+
+Process Each Number:
+Loop through each possible number (0 to 999999).
+
+Adjust Free Slot Pointer:
+Ensure p2 is always ahead of or at least equal to i.
+
+Handle Duplicates:
+For each number with more than one occurrence (ct[i] > 1):
+Find the next free slot (p2) that has no occurrences.
+Calculate increments needed to move a duplicate to this slot.
+Update the result ans with these increments.
+Update ct to reflect the movement of the duplicate.
+
+Return Result:
+The final value of ans represents the total increments needed to make all elements in nums unique.
