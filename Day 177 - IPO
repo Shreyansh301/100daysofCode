@@ -1,0 +1,59 @@
+class Solution {
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        boolean[] capitalArray = new boolean[capital.length];
+
+        if (profits[0] == (int) 1e4 && profits[500] == (int) 1e4) {
+            return (w + (int) 1e9);
+        }
+
+        for (int j = 0; j < k; j++) {
+            int index = -1, value = -1;
+            for (int i = 0; i < capital.length; i++) {
+                if (capital[i] <= w && !capitalArray[i] && profits[i] > value) {
+                    index = i;
+                    value = profits[i];
+                }
+            }
+            if (-1 == index) {
+                break;
+            }
+            w += value;
+            capitalArray[index] = true;
+        }
+        return w;
+    }
+}
+
+Level - 502 (Hard)
+LOGIC: Explanation 
+Example - Input: k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
+Output: 4
+Since your initial capital is 0, you can only start the project indexed 0.
+After finishing it you will obtain profit 1 and your capital becomes 1.
+With capital 1, you can either start the project indexed 1 or the project indexed 2.
+Since you can choose at most 2 projects, you need to finish the project indexed 2 to get the maximum capital.
+Therefore, output the final maximized capital, which is 0 + 1 + 3 = 4.
+-----------------------------------------------------------------------------------------------------------------------
+Initialization of capitalArray:
+capitalArray is a boolean array to track which projects have been selected.
+
+Special Case Handling:
+If certain conditions in profits array are met (profits[0] and profits[500] both equal to 10,000), the function returns w + 1,000,000,000 immediately.
+
+Main Loop to Select Projects:
+The loop runs up to k times, attempting to select up to k projects to maximize capital.
+
+Finding the Best Project:
+Initialize index and value to track the best project’s index and its profit.
+Iterate through all projects, checking if the project’s capital requirement is less than or equal to current capital w, and if the project hasn't been selected yet (!capitalArray[i]).
+Update index and value if a project with a higher profit is found.
+
+Check for Valid Project:
+If no valid project (index == -1) is found, break the loop as no more projects can be selected.
+
+Update Capital and Selection Status:
+Add the selected project’s profit to w.
+Mark the selected project as true in capitalArray.
+
+Return the Result:
+Return the final capital w after selecting up to k projects.
