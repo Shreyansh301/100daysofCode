@@ -1,0 +1,27 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        long s = 0, e = (long) Math.sqrt(c), sum;
+        while(s <= e){
+            sum = (s*s) + (e*e);
+            if(sum < c) s++;
+            else if(sum > c) e--;
+            else return true;
+        }
+        return c == 1;
+    }
+}
+
+Level - Medium (633)
+LOGIC: Explanation 
+Example - Input: c = 5
+Output: true
+1 * 1 + 2 * 2 = 5
+----------------------------------------------------------------------
+Method Definition: public boolean judgeSquareSum(int c) defines the method to check if c can be expressed as the sum of two squares.
+Initialization: long s = 0, e = (long) Math.sqrt(c), sum; initializes the start s to 0 and end e to the integer part of the square root of c.
+While Loop: while(s <= e) runs the loop as long as s is less than or equal to e.
+Calculate Sum: sum = (s*s) + (e*e); calculates the sum of the squares of s and e.
+Check Sum Less than c: if(sum < c) s++; increments s if sum is less than c.
+Check Sum Greater than c: else if(sum > c) e--; decrements e if sum is greater than c.
+Check Sum Equals c: else return true; returns true if sum equals c.
+Final Return: return c == 1; returns true if c is 1 (handling edge case), otherwise false.
