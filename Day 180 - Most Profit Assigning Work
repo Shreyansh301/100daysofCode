@@ -1,0 +1,54 @@
+class Solution {
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        List<int[]> infos = new ArrayList<>();
+        for (int i = 0; i < difficulty.length; i++) {
+            infos.add(new int[]{difficulty[i], profit[i]});
+        }
+        infos.sort((a, b) -> a[0] - b[0]);
+        
+        List<int[]> maxProfitForDifficulty = new ArrayList<>();
+        int maxp = 0;
+        for (int[] info : infos) {
+            int d = info[0], p = info[1];
+            maxp = Math.max(maxp, p);
+            maxProfitForDifficulty.add(new int[]{d, maxp});
+        }
+        
+        int totalProfit = 0;
+        for (int w : worker) {
+            int ind = binarySearch(maxProfitForDifficulty, w);
+            if (ind >= 0 && w >= maxProfitForDifficulty.get(ind)[0]) {
+                totalProfit += maxProfitForDifficulty.get(ind)[1];
+            }
+        }
+        return totalProfit;
+    }
+    
+    private int binarySearch(List<int[]> list, int target) {
+        int left = 0, right = list.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (list.get(mid)[0] <= target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return right;
+    }
+}
+
+Level - Medium (826)
+LOGIC: Explanation
+Example - Input: difficulty = [2,4,6,8,10], profit = [10,20,30,40,50], worker = [4,5,6,7]
+Output: 100
+Workers are assigned jobs of difficulty [4,4,6,6] and they get a profit of [20,20,30,30] separately.
+---------------------------------------------------------------------------------------------------------
+Initialization: Create a list of job difficulties and their corresponding profits.
+Sorting: Sort the list based on job difficulties.
+Max Profit Calculation: Create a list to store the maximum profit for each difficulty level.
+Update Maximum Profit: Traverse the sorted list to update the maximum profit for each difficulty.
+Total Profit Calculation: Initialize total profit to zero.
+Binary Search: For each worker, use binary search to find the highest difficulty job they can do.
+Add Profit: Add the corresponding profit to the total profit if the worker can perform the job.
+Return: Return the total profit accumulated.
