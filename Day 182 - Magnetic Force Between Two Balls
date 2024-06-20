@@ -1,0 +1,46 @@
+class Solution {
+    public int maxDistance(int[] position, int m) {
+        Arrays.sort(position);
+        int l = 1, r = position[position.length - 1] - position[0];
+        int ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            int lastPosition = position[0], balls = 1;
+            for (int i = 1; i < position.length; i++) {
+                if (position[i] - lastPosition >= mid) {
+                    lastPosition = position[i];
+                    balls++;
+                }
+            }
+            if (balls >= m) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+Level - Medium (1552)
+LOGIC: Explanation
+Example - Input: position = [1,2,3,4,7], m = 3
+Output: 3
+Distributing the 3 balls into baskets 1, 4 and 7 will make the magnetic force between ball pairs [3, 3, 6]. The minimum magnetic force is 3. 
+We cannot achieve a larger minimum magnetic force than 3.
+--------------------------------------------------------------------------------
+Class Declaration: The Solution class is defined.
+Method Declaration: The maxDistance method is declared, taking an integer array position and an integer m.
+Array Sorting: The position array is sorted in ascending order.
+Variable Initialization: Variables l (left boundary) is set to 1 and r (right boundary) is set to the difference between the maximum and minimum positions.
+Answer Initialization: ans is initialized to -1 to store the maximum distance found.
+Binary Search Loop: A while loop runs as long as l is less than or equal to r.
+Mid Calculation: mid is calculated as the middle point between l and r.
+Initial Positioning: lastPosition is set to the first position, and balls (number of balls placed) is set to 1.
+Position Loop: A for loop iterates through the sorted positions starting from the second element.
+Distance Check: If the distance between the current position and lastPosition is at least mid, update lastPosition and increment balls.
+Balls Check: After the loop, check if the number of balls placed is at least m.
+Update Answer: If true, set ans to mid and adjust l to mid + 1.
+Adjust Range: If false, adjust r to mid - 1.
+Return Result: After the loop, return ans as the maximum distance.
