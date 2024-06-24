@@ -1,0 +1,49 @@
+class Solution {
+    public int minKBitFlips(int[] nums, int k) {
+        int ans = 0, flips = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if ((nums[i] + flips) % 2 == 0) {
+                if (i > nums.length - k) {
+                    return -1;
+                } else {
+                    ans++;
+                    flips++;
+                    nums[i] = -1;
+                }
+            }
+            if (i + 1 >= k) {
+                flips -= (nums[i - k + 1] < 0 ? 1 : 0);
+            }
+        }
+        return ans;
+    }
+}
+
+Level - Hard (995)
+LOGIC: Ecplanation 
+Example - Input: nums = [0,1,0], k = 1
+Output: 2
+Flip nums[0], then flip nums[2].
+--------------------------------------------------------------------
+Initialization:
+ans is initialized to 0 to keep track of the number of flips performed.
+flips is initialized to 0 to keep track of the current number of flips that affect the current position.
+
+Iterate through the array:
+A for loop iterates over each element in the nums array.
+
+Check if current bit needs flipping:
+For each nums[i], check if (nums[i] + flips) % 2 == 0. This condition determines if the current bit is 0 (requires flipping) or 1 (does not require flipping). This is because the flips count affects the bit value.
+
+Handle the need for flipping:
+If the condition is true, and flipping is required:
+Check if the current index i is within bounds to perform a flip of size k. If not, return -1 since it's impossible to flip the bit and remain within the array bounds.
+Increment ans to count this flip.
+Increment flips to indicate an additional ongoing flip.
+Set nums[i] to -1 to mark the start of a flip at this position.
+
+Adjust the flips counter:
+After processing each element, if i + 1 is greater than or equal to k, decrement the flips counter if the bit k positions back was marked as flipped (i.e., nums[i - k + 1] < 0).
+
+Return the result:
+After the loop finishes, return ans, the total number of flips performed.
