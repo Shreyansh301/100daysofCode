@@ -1,0 +1,43 @@
+class Solution {
+    int val = 0 ;
+    public TreeNode bstToGst(TreeNode root) {
+        if(root.right != null)
+            bstToGst(root.right);
+        
+        val = root.val = val + root.val;
+        
+        if(root.left != null)
+            bstToGst(root.left);
+        
+        return root;
+    }
+}
+
+Level - Medium (1038)
+LOGIC: Explanation 
+Example - Input: root = [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]
+Output: [30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]
+-------------------------------------------------------------
+This Java code defines a method to convert a Binary Search Tree (BST) to a Greater Sum Tree (GST). 
+
+Class Definition and Variable Initialization:
+The class Solution is defined.
+An instance variable val is initialized to 0. This variable will store the cumulative sum of the node values as we traverse the tree.
+
+Method Declaration:
+The method bstToGst is declared to take a TreeNode object root as an argument and returns a TreeNode.
+
+Right Subtree Traversal:
+The method first checks if the right child of the root is not null. If it is not null, it recursively calls bstToGst on the right child.
+This ensures that the method traverses the right subtree first, which is necessary because, in a BST, all values in the right subtree are greater than the root.
+
+Update Node Value:
+The current node's value root.val is updated by adding it to val, which keeps a running total of all node values processed so far.
+val is then updated to this new value of root.val.
+
+Left Subtree Traversal:
+The method checks if the left child of the root is not null. If it is not null, it recursively calls bstToGst on the left child.
+This step ensures that after processing the current node, the method processes all nodes in the left subtree, which have values less than the current node.
+
+Return the Modified Tree:
+Finally, the method returns the modified root node, which is part of the GST.
