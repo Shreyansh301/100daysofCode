@@ -1,0 +1,52 @@
+class Solution {
+  List<Integer> list = new ArrayList<>();
+
+  private void dfs(TreeNode node) {
+    if (node == null) return;
+
+    dfs(node.left);
+    list.add(node.val);
+    dfs(node.right);
+  }
+
+  private TreeNode constructTree(int l, int r) {
+    if (l > r) return null;
+
+    var m = l + (r - l) / 2;
+
+    return new TreeNode(list.get(m), constructTree(l, m-1), constructTree(m+1, r));
+  }
+
+  public TreeNode balanceBST(TreeNode root) {
+    dfs(root);
+    return constructTree(0, list.size() - 1);
+  }
+}
+
+Level - Medium (1832)
+LOGIC: Explanation
+Example - Input: root = [1,null,2,null,3,null,4,null,null]
+Output: [2,1,3,null,null,null,4]
+This is not the only correct answer, [3,1,4,null,2] is also correct.
+--------------------------------------------------------------------------------------
+Class Declaration and Initialization:
+class Solution defines a class named Solution.
+List<Integer> list = new ArrayList<>(); initializes an ArrayList to store node values.
+
+Depth-First Search (DFS) Method:
+private void dfs(TreeNode node) is a helper method that performs an in-order traversal of a binary search tree (BST).
+if (node == null) return; checks if the current node is null. If so, it returns.
+dfs(node.left); recursively traverses the left subtree.
+list.add(node.val); adds the current node's value to the list.
+dfs(node.right); recursively traverses the right subtree.
+
+Tree Construction Method:
+private TreeNode constructTree(int l, int r) is a helper method that constructs a balanced BST from the sorted list of node values.
+if (l > r) return null; checks if the left index is greater than the right index. If so, it returns null.
+var m = l + (r - l) / 2; calculates the middle index of the current sublist.
+return new TreeNode(list.get(m), constructTree(l, m-1), constructTree(m+1, r)); creates a new TreeNode with the value at the middle index and recursively constructs the left and right subtrees.
+
+Main Method to Balance the BST:
+public TreeNode balanceBST(TreeNode root) is the main method to balance the input BST.
+dfs(root); performs an in-order traversal of the input tree and stores the node values in the list.
+return constructTree(0, list.size() - 1); constructs and returns a balanced BST using the sorted node values in the list.
