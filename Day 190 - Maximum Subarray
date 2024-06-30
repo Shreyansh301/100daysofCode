@@ -1,0 +1,44 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n=nums.length;
+        int max = Integer.MIN_VALUE; 
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            if (sum > max) {
+                max = sum;
+            }
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+        return max;
+    }
+}
+
+Level - Mediium (53)
+LOGIC: Explanation
+Example - Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+The subarray [4,-1,2,1] has the largest sum 6.
+----------------------------------------------------------
+Initialization:
+The function maxSubArray takes an array of integers nums as input.
+n is initialized to the length of nums.
+max is initialized to the smallest possible integer value (Integer.MIN_VALUE) to ensure any sum will be larger.
+sum is initialized to 0 to keep track of the current subarray sum.
+
+Iteration through the array:
+A for loop iterates over each element in the array nums using index i.
+
+Update the running sum:
+In each iteration, the current element nums[i] is added to sum.
+
+Update the maximum sum:
+If the current sum is greater than max, update max with the value of sum.
+
+Reset the sum if negative:
+If sum becomes negative, reset sum to 0. This is because a negative sum would decrease the value of any subsequent subarray sums.
+
+Return the result:
+After the loop completes, max contains the maximum sum of any subarray, which is returned as the result.
