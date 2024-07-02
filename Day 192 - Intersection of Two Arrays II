@@ -1,0 +1,79 @@
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        // Sort both arrays
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        // List to store the result
+        List<Integer> resultList = new ArrayList<>();
+
+        // Two pointers to iterate through both arrays
+        int i = 0, j = 0;
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] == nums2[j]) {
+                // If elements are equal, add to the result list
+                resultList.add(nums1[i]);
+                i++;
+                j++;
+            } else if (nums1[i] < nums2[j]) {
+                // If nums1's element is smaller, move pointer i
+                i++;
+            } else {
+                // If nums2's element is smaller, move pointer j
+                j++;
+            }
+        }
+
+        // Convert the result list to an array
+        int[] result = new int[resultList.size()];
+        for (int k = 0; k < resultList.size(); k++) {
+            result[k] = resultList.get(k);
+        }
+
+        return result;
+    }
+}
+
+Level - Easy (350)
+LOGIC: Explanation 
+Exampple - Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+---------------------------------------------------------------------
+Method Signature:
+The method intersect takes two integer arrays nums1 and nums2 as input and returns an integer array.
+
+Sorting Arrays:
+Arrays.sort(nums1);
+Arrays.sort(nums2);
+Both input arrays are sorted in ascending order to facilitate comparison.
+
+Result List:
+List<Integer> resultList = new ArrayList<>();
+A list named resultList is created to store the intersection elements.
+
+Two Pointers Initialization:
+int i = 0, j = 0;
+Two pointers, i for nums1 and j for nums2, are initialized to iterate through the arrays.
+
+While Loop for Iteration:
+while (i < nums1.length && j < nums2.length): The loop continues until either pointer reaches the end of its respective array.
+
+Inside the loop:
+If nums1[i] == nums2[j]:
+Both elements are equal, so add nums1[i] to resultList and increment both pointers.
+
+If nums1[i] < nums2[j]:
+nums1[i] is smaller, so increment pointer i to move to the next element in nums1.
+
+If nums1[i] > nums2[j]:
+nums2[j] is smaller, so increment pointer j to move to the next element in nums2.
+
+Convert List to Array:
+int[] result = new int[resultList.size()];
+A new integer array result is created with the size of resultList.
+for (int k = 0; k < resultList.size(); k++) { result[k] = resultList.get(k); }
+The elements from resultList are copied to the result array.
+
+Return Result:
+return result;
+The result array, which contains the intersection elements, is returned.
