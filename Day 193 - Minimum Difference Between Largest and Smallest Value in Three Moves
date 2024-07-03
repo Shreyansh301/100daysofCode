@@ -1,0 +1,55 @@
+class Solution {
+    public int minDifference(int[] nums) {
+        int n = nums.length;
+        if (n <= 4) return 0;
+
+        Arrays.sort(nums);
+
+        int res = Integer.MAX_VALUE;
+        res = Math.min(res, nums[n-4]-nums[0]);
+        res = Math.min(res, nums[n-1]-nums[3]);
+        res = Math.min(res, nums[n-3]-nums[1]);
+        res = Math.min(res, nums[n-2]-nums[2]);
+        return res;
+    }
+}
+
+Level - Medium (1509)
+LOGIC: Explanation 
+Example - Input: nums = [5,3,2,4]
+Output: 0
+We can make at most 3 moves.
+In the first move, change 2 to 3. nums becomes [5,3,3,4].
+In the second move, change 4 to 3. nums becomes [5,3,3,3].
+In the third move, change 5 to 3. nums becomes [3,3,3,3].
+After performing 3 moves, the difference between the minimum and maximum is 3 - 3 = 0.
+-------------------------------------------------------------------------------------------
+Class Declaration:
+The class Solution is declared.
+
+Method Declaration:
+The method minDifference is defined to take an integer array nums as input and return an integer.
+
+Edge Case Check:
+
+The variable n is assigned the length of the array nums.
+If the length of the array nums is less than or equal to 4, the method returns 0 immediately. This is because you can remove up to 3 elements and leave a list with a maximum of 1 element, whose difference is naturally 0.
+
+Sorting:
+The array nums is sorted using Arrays.sort(nums).
+
+Variable Initialization:
+The variable res is initialized to Integer.MAX_VALUE to store the minimum difference.
+
+Calculating Minimum Differences:
+The method calculates the minimum difference by considering the difference between:
+The largest element after removing the last 3 elements and the smallest element.
+The largest element and the 4th smallest element after removing the first 3 elements.
+The third largest element and the second smallest element.
+The second largest element and the third smallest element.
+
+Finding the Minimum Difference:
+The method updates the variable res with the smallest difference obtained from the above calculations.
+
+Returning the Result:
+The method returns the value of res.
