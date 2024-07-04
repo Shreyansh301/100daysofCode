@@ -1,0 +1,73 @@
+class Solution {
+    public ListNode mergeNodes(ListNode head) {
+        // Initialize a pointer to traverse the list starting from the node after the initial zero
+        ListNode curr = head.next;
+        // Initialize a tail pointer to construct the new list
+        ListNode tail = curr;
+        
+        // Traverse the entire list
+        while(curr != null) {
+            int sum = 0;
+            // Sum up values until the next zero is encountered
+            while(curr.val != 0) {
+                sum += curr.val;
+                curr = curr.next;
+            }
+            // Move curr to the next node after the zero
+            curr = curr.next;
+            // Assign the sum to the current tail node
+            tail.val = sum;
+            // Update the next pointer of tail to skip over the zero
+            tail.next = curr;
+            // Move the tail pointer to the next node
+            tail = curr;
+        }
+        // Return the modified list starting from the node after the initial zero
+        return head.next;
+    }
+}
+
+Level - Medium (2181)
+LOGIC: Explanation
+Example - Input: head = [0,3,1,0,4,5,2,0]
+Output: [4,11]
+The above figure represents the given linked list. The modified list contains
+- The sum of the nodes marked in green: 3 + 1 = 4.
+- The sum of the nodes marked in red: 4 + 5 + 2 = 11.
+---------------------------------------------------------------------------------------------------
+Initialize a Pointer:
+ListNode curr = head.next;
+curr is initialized to start from the node after the initial zero in the linked list.
+
+Initialize a Tail Pointer:
+ListNode tail = curr;
+tail is used to construct the new list by storing the sum of values between zeros.
+
+Traverse the Entire List:
+while (curr != null) { ... }
+The outer loop traverses the list until the end is reached (curr becomes null).
+
+Sum Values Until Next Zero:
+int sum = 0;
+while (curr.val != 0) { ... }
+An inner loop sums up the values of the nodes until a zero is encountered.
+
+Move curr to the Next Node After the Zero:
+curr = curr.next;
+After encountering a zero, move curr to the next node to skip the zero.
+
+Assign Sum to Current Tail Node:
+tail.val = sum;
+Assign the calculated sum to the node pointed to by tail.
+
+Update Tail's Next Pointer:
+tail.next = curr;
+Update the next pointer of tail to skip the zero and point to the next node with values.
+
+Move the Tail Pointer to the Next Node:
+tail = curr;
+Move the tail pointer forward to the next node.
+
+Return the Modified List:
+return head.next;
+Return the modified list, starting from the node after the initial zero.
