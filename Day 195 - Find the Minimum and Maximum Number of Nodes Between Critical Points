@@ -1,0 +1,74 @@
+class Solution {
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        if (head == null || head.next == null || head.next.next == null) {
+            return new int[]{-1, -1};
+        }
+
+        List<Integer> criticalPoints = new ArrayList<>();
+        ListNode prev = head;
+        ListNode curr = head.next;
+        int position = 1;
+
+        while (curr.next != null) {
+            if ((curr.val > prev.val && curr.val > curr.next.val) ||
+                (curr.val < prev.val && curr.val < curr.next.val)) {
+                criticalPoints.add(position);
+            }
+            prev = curr;
+            curr = curr.next;
+            position++;
+        }
+
+        if (criticalPoints.size() < 2) {
+            return new int[]{-1, -1};
+        }
+
+        int minDistance = Integer.MAX_VALUE;
+        int maxDistance = criticalPoints.get(criticalPoints.size() - 1) - criticalPoints.get(0);
+
+        for (int i = 1; i < criticalPoints.size(); i++) {
+            minDistance = Math.min(minDistance, criticalPoints.get(i) - criticalPoints.get(i - 1));
+        }
+
+        return new int[]{minDistance, maxDistance};
+    }
+}
+
+Level - Medium (2058)
+LOGIC: Explanation 
+Example - Input: head = [3,1]
+Output: [-1,-1]
+There are no critical points in [3,1].
+-----------------------------------------------------------------
+Method Declaration: The nodesBetweenCriticalPoints method is declared to take a ListNode called head and return an integer array.
+
+Initial Checks:
+If the linked list is empty (head == null), has only one node, or has only two nodes, return {-1, -1} because there can't be any critical points.
+
+Initialize Variables:
+criticalPoints: A list to store the positions of critical points.
+prev: Points to the previous node, initially set to head.
+curr: Points to the current node, initially set to head.next.
+position: Tracks the current node's position, starting from 1 (since the head is position 0).
+
+Traverse the Linked List:
+Use a while loop to iterate through the linked list.
+
+Check if the current node (curr) is a critical point:
+A critical point is when curr.val is either greater than both prev.val and curr.next.val (a peak) or less than both prev.val and curr.next.val (a valley).
+If a critical point is found, add the current position to the criticalPoints list.
+Move prev to curr and curr to curr.next.
+Increment the position by 1.
+
+Check Critical Points Count:
+If there are fewer than 2 critical points, return {-1, -1} because the distances can't be computed.
+
+Calculate Distances:
+minDistance: Initialize to Integer.MAX_VALUE. It will store the minimum distance between consecutive critical points.
+maxDistance: Calculate the distance between the first and the last critical points in the list.
+
+Compute Minimum Distance:
+Iterate through the criticalPoints list to find the minimum distance between consecutive critical points.
+
+Return Result:
+Return an array with minDistance and maxDistance.
