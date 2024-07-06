@@ -1,0 +1,30 @@
+class Solution {
+    public int passThePillow(int n, int time) {
+        time %= (2*n-2);
+        if(time <= n-1) return time+1;
+        else return 2*n-1-time;
+    }
+}
+
+/* Level - Easy (2582)
+LOGIC: Explanation 
+Example - Input: n = 4, time = 5
+Output: 2
+People pass the pillow in the following way: 1 -> 2 -> 3 -> 4 -> 3 -> 2.
+After five seconds, the 2nd person is holding the pillow.
+----------------------------------------------------------------------------
+Class and Method Declaration:
+The class is named Solution.
+The method passThePillow is declared as public and int, indicating it returns an integer. It takes two integer parameters: n (number of people) and time (time duration).
+
+Calculate Effective Time:
+time %= (2*n-2);
+This line calculates the effective time by taking the remainder of time divided by (2*n-2). This is because the pillow passes from one end to the other and back, forming a cycle of length 2*n-2.
+
+Determine Pillow Position:
+if (time <= n-1) return time + 1;
+If the effective time is less than or equal to n-1 (within the first half of the cycle), the pillow is being passed from the start to the end. The position is time + 1 since the position starts from 1.
+
+Calculate Position in the Return Path:
+else return 2*n - 1 - time;
+If time is greater than n-1 (in the return path), the position is calculated as 2*n - 1 - time. This handles the position as the pillow returns back from the end to the start. */
