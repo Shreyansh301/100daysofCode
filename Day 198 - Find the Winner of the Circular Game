@@ -1,0 +1,45 @@
+class Solution {
+    public int findTheWinner(int n, int k) {
+        int winner=0;
+        for (int i = 1; i <= n; i++) {
+            winner = (winner + k) % i;
+        }
+        return winner + 1;
+    }
+}
+
+/*
+ Level - Medium (1823)
+ LOGIC: Explanation
+ Example - Input: n = 5, k = 2
+Output: 3
+Here are the steps of the game:
+1) Start at friend 1.
+2) Count 2 friends clockwise, which are friends 1 and 2.
+3) Friend 2 leaves the circle. Next start is friend 3.
+4) Count 2 friends clockwise, which are friends 3 and 4.
+5) Friend 4 leaves the circle. Next start is friend 5.
+6) Count 2 friends clockwise, which are friends 5 and 1.
+7) Friend 1 leaves the circle. Next start is friend 3.
+8) Count 2 friends clockwise, which are friends 3 and 5.
+9) Friend 5 leaves the circle. Only friend 3 is left, so they are the winner.
+----------------------------------------------------------------------------------
+Class Definition:
+class Solution: Defines a class named Solution.
+
+Method Definition:
+public int findTheWinner(int n, int k): Defines a public method findTheWinner that takes two integer parameters, n (the number of people) and k (the step count for elimination). 
+It returns an integer, which is the position of the winner.
+
+Variable Initialization:
+int winner = 0;: Initializes a variable winner to 0. This will store the position of the current winner during the iterative process.
+
+Iterative Process:
+for (int i = 1; i <= n; i++) {: Starts a loop that iterates from 1 to n (inclusive). This loop simulates the elimination process.
+winner = (winner + k) % i;: Updates the winner variable in each iteration using the formula (winner + k) % i. 
+This formula calculates the new position of the winner after each elimination.
+
+Return Statement:
+return winner + 1;: Returns the final winner's position, adjusting by 1 because array indices in Java are zero-based, but the problem expects a one-based index.
+
+ */
