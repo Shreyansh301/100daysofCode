@@ -1,0 +1,60 @@
+class Solution {
+    public double averageWaitingTime(int[][] customers) {
+        int n = customers.length, curTime = 0;
+        double totalTime = 0;
+        for(int i = 0; i < n; i++) {
+            if(curTime <= customers[i][0]) {
+                totalTime += customers[i][1];
+                curTime = customers[i][0] + customers[i][1];
+            } else {
+                totalTime += (curTime - customers[i][0] + customers[i][1]);
+                curTime += customers[i][1];
+            }
+        }
+        return totalTime / n;
+    }
+}
+
+/*
+ Level - Medium (1701)
+ LOGIC: Explanation
+ Example - Input: customers = [[1,2],[2,5],[4,3]]
+Output: 5.00000
+1) The first customer arrives at time 1, the chef takes his order and starts preparing it immediately at time 1, and finishes at time 3, so the waiting time of the first customer is 3 - 1 = 2.
+2) The second customer arrives at time 2, the chef takes his order and starts preparing it at time 3, and finishes at time 8, so the waiting time of the second customer is 8 - 2 = 6.
+3) The third customer arrives at time 4, the chef takes his order and starts preparing it at time 8, and finishes at time 11, so the waiting time of the third customer is 11 - 4 = 7.
+So the average waiting time = (2 + 6 + 7) / 3 = 5.
+-----------------------------------------------------------------
+Class Definition:
+The code defines a public class named Solution.
+
+Method Definition:
+Inside the class, there's a public method averageWaitingTime which takes a 2D array customers as input and returns a double.
+
+Initialization:
+int n = customers.length initializes n to the number of customers.
+int curTime = 0 initializes curTime to 0, representing the current time.
+double totalTime = 0 initializes totalTime to 0, which will accumulate the total waiting time for all customers.
+
+Loop Through Customers:
+The code loops through each customer using a for loop (for(int i = 0; i < n; i++)).
+
+Service Begins Before or At Arrival:
+Condition: if(curTime <= customers[i][0])
+If the current time is less than or equal to the arrival time of the customer (customers[i][0]):
+Action: totalTime += customers[i][1]
+The waiting time is the cooking time itself (customers[i][1]), added to totalTime.
+Action: curTime = customers[i][0] + customers[i][1]
+Update curTime to the customer's arrival time plus the cooking time.
+
+Service Begins After Arrival:
+Condition: else
+If the current time is greater than the customer's arrival time:
+Action: totalTime += (curTime - customers[i][0] + customers[i][1])
+The waiting time is the difference between the current time and the arrival time, plus the cooking time, added to totalTime.
+Action: curTime += customers[i][1]
+Update curTime by adding the cooking time.
+
+Return Statement:
+return totalTime / n calculates the average waiting time by dividing the totalTime by the number of customers (n).
+ */
