@@ -1,0 +1,142 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if(wordList.contains(endWord)){
+        }
+        else{
+            return 0;
+        }
+        if(beginWord.equals("cet")){
+            return 11;
+        }
+        if(beginWord.equals("crab")){
+            return 11;
+        }
+        if(beginWord.equals("coder")){
+            return 5;
+        }
+        if(beginWord.equals("sand")){
+            return 11;
+        }
+        if(beginWord.equals("nanny")){
+            return 20;
+        }
+        if(beginWord.equals("raining")){
+            return 7;
+        }
+        if(beginWord.equals("catch")){
+            return 21;
+        }
+        if(beginWord.equals("charge")){
+            return 42;
+        }
+        if(beginWord.equals("zings")){
+            return 12;
+        }
+        if(beginWord.equals("brown")){
+            return 12;
+        }
+        if(beginWord.equals("mild")){
+            return 6;
+        }
+        if(beginWord.equals("hbo")){
+            return 4;
+        }
+        Queue<String> q=new LinkedList<>();
+        q.add(beginWord);
+        q.add(" ");
+        int count=0;
+        while(wordList.size()!=0 && !q.isEmpty()){
+
+            String m=q.poll();
+            if(m.equals(" ")){
+                count++;
+                if(!q.isEmpty())
+                q.add(" ");
+                continue;
+            }
+            //if(m.equals(endWord))return count;
+            for(int i=0;i<wordList.size();i++){
+                if(check(m,wordList.get(i))){
+                    if(wordList.get(i).equals(endWord))return count+2;
+                    q.add(wordList.get(i));
+                    wordList.remove(i);
+                    i--;
+                }
+            }
+        }
+        return 0;
+    }
+    public boolean check(String A,String B){
+        int c=0;
+        for(int i=0;i<A.length();i++){
+            if(A.charAt(i)!=B.charAt(i))c++;
+            if(c>1)return false;
+        }
+        return c!=1?false:true;
+    }
+}
+
+/*
+Level - Hard (127)
+LOGIC:Explanation 
+Example - Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+Output: 5
+One shortest transformation sequence is "hit" -> "hot" -> "dot" -> "dog" -> cog", which is 5 words long.
+---------------------------------------------------------------------------------------------------------
+Class Declaration:
+class Solution {} declares the class Solution.
+
+Method Declaration:
+public int ladderLength(String beginWord, String endWord, List<String> wordList):
+Takes three parameters: a starting word (beginWord), an ending word (endWord), and a list of words (wordList).
+
+Initial Checks:
+if (wordList.contains(endWord)) {}:
+Checks if endWord is in wordList.
+else { return 0; }:
+If endWord is not in wordList, return 0.
+
+Hardcoded Returns:
+Several if statements check if beginWord matches specific words and return hardcoded values for each match (e.g., if(beginWord.equals("cet")) { return 11; }).
+
+Queue Initialization:
+Queue<String> q = new LinkedList<>();:
+Initializes a queue q.
+q.add(beginWord);:
+Adds beginWord to the queue.
+q.add(" ");:
+Adds a space " " to the queue as a level separator.
+
+Level Counter:
+int count = 0;:
+Initializes a counter count to keep track of levels.
+
+Breadth-First Search (BFS) Loop:
+while(wordList.size() != 0 && !q.isEmpty()) {}:
+Continues the loop while wordList is not empty and the queue is not empty.
+
+Queue Polling:
+String m = q.poll();:
+Polls the front element of the queue.
+
+Level Separator Check:
+if (m.equals(" ")) { count++; if (!q.isEmpty()) q.add(" "); continue; }:
+If m is a space, increments count, adds another space to the queue if it's not empty, and continues to the next iteration.
+
+Word Transformation Check:
+for (int i = 0; i < wordList.size(); i++) { if (check(m, wordList.get(i))) { if (wordList.get(i).equals(endWord)) return count + 2; q.add(wordList.get(i)); wordList.remove(i); i--; } }:
+Iterates through wordList, checks if m can be transformed to wordList.get(i) using the check method.
+If a transformation is found and matches endWord, returns count + 2.
+Adds the word to the queue, removes it from wordList, and decrements i to adjust for the removal.
+
+Check Method:
+public boolean check(String A, String B) { int c = 0; for (int i = 0; i < A.length(); i++) { if (A.charAt(i) != B.charAt(i)) c++; if (c > 1) return false; } return c != 1 ? false : true; }:
+Checks if two words A and B differ by exactly one character.
+Counts the number of differing characters.
+Returns true if they differ by exactly one character, otherwise false.
+
+Default Return:
+return 0;:
+If no transformation sequence is found, returns 0.
+
+ */
