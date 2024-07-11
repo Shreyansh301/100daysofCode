@@ -1,0 +1,52 @@
+class Solution {
+    int i = 0;
+    public String reverseParentheses(String s) {
+        char[] ar = s.toCharArray();
+        return helper(ar);
+    }
+
+    public String helper(char[] s){
+        StringBuilder sb = new StringBuilder();
+
+        while(i < s.length){
+            if(s[i] == ')'){
+                i++;
+                return sb.reverse().toString();
+            }else if(s[i] == '('){
+                i++;
+                String st  = helper(s);
+                sb.append(st);
+            }else{
+                sb.append(s[i]);
+                i++;
+            }
+        }
+        return sb.toString();
+
+    }
+}
+
+/*
+Level - Medium (1190)
+LOGIC: Explanation 
+Example - Input: s = "(abcd)"
+Output: "dcba"
+-------------------------------------------------------------------------
+Class Solution
+Variable i: A class-level integer variable i initialized to 0, used to track the current position in the character array.
+
+Method reverseParentheses
+Input: Takes a string s as input.
+Convert to Character Array: Converts the input string s into a character array ar.
+Call Helper Method: Calls the helper method with the character array ar and returns its result.
+
+Method helper
+Input: Takes a character array s as input.
+StringBuilder sb: Initializes a StringBuilder object sb to build the resulting string.
+While Loop: Iterates through the character array until the end of the array is reached.
+Close Parenthesis ): If the current character is ), it increments the index i and returns the reverse of the string built so far (sb).
+Open Parenthesis (: If the current character is (, it increments the index i, recursively calls the helper method to process the substring inside the parentheses, and appends the result to sb.
+Other Characters: If the current character is not a parenthesis, it appends the character to sb and increments the index i.
+
+Return Result: After the loop completes, returns the string built in sb.
+*/
