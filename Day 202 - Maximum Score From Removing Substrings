@@ -1,0 +1,81 @@
+class Solution {
+    public int maximumGain(String s, int x, int y) {
+        int countA = 0;
+        int countB = 0;
+        int result = 0;
+        int less = Math.min(x,y);
+        
+        for(int i = 0 ; i < s.length() ; i++){
+            char ch = s.charAt(i);
+            
+            if(ch > 'b'){
+                result += Math.min(countA , countB) * less;
+                countA = 0;
+                countB = 0;
+            }else if(ch == 'a'){
+                if(x < y && countB > 0){
+                    countB--;
+                    result += y;
+                }else{
+                    countA++;
+                }
+            }else{
+                if(x > y && countA > 0){
+                    countA--;
+                    result+=x;
+                }else{
+                    countB++;
+                }
+            }
+            
+        }
+        result+= Math.min(countA , countB)* less;
+        
+        return result;
+    }
+}
+
+/*
+ Level - Medium (1717)
+ LOGIC: Explanation 
+ Example - Input: s = "cdbcbbaaabab", x = 4, y = 5
+Output: 19
+- Remove the "ba" underlined in "cdbcbbaaabab". Now, s = "cdbcbbaaab" and 5 points are added to the score.
+- Remove the "ab" underlined in "cdbcbbaaab". Now, s = "cdbcbbaa" and 4 points are added to the score.
+- Remove the "ba" underlined in "cdbcbbaa". Now, s = "cdbcba" and 5 points are added to the score.
+- Remove the "ba" underlined in "cdbcba". Now, s = "cdbc" and 5 points are added to the score.
+Total score = 5 + 4 + 5 + 5 = 19.
+------------------------------------------------------------------------------------------------------------
+Class Declaration:
+The class Solution contains a public method maximumGain that takes a string s and two integers x and y as input.
+
+Variable Initialization:
+countA and countB are initialized to 0 to keep track of the counts of 'a' and 'b' characters, respectively.
+result is initialized to 0 to store the total gain.
+less is set to the minimum of x and y.
+
+Iterating Through the String:
+A for loop iterates through each character in the string s.
+
+Character Processing:
+For each character ch in the string:
+If ch is greater than 'b':
+Calculate the gain from the minimum count of 'a' and 'b' multiplied by less.
+Reset countA and countB to 0.
+
+If ch is 'a':
+If x is less than y and countB is greater than 0:
+Decrement countB and add y to the result.
+Else, increment countA.
+
+If ch is 'b':
+If x is greater than y and countA is greater than 0:
+Decrement countA and add x to the result.
+Else, increment countB.
+
+Final Calculation:
+After the loop, add the gain from the minimum count of 'a' and 'b' multiplied by less to the result.
+
+Return Result:
+Return the final result value.
+ */
