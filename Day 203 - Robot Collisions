@@ -1,0 +1,93 @@
+class Solution {
+    public List<Integer> survivedRobotsHealths(int[] positions, int[] healths, String directions) {
+        int n = positions.length;
+        List<int[]> robots = new ArrayList<>();
+
+        for (int i = 0; i < n; ++i) {
+            robots.add(new int[]{positions[i], healths[i], directions.charAt(i), i});
+        }
+
+        Collections.sort(robots, (a, b) -> Integer.compare(a[0], b[0]));
+
+        Stack<int[]> stack = new Stack<>();
+
+        for (int[] robot : robots) {
+            if (robot[2] == 'R' || stack.isEmpty() || stack.peek()[2] == 'L') {
+                stack.push(robot);
+                continue;
+            }
+
+            if (robot[2] == 'L') {
+                boolean add = true;
+                while (!stack.isEmpty() && stack.peek()[2] == 'R' && add) {
+                    int last_health = stack.peek()[1];
+                    if (robot[1] > last_health) {
+                        stack.pop();
+                        robot[1] -= 1;
+                    } else if (robot[1] < last_health) {
+                        stack.peek()[1] -= 1;
+                        add = false;
+                    } else {
+                        stack.pop();
+                        add = false;
+                    }
+                }
+
+                if (add) {
+                    stack.push(robot);
+                }
+            }
+        }
+
+        List<int[]> resultList = new ArrayList<>(stack);
+        resultList.sort(Comparator.comparingInt(a -> a[3]));
+
+        List<Integer> result = new ArrayList<>();
+        for (int[] robot : resultList) {
+            result.add(robot[1]);
+        }
+
+        return result;
+    }
+}
+
+/*
+Level - Hard (2751)
+LOGIC: Explanation 
+Example - Input: positions = [5,4,3,2,1], healths = [2,17,9,15,10], directions = "RRRRR"
+Output: [2,17,9,15,10]
+Explanation: No collision occurs in this example, since all robots are moving in the same direction. 
+So, the health of the robots in order from the first robot is returned, [2, 17, 9, 15, 10].
+-----------------------------------------------------------------------------------------------------
+Initialize Variables:
+The method survivedRobotsHealths takes three inputs: an array of positions, an array of healths, and a string of directions.
+n is the length of the positions array.
+A list robots is created to store robot data (position, health, direction, and index).
+
+Populate Robots List:
+A loop iterates through each robot, adding its position, health, direction, and index to the robots list.
+
+Sort Robots by Position:
+The robots list is sorted based on the robots' positions.
+
+Initialize Stack:
+A stack stack is used to keep track of robots as they are processed.
+
+Process Robots:
+Loop through each robot in the sorted list:
+If the robot is moving right ('R') or the stack is empty or the top of the stack is a left-moving robot ('L'), push the robot onto the stack.
+If the robot is moving left ('L'), handle collisions with right-moving robots in the stack:
+
+Compare health of colliding robots:
+If the left-moving robot has more health, it reduces its health by 1 and the right-moving robot is removed from the stack.
+If the right-moving robot has more health, it reduces its health by 1 and the left-moving robot is not added.
+If both have equal health, both are removed from the stack.
+Continue this process until no more collisions are possible or the stack is empty.
+
+Sort Remaining Robots by Original Index:
+Convert the stack to a list resultList and sort it based on the original index of the robots.
+
+Final Result:
+Create a result list containing the health of the surviving robots in their original order.
+Return this list.
+*/
