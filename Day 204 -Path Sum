@@ -1,0 +1,49 @@
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+        
+        boolean leftSum = hasPathSum(root.left, targetSum - root.val);
+        boolean rightSum = hasPathSum(root.right, targetSum - root.val);
+        
+        return leftSum || rightSum;
+    }
+}
+
+/*
+Level - Easy (112)
+LOGIC: Explanation
+Example - Input: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+Output: true
+The root-to-leaf path with the target sum is shown.
+------------------------------------------------------------------------------------------
+Class Definition:
+The class is named Solution.
+
+Method Definition:
+The method hasPathSum takes two arguments:
+TreeNode root: the root of a binary tree.
+int targetSum: the target sum to be checked against the path sum from root to leaf.
+
+Base Case Check:
+The first condition checks if the root is null. If it is, return false because there is no path.
+
+Leaf Node Check:
+The second condition checks if both root.left and root.right are null (indicating a leaf node).
+If it's a leaf node, it checks if root.val is equal to targetSum.
+Returns true if they are equal, otherwise false.
+
+Recursive Case:
+Recursively call hasPathSum on the left subtree with targetSum reduced by root.val.
+Store the result in leftSum.
+Recursively call hasPathSum on the right subtree with targetSum reduced by root.val.
+Store the result in rightSum.
+
+Return Result:
+Return true if either leftSum or rightSum is true, indicating there is a path with the sum equal to targetSum.
+ */
