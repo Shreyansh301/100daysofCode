@@ -1,0 +1,68 @@
+class Solution {
+    public TreeNode createBinaryTree(final int[][] descriptions) {
+        final TreeNode[] nodes = new TreeNode[100001];
+        final boolean[] children = new boolean[100001];
+
+        for(final int[] description : descriptions) {
+            if(nodes[description[0]] == null)
+                nodes[description[0]] = new TreeNode(description[0]);
+
+            if(nodes[description[1]] == null)
+                nodes[description[1]] = new TreeNode(description[1]);
+
+            if(description[2] == 0)
+                nodes[description[0]].right = nodes[description[1]];
+            else
+                nodes[description[0]].left = nodes[description[1]];
+
+            children[description[1]] = true;
+        }
+
+        for(final int[] description : descriptions)
+            if(!children[description[0]])
+                return nodes[description[0]];
+
+        return null;
+    }
+}
+
+/*
+Level - Medium (2196)
+LOGIC: Explanation
+Example - Input: descriptions = [[20,15,1],[20,17,0],[50,20,1],[50,80,0],[80,19,1]]
+Output: [50,20,80,15,17,19]
+The root node is the node with value 50 since it has no parent.
+The resulting binary tree is shown in the diagram.
+-----------------------------------------------------------------------------------------
+This code constructs a binary tree from a given set of node descriptions and returns the root of the tree.
+
+Class Definition:
+Solution: Contains the method createBinaryTree.
+
+Method Definition:
+createBinaryTree(final int[][] descriptions): Takes a 2D array descriptions where each sub-array represents a relationship between two nodes.
+
+Variables:
+TreeNode[] nodes: An array to store TreeNode objects. The size is 100001 to accommodate node values up to 100000.
+boolean[] children: An array to mark nodes that are children.
+
+Loop Through Descriptions:
+For each description in descriptions:
+Check if the parent node (description[0]) exists in the nodes array. If not, create a new TreeNode for it.
+Check if the child node (description[1]) exists in the nodes array. If not, create a new TreeNode for it.
+Establish the parent-child relationship:
+If description[2] == 0, set the child as the right child of the parent.
+Otherwise, set the child as the left child of the parent.
+Mark the child node in the children array.
+
+Identify the Root Node:
+Loop through the descriptions again:
+Check the parent node (description[0]). If it is not marked as a child (children[description[0]] is false), it is the root node of the tree.
+Return the root node.
+
+Return:
+Return the root node of the binary tree.
+If no root node is found, return null.
+
+This code effectively builds a binary tree from the given descriptions and identifies the root node by ensuring it is not marked as a child of any other node.
+ */
