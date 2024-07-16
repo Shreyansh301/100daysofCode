@@ -1,0 +1,59 @@
+class Solution {
+    private boolean find(TreeNode n, int val, StringBuilder sb) {
+        if (n.val == val)
+            return true;
+        if (n.left != null && find(n.left, val, sb))
+            sb.append("L");
+        else if (n.right != null && find(n.right, val, sb))
+            sb.append("R");
+        return sb.length() > 0;
+    }
+
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        StringBuilder s = new StringBuilder(), d = new StringBuilder();
+        find(root, startValue, s);
+        find(root, destValue, d);
+        int i = 0, max_i = Math.min(d.length(), s.length());
+        while (i < max_i && s.charAt(s.length() - i - 1) == d.charAt(d.length() - i - 1))
+            ++i;
+        return "U".repeat(s.length() - i) + d.reverse().toString().substring(i);
+    }
+}
+
+/*
+Level - Medium (2096)
+LOGIC: Explanation 
+Example - Input: root = [5,1,2,3,null,6,4], startValue = 3, destValue = 6
+Output: "UURL"
+The shortest path is: 3 → 1 → 5 → 2 → 6.
+---------------------------------------------------------------------------
+Class Solution: Contains methods to find directions in a binary tree.
+Private method find(TreeNode n, int val, StringBuilder sb):
+Purpose: Searches for a node with a specified value (val) in the binary tree and records the path to this node.
+
+Parameters:
+TreeNode n: The current node in the tree.
+int val: The value to search for.
+StringBuilder sb: The string builder to record the path.
+Returns: true if the value is found, otherwise false.
+
+Path Recording:
+Appends 'L' if the left child contains the value.
+Appends 'R' if the right child contains the value.
+Public Method getDirections
+Purpose: Finds directions from a start node (startValue) to a destination node (destValue) in a binary tree.
+
+Parameters:
+TreeNode root: The root node of the binary tree.
+int startValue: The starting node value.
+int destValue: The destination node value.
+
+Logic:
+Initializes two StringBuilder objects (s and d) to record paths for startValue and destValue.
+Calls find method to populate s and d with paths.
+Finds the common path prefix between startValue and destValue by comparing paths from the end (reversed).
+
+Constructs the final path:
+Appends 'U' for every step up from the startValue to the lowest common ancestor (LCA).
+Appends the reversed path from LCA to destValue starting from the first differing character.
+ */
