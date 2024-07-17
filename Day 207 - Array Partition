@@ -1,0 +1,61 @@
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int num : nums) {
+            max = Math.max(num, max);
+            min = Math.min(num, min);
+        }
+        int[] counts = new int[max - min + 1];
+        for (int num : nums) {
+            counts[num - min]++;
+        }
+        int res = 0;
+        int idx = 0;
+        for (int i = 0; i < nums.length / 2; i++) {
+            while (counts[idx] == 0) {
+                idx++;
+            }
+            res += idx;
+            counts[idx]--;
+            while (counts[idx] == 0) {
+                idx++;
+            }
+            counts[idx]--;
+        }
+        return res + nums.length / 2 * min;
+    }
+}
+
+/*
+Level - Easy (561)
+LOGIC: Explanation 
+Example - Input: nums = [1,4,3,2]
+Output: 4
+All possible pairings (ignoring the ordering of elements) are:
+1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+So the maximum possible sum is 4.
+---------------------------------------------------------------
+The code defines a method arrayPairSum which returns the maximum sum of min(ai, bi) for all pairs (ai, bi) formed from the array nums.
+
+Finding Min and Max:
+Initializes max to the smallest possible integer value (Integer.MIN_VALUE) and min to the largest possible integer value (Integer.MAX_VALUE).
+Iterates through nums to find the actual max and min values in the array.
+
+Count Array:
+Creates a counts array to store the frequency of each number in nums, offset by min to handle potential negative values.
+Populates the counts array with the frequency of each number in nums.
+
+Calculating Result:
+Initializes res to store the result and idx to iterate through the counts array.
+Iterates through half the length of nums (since each pair consists of two elements).
+Finds the next non-zero count in counts and adds the index value to res.
+Decreases the count of the current number by one.
+Skips to the next non-zero count and decreases it by one (pairing the numbers).
+
+Final Calculation:
+Adds nums.length / 2 * min to res to account for the offset due to the min value.
+Returns the final result stored in res.
+ */
