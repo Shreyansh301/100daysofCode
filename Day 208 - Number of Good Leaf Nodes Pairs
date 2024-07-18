@@ -1,0 +1,73 @@
+class Solution {
+  int res = 0;
+
+  private int[] dfs(TreeNode node, int distance) {
+    var map = new int[11];
+
+    if (node == null) return map;
+
+    if (node.left == null && node.right == null)
+      map[1] = 1;
+
+    var left = dfs(node.left, distance);
+    var right = dfs(node.right, distance);
+
+    for (var i = 1; i < distance; i++)
+      for (var j = 1; j <= distance - i; j++)
+        res += (left[i] * right[j]);
+
+    for (var i=2; i<11; i++)
+      map[i] += left[i-1] + right[i-1];
+
+    return map;
+  }
+
+  public int countPairs(TreeNode root, int distance) {
+    dfs(root, distance);
+    return res;
+  }
+}
+
+/*
+Level - Medium (1530)
+LOGIC: Explanation 
+Example - Input: root = [1,2,3,null,4], distance = 3
+Output: 1
+The leaf nodes of the tree are 3 and 4 and the length of the shortest path between them is 3. 
+This is the only good pair.
+--------------------------------------------------------------------------------------------
+Class and Variables:
+class Solution - Defines a class named Solution.
+int res = 0 - Initializes a variable res to store the result, which is the count of good leaf node pairs.
+
+Depth-First Search (DFS) Method:
+private int[] dfs(TreeNode node, int distance) - Defines a private method dfs that returns an array of integers.
+var map = new int[11] - Initializes an array map to count the number of leaf nodes at each distance up to 10.
+
+Base Case:
+if (node == null) return map - If the node is null, return the empty map.
+
+Leaf Node Case:
+if (node.left == null && node.right == null) - If the node is a leaf, increment the count at distance 1 in map.
+
+Recursive DFS Calls:
+var left = dfs(node.left, distance) - Recursively call dfs on the left child.
+var right = dfs(node.right, distance) - Recursively call dfs on the right child.
+
+Counting Good Leaf Node Pairs:
+for (var i = 1; i < distance; i++) - Iterate over possible distances from the left subtree.
+for (var j = 1; j <= distance - i; j++) - Iterate over possible distances from the right subtree.
+res += (left[i] * right[j]) - Increment res by the product of leaf counts from left and right subtrees within the given distance.
+
+Updating Distance Counts:
+for (var i=2; i<11; i++) - Iterate from distance 2 to 10.
+map[i] += left[i-1] + right[i-1] - Update map with the counts of leaf nodes from left and right subtrees at the previous distance.
+
+Return Map:
+return map - Return the map containing the updated counts of leaf nodes at various distances.
+
+Count Pairs Method:
+public int countPairs(TreeNode root, int distance) - Defines a public method countPairs to count good leaf node pairs.
+dfs(root, distance) - Calls the dfs method starting from the root.
+return res - Returns the final count of good leaf node pairs.
+*/
