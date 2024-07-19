@@ -1,0 +1,49 @@
+class Solution {
+    public int[] createTargetArray(int[] nums, int[] index) {
+        int len = nums.length;
+        ArrayList<Integer> targetList = new ArrayList<>();
+        for(int i=0;i<len;i++){
+            // Insert nums[i] at index[i] in targetList.
+            targetList.add(index[i],nums[i]);  
+        }
+        int[] target = new int[len];
+        for(int i=0;i<len;i++){
+            // Convert ArrayList to integer array.
+            target[i] = targetList.get(i);  
+        }
+        return target;
+    }
+}
+
+/*
+Level - Easy (1389)
+LOGIC: Explanation
+Example - Input: nums = [0,1,2,3,4], index = [0,1,2,2,1]
+Output: [0,4,1,3,2]
+nums       index     target
+0            0        [0]
+1            1        [0,1]
+2            2        [0,1,2]
+3            2        [0,1,3,2]
+4            1        [0,4,1,3,2]
+----------------------------------------------------------------
+Class and Method Declaration:
+The code defines a public class named Solution.
+Inside this class, there's a public method createTargetArray that takes two integer arrays nums and index as input and returns an integer array.
+
+Initialization:
+int len = nums.length;: The variable len is assigned the length of the nums array.
+ArrayList<Integer> targetList = new ArrayList<>();: An empty ArrayList named targetList is created to store the elements in the desired order.
+
+Loop to Populate targetList:
+A for loop iterates from 0 to len - 1.
+targetList.add(index[i], nums[i]);: In each iteration, the element nums[i] is inserted into the targetList at the position specified by index[i].
+
+Conversion to Array:
+int[] target = new int[len];: An integer array target of length len is created to store the final result.
+Another for loop iterates from 0 to len - 1.
+target[i] = targetList.get(i);: In each iteration, the element at position i in targetList is copied to the target array.
+
+Return Statement:
+return target;: The method returns the target array, which is now populated with elements from nums inserted at the indices specified by index.
+ */
