@@ -1,0 +1,57 @@
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int closeSum=nums[0]+nums[1]+nums[2];
+        for(int i=0;i<nums.length-2;i++){
+            int j=i+1;
+            int k = nums.length-1;
+            while(j<k){
+                int sum = nums[i]+nums[j]+nums[k];
+                if(Math.abs(target-sum)<Math.abs(target-closeSum)){
+                    closeSum=sum;
+                }
+                if(sum<target){
+                    j++;
+                }
+                else{
+                    k--;
+                }
+            }
+        }
+        return closeSum;
+    }
+}
+
+/*
+Level - Medium (16)
+LOGIC: Explanation
+Example - Input: nums = [-1,2,1,-4], target = 1
+Output: 2
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+----------------------------------------------------------------------
+Class Definition and Method Declaration:
+The Solution class contains a method threeSumClosest.
+This method takes an array of integers nums and an integer target as input and returns the sum of three integers in nums that is closest to target.
+
+Initial Setup:
+Arrays.sort(nums);: Sorts the input array nums to facilitate the two-pointer technique.
+int closeSum=nums[0]+nums[1]+nums[2];: Initializes closeSum to the sum of the first three elements in the sorted array.
+
+Main Loop:
+The outer for loop iterates through each element in nums up to the third-to-last element.
+int j=i+1; int k = nums.length-1;: Initializes two pointers, j (the element right after i) and k (the last element in the array).
+
+Two-Pointer Technique:
+The while(j<k) loop moves the two pointers towards each other to find the closest sum.
+int sum = nums[i]+nums[j]+nums[k];: Calculates the sum of the elements at the current positions of i, j, and k.
+
+Updating Closest Sum:
+if(Math.abs(target-sum)<Math.abs(target-closeSum)){ closeSum=sum; }: Updates closeSum if the current sum is closer to target than the previous closeSum.
+
+Adjusting Pointers:
+if(sum<target){ j++; }: If sum is less than target, moves the left pointer j to the right to increase the sum.
+else{ k--; }: If sum is greater than or equal to target, moves the right pointer k to the left to decrease the sum.
+
+Return Statement:
+return closeSum;: After all iterations, returns the closest sum found.
+ */
