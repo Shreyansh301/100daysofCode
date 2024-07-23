@@ -1,0 +1,114 @@
+class Solution {
+    TrieNode root;
+
+    public Solution() {
+        root = new TrieNode('\0');
+    }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        for(String word : wordDict) {
+            insertWord(root,word);
+        }
+        int[] memo = new int[s.length()];
+        Arrays.fill(memo, -1);
+        return canSegmentString(root,s,0,memo);
+    }
+
+    public void insertWord(TrieNode root, String word) {
+        TrieNode current = root;
+        for(char c : word.toCharArray()) {
+            int index = c -'a';
+            if(current.children[index] == null) {
+                current.children[index] = new TrieNode(c);
+            }
+            current = current.children[index];
+        }
+        current.isEndOfWord = true;
+    }
+
+    public boolean canSegmentString(TrieNode root, String s, int start, int[] memo) {
+        if(start == s.length()) return true;
+        if(memo[start] != -1) return memo[start]==1;
+        TrieNode current = root;
+        for(int i = start; i< s.length(); i++) {
+            int index = s.charAt(i) - 'a';
+            if(current.children[index] == null) {
+                memo[start] = 0;
+                return false;
+            }
+            current = current.children[index];
+            if(current.isEndOfWord && canSegmentString(root,s,i+1,memo)) {
+                memo[start] = 1;
+                return true;
+            }
+        }
+        memo[start] = 0;
+        return false;
+    }
+}
+
+class TrieNode {
+    char c;
+    TrieNode[] children;
+    boolean isEndOfWord;
+    TrieNode(char c) {
+        this.c = c;
+        children = new TrieNode[26];
+        isEndOfWord = false;
+    }
+}
+
+/*
+Level - Medium (139)
+LOGIC: Explanation 
+Example - Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Return true because "leetcode" can be segmented as "leet code".
+------------------------------------------------------------------------
+Class: Solution
+
+Attributes:
+TrieNode root:
+Initializes the root of the Trie with an empty character.
+
+Constructor:
+Solution():
+Creates a new TrieNode with an empty character ('\0').
+
+Methods:
+wordBreak(String s, List<String> wordDict):
+Step 1: For each word in wordDict, call insertWord(root, word) to insert the word into the Trie.
+Step 2: Create an integer array memo of size s.length() initialized to -1 to store the results of subproblems.
+Step 3: Call canSegmentString(root, s, 0, memo) to check if the string s can be segmented starting from index 0.
+
+insertWord(TrieNode root, String word):
+Step 1: Initialize current to root.
+Step 2: For each character c in word:
+Calculate the index index = c - 'a'.
+If current.children[index] is null, create a new TrieNode for that character.
+Move current to current.children[index].
+Step 3: After processing all characters, mark current.isEndOfWord as true.
+
+canSegmentString(TrieNode root, String s, int start, int[] memo):
+Step 1: If start equals the length of s, return true (base case: entire string is segmented).
+Step 2: If memo[start] is not -1, return memo[start] == 1 (use memoized result).
+Step 3: Initialize current to root.
+Step 4: For each index i from start to the end of s:
+Calculate the index index = s.charAt(i) - 'a'.
+If current.children[index] is null, set memo[start] to 0 and return false.
+Move current to current.children[index].
+If current.isEndOfWord and canSegmentString(root, s, i + 1, memo) returns true, set memo[start] to 1 and return true.
+Step 5: If no segmentation is found, set memo[start] to 0 and return false.
+
+Class: TrieNode
+Attributes:
+char c: Character stored in the node.
+TrieNode[] children: Array to store child nodes for each letter of the alphabet.
+boolean isEndOfWord: Flag to indicate the end of a word.
+
+Constructor:
+TrieNode(char c):
+Initializes the node with the character c.
+Creates an empty children array of size 26.
+Sets isEndOfWord to false.
+ */
