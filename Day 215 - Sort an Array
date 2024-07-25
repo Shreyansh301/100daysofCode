@@ -1,0 +1,71 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        if (nums == null || nums.length <= 1) return nums;
+        
+        int max = nums[0], min = nums[0];
+        for (int num : nums) {
+            if (num > max) max = num;
+            if (num < min) min = num;
+        }
+        
+        int range = max - min + 1;
+        int[] count = new int[range];
+        
+        for (int num : nums) {
+            count[num - min]++;
+        }
+        
+        int index = 0;
+        for (int i = 0; i < range; i++) {
+            int freq = count[i];
+            if (freq > 0) {
+                int value = i + min;
+                while (freq-- > 0) {
+                    nums[index++] = value;
+                }
+            }
+        }
+        
+        return nums;
+    }
+}
+
+/*
+Level - Medium (912)
+LOGIC: Explanation 
+Example - Input: nums = [5,2,3,1]
+Output: [1,2,3,5]
+Explanation: After sorting the array, the positions of some numbers are not changed (for example, 2 and 3)
+while the positions of other numbers are changed (for example, 1 and 5).
+-------------------------------------------------------------------------------
+Class Declaration: The code defines a class named Solution.
+
+Method Declaration: The sortArray method is declared, which takes an integer array nums as input and returns a sorted integer array.
+
+Base Case Check:
+
+Checks if the input array nums is null or has a length of 1 or less.
+If true, it returns the array as it is already sorted.
+
+Finding Min and Max:
+Initializes max and min to the first element of the array.
+Iterates through the array to find the maximum and minimum values.
+
+Range Calculation:
+Computes the range as max - min + 1.
+Creates a count array of size range to keep track of the frequency of each number.
+
+Counting Frequencies:
+Iterates through the array nums.
+Increments the count for each number in the count array using the formula count[num - min]++.
+
+Reconstructing Sorted Array:
+Initializes an index variable index to 0.
+Iterates through the count array.
+For each index in the count array, if the frequency is greater than 0:
+Computes the actual value as i + min.
+Inserts the value into nums the number of times it appears (frequency).
+
+Return Statement:
+Returns the sorted array nums.
+ */
