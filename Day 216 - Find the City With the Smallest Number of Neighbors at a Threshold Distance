@@ -1,0 +1,79 @@
+class Solution {
+   public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int[][] distance = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(distance[i], 1000000000); // Use a large value as infinity
+            distance[i][i] = 0;
+        }
+
+        for (int[] edge : edges) {
+            distance[edge[0]][edge[1]] = edge[2];
+            distance[edge[1]][edge[0]] = edge[2];
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    distance[i][j] = Math.min(distance[i][j], distance[i][k] + distance[k][j]);
+                }
+            }
+        }
+
+        int ans = -1;
+        int mini = Integer.MAX_VALUE;
+        int[] reachable = new int[n];
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && distance[i][j] <= distanceThreshold) {
+                    count++;
+                }
+            }
+            reachable[i] = count;
+            if (count <= mini) {
+                mini = count;
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+}
+
+/*
+Level - Medium (1334)
+LOGIC: Explanation
+Example - Input: n = 4, edges = [[0,1,3],[1,2,1],[1,3,4],[2,3,1]], distanceThreshold = 4
+Output: 3
+The figure above describes the graph. 
+The neighboring cities at a distanceThreshold = 4 for each city are:
+City 0 -> [City 1, City 2] 
+City 1 -> [City 0, City 2, City 3] 
+City 2 -> [City 0, City 1, City 3] 
+City 3 -> [City 1, City 2] 
+Cities 0 and 3 have 2 neighboring cities at a distanceThreshold = 4
+but we have to return city 3 since it has the greatest number.
+----------------------------------------------------------------------------------
+Class and Method Definition
+The Solution class contains a public method findTheCity.
+The method takes three parameters: an integer n, a 2D array edges, and an integer distanceThreshold.
+
+Initialize Distance Matrix
+A 2D array distance is created to store the shortest distances between any two cities.
+Each element of distance is initially set to a large value (representing infinity) to indicate no direct connection.
+The distance from each city to itself is set to 0.
+Populate Distance Matrix with Edge Weights
+Iterate through the edges array and populate the distance matrix with the given edge weights.
+
+Floyd-Warshall Algorithm
+This algorithm is used to find the shortest paths between all pairs of cities.
+It updates the distance matrix by considering each city as an intermediate point.
+
+Find the City with the Fewest Reachable Cities
+Initialize variables ans to store the result and mini to store the minimum count of reachable cities.
+Iterate through each city and count how many cities are reachable within the distanceThreshold.
+Keep track of the city with the smallest count of reachable cities. If there are ties, the city with the larger index is preferred.
+
+Return the Result
+Return the city (index) with the fewest reachable cities within the distanceThreshold.
+*/
