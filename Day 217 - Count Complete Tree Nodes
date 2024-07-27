@@ -1,0 +1,39 @@
+class Solution {
+    int height(TreeNode root) {
+        return root == null ? -1 : 1 + height(root.left);
+    }
+    public int countNodes(TreeNode root) {
+        int h = height(root);
+        return h < 0 ? 0 :
+               height(root.right) == h-1 ? (1 << h) + countNodes(root.right)
+                                         : (1 << h-1) + countNodes(root.left);
+    }
+}
+/*
+Level - Easy (222)
+LOGIC: Explanation
+Example - Input: root = [1,2,3,4,5,6]
+Output: 6
+----------------------------------------------
+height Method
+Purpose: Calculate the height of the leftmost branch of a binary tree.
+Input: A TreeNode object, root.
+Output: An integer representing the height of the tree.
+
+Logic:
+If the root is null, return -1.
+Otherwise, return 1 + height(root.left), which recursively calculates the height by traversing down the left subtree.
+countNodes Method
+
+Purpose: Count the number of nodes in a complete binary tree.
+Input: A TreeNode object, root.
+Output: An integer representing the number of nodes in the tree.
+
+Logic:
+Calculate the height of the tree using the height method and store it in h.
+If the height h is less than 0, the tree is empty, so return 0.
+
+Check if the height of the right subtree (height(root.right)) is equal to h - 1.
+If true, it means the left subtree is a perfect binary tree of height h. Thus, the number of nodes is (1 << h) + countNodes(root.right).
+If false, it means the left subtree is not a perfect binary tree, so the number of nodes is (1 << (h - 1)) + countNodes(root.left).
+*/
