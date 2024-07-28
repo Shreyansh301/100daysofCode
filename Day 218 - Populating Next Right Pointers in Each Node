@@ -1,0 +1,74 @@
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) return null;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            Node prev = null;
+
+            for (int i = 0; i < levelSize; i++) {
+                Node currentNode = queue.poll();
+
+                if (prev != null) {
+                    prev.next = currentNode;
+                }
+
+                prev = currentNode;
+
+                if (currentNode.left != null) {
+                    queue.offer(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    queue.offer(currentNode.right);
+                }
+            }
+        }
+
+        return root;
+    }
+}
+
+/*
+Level - Medium (116)
+LOGIC: Explanation
+Example - Input: root = [1,2,3,4,5,6,7]
+Output: [1,#,2,3,#,4,5,6,7,#]
+Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. 
+The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.
+-----------------------------------------------------------------------------------------------------------------------------
+Class Definition:
+The class Solution is defined with a public method connect.
+
+Method connect:
+The method takes a Node object root as its parameter and returns a Node object.
+
+Base Case:
+If the root is null, the method returns null immediately.
+
+Queue Initialization:
+A Queue of Node objects, named queue, is created and initialized using a LinkedList.
+
+Root Node Addition:
+The root node is added to the queue using queue.offer(root).
+
+While Loop (Processing Levels):
+The while loop runs as long as the queue is not empty.
+
+Processing Each Level:
+levelSize is set to the current size of the queue, representing the number of nodes at the current level.
+A Node variable prev is initialized to null to keep track of the previous node in the current level.
+
+For Loop (Connecting Nodes at the Same Level):
+The for loop iterates levelSize times to process all nodes at the current level.
+currentNode is set to the node removed from the queue using queue.poll().
+If prev is not null, prev.next is set to currentNode, connecting the previous node to the current node.
+prev is then updated to currentNode.
+If currentNode.left is not null, it is added to the queue.
+If currentNode.right is not null, it is added to the queue.
+
+Return Statement:
+After all levels have been processed, the method returns the root.
+ */
