@@ -1,0 +1,49 @@
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int row = triangle.size();
+        int[] memo = new int[row];
+
+        for (int i = 0; i < row; i++) {
+            memo[i] = triangle.get(row - 1).get(i);
+        }
+
+        for (int r = row-2; r >= 0; r--) {
+            for (int c = 0; c <= r; c++) {
+                memo[c] = Math.min(memo[c], memo[c+1]) + triangle.get(r).get(c);
+            }
+        }
+
+        return memo[0];        
+    }
+}
+
+/*
+Level - Medium (120)
+LOGIC: Explanaation 
+Example - Input: triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+Output: 11
+The triangle looks like:
+   2
+  3 4
+ 6 5 7
+4 1 8 3
+The minimum path sum from top to bottom is 2 + 3 + 5 + 1 = 11 (underlined above).
+------------------------------------------------------------------------------------
+Purpose: The method minimumTotal calculates the minimum path sum from the top to the bottom of a given triangle of integers.
+Parameters: The method takes a single parameter, triangle, which is a list of lists of integers representing the triangle.
+
+Initialization:
+row: Stores the number of rows in the triangle.
+memo: A one-dimensional array of size row used to store the minimum path sums for each position in the triangle.
+
+Base Case Setup:
+The for loop for (int i = 0; i < row; i++) initializes the memo array with the values from the last row of the triangle.
+
+Dynamic Programming Calculation:
+The outer for loop for (int r = row-2; r >= 0; r--) iterates from the second-last row up to the first row.
+The inner for loop for (int c = 0; c <= r; c++) iterates through each element in the current row.
+memo[c] = Math.min(memo[c], memo[c+1]) + triangle.get(r).get(c); updates the memo array by choosing the minimum path sum for the current position c in row r and adding the current element of the triangle to it.
+
+Return Value:
+return memo[0]; returns the minimum path sum from the top to the bottom of the triangle, which is stored in memo[0].
+ */
