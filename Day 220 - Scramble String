@@ -1,0 +1,67 @@
+class Solution {
+    Boolean dp[][][];
+    char[] s1, s2;
+    int n;
+    public boolean isScramble(String s1, String s2) {
+        this.s1=s1.toCharArray();
+        this.s2=s2.toCharArray();
+        n=s1.length();
+        dp=new Boolean[n][n][n+1];
+        return f(0, 0, n);
+    }
+
+    private boolean f(int i, int j, int len) {
+        if(len==1) return dp[i][j][len]=s1[i]==s2[j];
+        if(dp[i][j][len]!=null) return dp[i][j][len];
+
+        for(int k=1; k<len; k++) {
+            if(f(i, j, k) && f(i+k, j+k, len-k))
+                return dp[i][j][len]=true;
+            else if(f(i, j+len-k, k) && f(i+k, j, len-k))
+                return dp[i][j][len]=true;
+        }
+        return dp[i][j][len]=false;
+    }
+}
+
+/*
+Level - Hard (87)
+LOGIC: Explanation
+Example - Input: s1 = "great", s2 = "rgeat"
+Output: true
+One possible scenario applied on s1 is:
+"great" --> "gr/eat" // divide at random index.
+"gr/eat" --> "gr/eat" // random decision is not to swap the two substrings and keep them in order.
+"gr/eat" --> "g/r / e/at" // apply the same algorithm recursively on both substrings. divide at random index each of them.
+"g/r / e/at" --> "r/g / e/at" // random decision was to swap the first substring and to keep the second substring in the same order.
+"r/g / e/at" --> "r/g / e/ a/t" // again apply the algorithm recursively, divide "at" to "a/t".
+"r/g / e/ a/t" --> "r/g / e/ a/t" // random decision is to keep both substrings in the same order.
+The algorithm stops now, and the result string is "rgeat" which is s2.
+As one possible scenario led s1 to be scrambled to s2, we return true.
+----------------------------------------------------------------------------
+Class Definition: The class Solution is defined to contain the solution to the problem.
+
+Member Variables:
+Boolean dp[][][]: A 3D array used for memoization, storing results of subproblems.
+char[] s1, s2: Character arrays representing the input strings s1 and s2.
+int n: The length of the input strings.
+
+Constructor and Initialization:
+isScramble(String s1, String s2): This method initializes the character arrays s1 and s2 and the length n.
+The memoization array dp is initialized with dimensions [n][n][n+1] where n is the length of the input strings.
+The method then calls the helper function f with initial indices and the full length of the strings.
+
+Helper Function f:
+Parameters: The function f takes three parameters: i (index in s1), j (index in s2), and len (length of the substring to be compared).
+Base Case: If len == 1, it checks if the characters s1[i] and s2[j] are equal and stores the result in dp[i][j][len].
+Memoization Check: If the result for the current indices and length is already computed (dp[i][j][len] is not null), it returns the stored result.
+
+Recursive Check:
+The function iterates over possible split points k from 1 to len-1.
+It checks two conditions:
+If the first k characters of s1 match with the first k characters of s2 and the remaining len-k characters of s1 match with the remaining len-k characters of s2.
+If the first k characters of s1 match with the last k characters of s2 and the remaining len-k characters of s1 match with the first len-k characters of s2.
+If either condition is met, it stores true in dp[i][j][len] and returns true.
+
+Return False: If none of the conditions are met, it stores false in dp[i][j][len] and returns false.
+ */
