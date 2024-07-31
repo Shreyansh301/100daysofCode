@@ -1,0 +1,59 @@
+class Solution {
+    public int minHeightShelves(int[][] books, int shelfWidth) {
+        int n = books.length;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;  // Base case: no books require 0 height
+        
+        for (int i = 1; i <= n; ++i) {
+            int total_width = 0;
+            int max_height = 0;
+            for (int j = i; j > 0; --j) {
+                total_width += books[j-1][0];
+                if (total_width > shelfWidth) {
+                    break;
+                }
+                max_height = Math.max(max_height, books[j-1][1]);
+                dp[i] = Math.min(dp[i], dp[j-1] + max_height);
+            }
+        }
+        
+        return dp[n];
+    }
+}
+
+/*
+Level - 1105 (Meddium)
+LOGIC: Explanation
+Example - Input: books = [[1,1],[2,3],[2,3],[1,1],[1,1],[1,1],[1,2]], shelfWidth = 4
+Output: 6
+The sum of the heights of the 3 shelves is 1 + 3 + 2 = 6.
+Notice that book number 2 does not have to be on the first shelf.
+----------------------------------------------------------------------
+Class Declaration:
+The class Solution is declared, which contains the method minHeightShelves.
+
+Method Signature:
+The method minHeightShelves takes two parameters: a 2D array books (where each book is represented by its width and height) and an integer shelfWidth (the width of the shelf).
+
+Initialization:
+int n = books.length; - Stores the number of books.
+int[] dp = new int[n + 1]; - Initializes a dynamic programming array dp with n+1 elements.
+Arrays.fill(dp, Integer.MAX_VALUE); - Fills the dp array with a large value (infinity) to represent initial heights.
+dp[0] = 0; - Sets the base case: no books require 0 height.
+
+Dynamic Programming Loop:
+The outer loop (for (int i = 1; i <= n; ++i)) iterates over the books.
+
+Inside the loop:
+int total_width = 0; - Initializes total_width to keep track of the width of books on the current shelf.
+int max_height = 0; - Initializes max_height to keep track of the maximum height of books on the current shelf.
+The inner loop (for (int j = i; j > 0; --j)) iterates backwards to place books on the current shelf:
+total_width += books[j-1][0]; - Adds the width of the current book to total_width.
+if (total_width > shelfWidth) { break; } - Breaks the loop if total_width exceeds shelfWidth.
+max_height = Math.max(max_height, books[j-1][1]); - Updates max_height with the height of the current book if it is greater.
+dp[i] = Math.min(dp[i], dp[j-1] + max_height); - Updates dp[i] with the minimum height required to place the first i books.
+
+Return Statement:
+return dp[n]; - Returns the minimum height required to place all n books on the shelves.
+*/
