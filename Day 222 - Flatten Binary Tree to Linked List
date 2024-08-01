@@ -1,0 +1,49 @@
+class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null)
+            return ;
+        flatten(root.left);
+        if(root.left != null){
+            TreeNode node= root.right;
+            root.right=root.left;
+            root.left=null;
+            TreeNode temp=root;
+            while(temp.right != null){
+                temp= temp.right;
+            }
+            temp.right = node;
+        }
+        flatten(root.right);
+    }
+}
+
+/*
+Level - Medium (114)
+LOGIC: Explanation
+Example - Input: root = [1,2,5,3,4,null,6]
+Output: [1,null,2,null,3,null,4,null,5,null,6]
+--------------------------------------------------
+Method Definition:
+The method flatten(TreeNode root) is designed to flatten a binary tree into a linked list in-place.
+
+Base Case:
+if(root == null) return;:
+If the root is null, the function returns immediately. This is the base case for the recursion to stop.
+
+Recursive Flattening of Left Subtree:
+flatten(root.left);:
+Recursively calls the flatten method on the left subtree of the current root.
+
+Adjust Right Subtree:
+if(root.left != null) {...}:
+If the left child of the root is not null:
+Temporarily store the current right subtree in node.
+Move the left subtree to the right.
+Set the left child of the root to null.
+Traverse the newly adjusted right subtree (which was the left subtree) to find the rightmost node (temp).
+Attach the original right subtree (stored in node) to the rightmost node of the new right subtree.
+
+Recursive Flattening of Right Subtree:
+flatten(root.right);:
+Finally, recursively call the flatten method on the right subtree of the current root.
+ */
