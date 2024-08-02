@@ -1,0 +1,89 @@
+class Solution {
+    public int minSwaps(int[] nums) {
+        int n = nums.length;
+        int countOnes = 0;
+        for (int num : nums) {
+            if (num == 1) countOnes++;
+        }
+        if (countOnes == 0) return 0;
+
+        // Extend the array to handle the circular nature
+        int[] extendedNums = new int[2 * n];
+        System.arraycopy(nums, 0, extendedNums, 0, n);
+        System.arraycopy(nums, 0, extendedNums, n, n);
+
+        // Initialize the number of zeroes in the first window
+        int currentZeroes = 0;
+        for (int i = 0; i < countOnes; i++) {
+            if (extendedNums[i] == 0) currentZeroes++;
+        }
+        int minZeroes = currentZeroes;
+
+        // Slide the window
+        for (int i = countOnes; i < extendedNums.length; i++) {
+            if (extendedNums[i] == 0) currentZeroes++;
+            if (extendedNums[i - countOnes] == 0) currentZeroes--;
+
+            minZeroes = Math.min(minZeroes, currentZeroes);
+        }
+
+        return minZeroes;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[] nums = {1, 0, 1, 0, 1, 0, 0, 1};
+        System.out.println(sol.minSwaps(nums));  // Expected output should consider the circular nature
+    }
+}
+
+/*
+Level - Medium(2134)
+LOGIC: Explanation
+Example - Input: nums = [0,1,0,1,1,0,0]
+Output: 1
+Here are a few of the ways to group all the 1's together:
+[0,0,1,1,1,0,0] using 1 swap.
+[0,1,1,1,0,0,0] using 1 swap.
+[1,1,0,0,0,0,1] using 2 swaps (using the circular property of the array).
+There is no way to group all 1's together with 0 swaps.
+Thus, the minimum number of swaps required is 1.
+------------------------------------------------------------------------------
+Class Declaration:
+class Solution declares the class.
+
+Method Declaration:
+public int minSwaps(int[] nums) declares the method to find the minimum swaps required to group all 1s together in a circular array.
+
+Initial Count of 1s:
+int countOnes = 0; initializes a counter for 1s.
+A for loop counts the number of 1s in the nums array.
+
+Edge Case:
+If there are no 1s (countOnes == 0), the method returns 0.
+
+Extend the Array:
+int[] extendedNums = new int[2 * n]; creates an extended array to handle the circular nature.
+System.arraycopy copies the original array twice into extendedNums.
+
+Initial Window of Zeroes:
+int currentZeroes = 0; initializes the counter for zeroes in the first window.
+A for loop counts the number of zeroes in the first window of size countOnes.
+
+Sliding Window:
+int minZeroes = currentZeroes; initializes the minimum zeroes counter.
+A for loop slides the window through the extendedNums array.
+If the new element in the window is 0, increment currentZeroes.
+If the element leaving the window is 0, decrement currentZeroes.
+Update minZeroes with the minimum value of currentZeroes.
+
+Return Result:
+The method returns minZeroes, the minimum number of zeroes found in any window, representing the minimum swaps needed.
+
+Main Method for Testing:
+public static void main(String[] args) declares the main method for testing.
+An instance of Solution is created.
+int[] nums = {1, 0, 1, 0, 1, 0, 0, 1}; initializes the test array.
+System.out.println(sol.minSwaps(nums)); prints the result of the minSwaps method for the test array.
+ */
