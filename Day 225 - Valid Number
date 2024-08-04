@@ -1,0 +1,71 @@
+class Solution {
+    public boolean isNumber(String s) {
+        boolean numberSeen = false;
+        boolean eSeen = false;
+        boolean dotCheck = false;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (Character.isDigit(ch)) {
+                numberSeen = true;
+            } else if (ch == '+' || ch == '-') {
+                if (i > 0 && (s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E')){
+                    return false;
+                }
+            } else if (ch == '.') {
+                if (dotCheck || eSeen) {
+                    return false;
+                }
+                dotCheck = true;
+            } else if (ch == 'e' || ch == 'E') {
+                if (eSeen || !numberSeen) {
+                    return false;
+                }
+                eSeen = true;
+                numberSeen = false;
+            } else {
+                return false; 
+            }
+        }
+
+        return numberSeen;
+    }
+}
+
+/*
+Level - Hard (65)
+LOGIC: Explanation
+Example - Input: s = "0"
+Output: true
+------------------------------------------
+Class Definition:
+The code defines a class named Solution.
+
+Method Declaration:
+The class contains a public method isNumber which takes a String as input and returns a boolean.
+
+Initialization of Flags:
+Three boolean flags are initialized:
+numberSeen: Tracks if a digit has been encountered.
+eSeen: Tracks if the character 'e' or 'E' has been encountered.
+dotCheck: Tracks if a dot ('.') has been encountered.
+
+Loop Through Characters:
+The method loops through each character in the input string s using a for loop.
+
+Character Checks:
+Digit Check:
+If the character is a digit (Character.isDigit(ch)), set numberSeen to true.
+Sign Check ('+' or '-'):
+If the character is a '+' or '-', it should be at the start or immediately after 'e' or 'E'. If not, return false.
+Dot Check ('.'):
+If the character is a dot ('.'), ensure it hasn't been seen before and there isn't an 'e' or 'E' before it. If either condition fails, return false. Otherwise, set dotCheck to true.
+Exponent Check ('e' or 'E'):
+If the character is 'e' or 'E', ensure it hasn't been seen before and a digit has been seen before it. If either condition fails, return false. Otherwise, set eSeen to true and reset numberSeen to false (expecting digits after 'e'/'E').
+Invalid Character:
+If the character is anything else, return false.
+
+Final Check:
+After the loop, return the value of numberSeen to ensure the string ends with a valid number part.
+ */
