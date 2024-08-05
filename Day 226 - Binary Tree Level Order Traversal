@@ -1,0 +1,81 @@
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) 
+    {
+        List<List<Integer>>al=new ArrayList<>();
+        pre(root,0,al);
+        return al;
+    }
+    public static void pre(TreeNode root,int l,List<List<Integer>>al)
+    {
+        if(root==null)
+            return;
+        if(al.size()==l)
+        {
+            List<Integer>li=new ArrayList<>();
+            li.add(root.val);
+            al.add(li);
+        }
+        else
+            al.get(l).add(root.val);
+        pre(root.left,l+1,al);
+        pre(root.right,l+1,al);
+    } 
+}
+
+/*
+Level - Medium (102)
+LOGIC: Explanation 
+Example - Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+-------------------------------------------------------
+Class Definition:
+class Solution: A class named Solution which contains the methods to solve the problem.
+
+Method: levelOrder:
+public List<List<Integer>> levelOrder(TreeNode root):
+A public method that takes a TreeNode (root of a binary tree) as input.
+It returns a list of lists, where each inner list contains the values of the nodes at each level of the tree.
+
+Variable Initialization:
+List<List<Integer>> al = new ArrayList<>();:
+Initializes an empty list of lists named al.
+
+Recursive Helper Method:
+pre(root, 0, al);:
+Calls the helper method pre to perform a preorder traversal starting from the root node, at level 0, passing the list al.
+
+Return Statement:
+return al;:
+Returns the list of lists al after traversal.
+
+Helper Method: pre:
+public static void pre(TreeNode root, int l, List<List<Integer>> al):
+A static method that performs a recursive preorder traversal on the binary tree.
+
+Parameters:
+TreeNode root: The current node.
+int l: The current level in the tree.
+List<List<Integer>> al: The list of lists to store the values at each level.
+
+Base Case:
+if (root == null) return;:
+If the current node is null, return from the method (end the recursion).
+
+Level Check and List Addition:
+if (al.size() == l) {:
+Checks if the list al has reached the current level l.
+List<Integer> li = new ArrayList<>();:
+Creates a new list li to store the values of nodes at the current level.
+li.add(root.val);:
+Adds the value of the current node to the list li.
+al.add(li);:
+Adds the list li to the list of lists al.
+} else { al.get(l).add(root.val); }:
+If the list al already has a list for the current level l, adds the current node's value to the existing list.
+
+Recursive Calls:
+pre(root.left, l + 1, al);:
+Recursively calls the pre method for the left child of the current node, incrementing the level by 1.
+pre(root.right, l + 1, al);:
+Recursively calls the pre method for the right child of the current node, incrementing the level by 1.
+ */
