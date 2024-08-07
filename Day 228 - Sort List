@@ -1,0 +1,89 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    static ListNode quickSort(ListNode head,ListNode tail){
+        if(head==null || head.next==null || head==tail) return head;
+        ListNode prev=head,curr=head.next,piv=head;
+        boolean sort=true;
+        while(curr!=null && curr!=tail){
+            ListNode next=curr.next;
+            if(piv.val>curr.val){
+                sort=false;
+                curr.next=head;
+                head=curr;
+                prev.next=next;
+            }
+            else{
+                if(curr.val<prev.val){
+                    sort=false;
+                }
+                prev=curr;
+            }
+            curr=next;
+        }
+        if(sort){
+            return head;
+        }
+        piv.next=quickSort(piv.next,tail);
+
+        return quickSort(head,piv);
+    }
+    public ListNode sortList(ListNode head) {
+        return quickSort(head,null);
+    }
+}
+
+/*
+Level - Medium (148)
+LOGIC: Explanation
+Example - Input: head = [4,2,1,3]
+Output: [1,2,3,4]
+------------------------------------------------
+Class and Method Definitions:
+ListNode class: Represents a node in a singly-linked list.
+
+int val: The value stored in the node.
+ListNode next: A reference to the next node in the list.
+Solution class: Contains the method for sorting the list.
+
+static ListNode quickSort(ListNode head, ListNode tail): A static method to perform QuickSort on the linked list.
+Method Explanation:
+
+Base Cases:
+If the list is empty (head == null).
+If the list has only one element (head.next == null).
+If the head is the same as tail.
+Return head directly in these cases as they are already sorted.
+Initialize Pointers:
+
+ListNode prev = head: Previous node pointer.
+ListNode curr = head.next: Current node pointer.
+ListNode piv = head: Pivot node.
+
+Partition the List:
+A while loop iterates through the list (curr != null && curr != tail).
+Compare each node's value with the pivot node's value (piv.val).
+If curr.val is less than piv.val:
+Move curr node before head and update pointers.
+Set sort = false to indicate the list needs sorting.
+Otherwise, check if the current node's value is less than the previous node's value to set sort = false.
+Move to the next node (curr = next).
+
+Check Sorted Flag:
+If the list is already sorted (sort == true), return head.
+
+Recursive Calls:
+Recursively sort the list after the pivot node (piv.next = quickSort(piv.next, tail)).
+Recursively sort the list before the pivot node (return quickSort(head, piv)).
+
+Public Method:
+public ListNode sortList(ListNode head): Calls quickSort with head and null as arguments to sort the entire list.
+ */
