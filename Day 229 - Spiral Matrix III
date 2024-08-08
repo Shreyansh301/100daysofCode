@@ -1,0 +1,106 @@
+class Solution {
+    public int[][] spiralMatrixIII(int rows, int cols, int rs, int cs) {
+        int len = rows*cols, count = 0;
+        int[][] ans = new int[len][2];
+
+        int i = rs, j = cs;
+        int lrs = rs, lcs = cs;
+        
+        while(count<len) {
+            if(rs<rows) rs++;
+            if(cs<cols) cs++;
+
+            if(lrs>=0) {
+                i = lrs;
+                if(lcs>=0) j = lcs;
+                else j = 0;
+
+                while(j<=cs && j<cols && count<len) { 
+                    // System.out.println("right: "+i+", "+j);
+                    ans[count][0] = i;
+                    ans[count][1] = j;
+                    count++;
+                    j++;
+                }
+            }
+
+            if(cs<cols) {
+                i = lrs+1;
+                j = cs;
+
+                while(i<=rs && i<rows && count<len) { 
+                    // System.out.println("botom: "+i+", "+j);
+                    ans[count][0] = i;
+                    ans[count][1] = j;
+                    count++;
+                    i++;
+                }
+            }
+
+            if(lrs>=0) lrs--;
+            if(lcs>=0) lcs--;
+
+            if(rs<rows) {
+                i = rs;
+                j = cs-1;
+
+                while(j>=lcs && j>=0 && count<len) { 
+                    // System.out.println("left: "+i+", "+j);
+                    ans[count][0] = i;
+                    ans[count][1] = j;
+                    count++;
+                    j--;
+                }
+            }
+
+            if(lcs>=0) {
+                i = rs-1;
+                j = lcs;
+
+                while(i>lrs && i>=0 && count<len) { 
+                    // System.out.println("top: "+i+", "+j);
+                    ans[count][0] = i;
+                    ans[count][1] = j;
+                    count++;
+                    i--;
+                }
+            }
+            
+            // if(lrs==-1 && lcs==-1 && rs==rows && cs==cols) break;
+        }
+        return ans;
+    }
+}
+
+/*
+Level - Medium (885)
+LOGIC: Explanation 
+Example - Input: rows = 1, cols = 4, rStart = 0, cStart = 0
+Output: [[0,0],[0,1],[0,2],[0,3]]
+-----------------------------------------------------------------
+Purpose: 
+The code generates a 2D matrix of coordinates ([i, j]), starting from a given starting point (rs, cs) and spiraling outwards in a specific pattern until all positions within a grid of size rows x cols are covered.
+
+Initialization:
+len stores the total number of cells in the grid (rows * cols).
+count keeps track of how many positions have been filled in the ans array.
+ans is a 2D array to store the spiral order of coordinates.
+i and j represent the current position, initially set to the starting point (rs, cs).
+lrs and lcs keep track of the last starting positions of rs and cs.
+
+Main Logic:
+The loop continues until all len positions are filled (count < len).
+The grid is traversed in four directions: right, down, left, and up.
+Right: Moves the pointer right from the current position if the row (rs) is valid.
+Down: Moves the pointer down from the current position if the column (cs) is valid.
+Left: Moves the pointer left from the last right boundary (lcs) if the row (rs) is valid.
+Up: Moves the pointer up from the last bottom boundary (lrs) if the column (lcs) is valid.
+
+Boundary Adjustments:
+lrs and lcs are decremented after each iteration to update the last starting positions.
+rs and cs are incremented to expand the spiral in the next iteration.
+
+Termination: The loop terminates when all cells in the grid are filled and stored in the ans array.
+
+Output: The method returns the ans array containing all the coordinates in spiral order.
+ */
