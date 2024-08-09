@@ -1,0 +1,77 @@
+class Solution {
+    private static int[] fact = {0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
+    
+    private String getPermutation(int n, int k, boolean[] nums, char[] str, int index) {
+        int i = 0, m = nums.length;
+        if(n == 1) {
+            while(i < m && nums[i]) ++i;
+            str[index++]=(char)('0'+i+1);
+            return String.valueOf(str);
+        }
+        if(k == 0) {
+            while(i < m) {
+                if(!nums[i]) str[index++]=(char)('0'+i+1);
+                ++i;
+            }
+            return String.valueOf(str);
+        }
+        
+        int div = k/fact[n-1], mod = k%fact[n-1], j = -1;
+        while(i < m-1 && div != j) {
+            if(!nums[i]) ++j;
+            if(j == div) break;
+            ++i;
+        }
+        str[index++]=(char)('0'+i+1);
+        if(i < m) nums[i]=true;
+        return getPermutation(n-1, mod, nums, str, index); 
+    }
+
+    public String getPermutation(int n, int k) {
+        boolean[] nums = new boolean[n];
+        char[] charArr = new char[n];
+        return getPermutation(n, k-1, nums, charArr, 0);
+    }
+}
+
+/*
+Level - Hard (70)
+LOGIC: Explanation
+Example - Input: n = 3, k = 3
+Output: "213"
+-----------------------------------------------------
+Purpose: The code is designed to find the k-th permutation sequence of numbers from 1 to n.
+
+Class & Data Members:
+Solution: The class that contains the methods to solve the problem.
+fact[]: A precomputed array of factorials from 0! to 9! to help in determining the position of digits in the permutation.
+
+getPermutation(int n, int k) Method:
+The public method which initiates the process of finding the k-th permutation.
+boolean[] nums: An array to keep track of which numbers have already been used in the permutation.
+char[] charArr: An array to build the final permutation sequence.
+Calls the recursive helper method getPermutation with adjusted parameters, where k-1 is passed to handle zero-based indexing.
+Recursive getPermutation(int n, int k, boolean[] nums, char[] str, int index) Method:
+
+Base Case:
+If n == 1: It means only one number is left, so the remaining number is appended to the result.
+If k == 0: All remaining numbers are added in sequential order to complete the permutation.
+
+Recursion:
+Calculate Division and Modulus:
+div = k / fact[n-1]: Determines which block of permutations the k-th permutation belongs to.
+mod = k % fact[n-1]: Determines the position within that block.
+
+Finding the Next Digit:
+A loop iterates to find the appropriate digit that hasn't been used yet (!nums[i]).
+This digit is then added to the result string.
+The corresponding index in the nums[] array is marked as used.
+Recursive Call:
+The function calls itself with reduced n and the updated mod value to determine the next digit in the sequence.
+
+Return:
+The final permutation sequence is returned as a string.
+
+Efficiency:
+The code leverages precomputed factorial values and a boolean array to efficiently find the k-th permutation without generating all permutations.
+ */
