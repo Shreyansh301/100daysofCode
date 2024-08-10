@@ -1,0 +1,55 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> comb = new ArrayList<>();
+
+        backtrack(1, comb, res, n, k);
+        return res;
+    }
+
+    private void backtrack(int start, List<Integer> comb, List<List<Integer>> res, int n, int k) {
+        if (comb.size() == k) {
+            res.add(new ArrayList<>(comb));
+            return;
+        }
+
+        for (int num = start; num <= n; num++) {
+            comb.add(num);
+            backtrack(num + 1, comb, res, n, k);
+            comb.remove(comb.size() - 1);
+        }
+    } 
+}
+
+/*
+Level - Medium (77)
+LOGIC: Explanation
+Example - Input: n = 4, k = 2
+Output: [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+There are 4 choose 2 = 6 total combinations.
+Note that combinations are unordered, i.e., [1,2] and [2,1] are considered to be the same combination.
+----------------------------------------------------------------------------------------------------------
+Class and Method Overview:
+The code defines a class Solution that contains a method combine(int n, int k).
+The combine method generates all possible combinations of k numbers out of the range 1 to n.
+
+Data Structures:
+res: A List<List<Integer>> that stores the final list of all combinations.
+comb: A List<Integer> used to build each combination recursively.
+
+Main Logic:
+The combine method initializes res and comb, then calls a helper method backtrack to populate res with all valid combinations.
+Backtracking Function (backtrack):
+
+Base Case:
+If the size of comb equals k, it means a complete combination is formed. The combination is added to res.
+Loop through Possible Numbers:
+The loop iterates through numbers from start to n.
+Each number is added to comb, and backtrack is called recursively with the next number (num + 1).
+After returning from the recursive call, the last number added to comb is removed (backtracking step) to try different combinations.
+
+Key Points:
+Recursive Exploration: The code explores each possible combination by adding numbers to comb and recursively calling backtrack.
+Backtracking: After each recursive call, the last element is removed from comb to explore other possibilities.
+Combination Building: Combinations are built by incrementally adding numbers and storing the completed ones when they reach the required size k.
+ */
