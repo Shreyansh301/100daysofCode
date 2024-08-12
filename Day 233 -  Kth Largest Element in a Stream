@@ -1,0 +1,69 @@
+class KthLargest {
+
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    int K;
+    public KthLargest(int k, int[] nums) {
+        
+        K = k;
+
+        for(int num : nums){
+
+            minHeap.add(num);
+
+            if(minHeap.size() > K){
+
+                minHeap.poll();
+            }
+        }
+    }
+    
+    public int add(int val) {
+        
+        minHeap.add(val);
+
+        if(minHeap.size() > K){
+
+            minHeap.poll();
+        }
+
+        return minHeap.peek();
+    }
+}
+
+/*
+Level - Easy (703)
+LOGIC: Explanation
+Example - ["KthLargest", "add", "add", "add", "add", "add"]
+[[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]
+Output
+[null, 4, 5, 5, 8, 8]
+--------------------------------------------------------------
+Class Definition:
+The class KthLargest is designed to find the k-th largest element in a stream of numbers.
+
+Member Variables:
+PriorityQueue<Integer> minHeap: A min-heap (priority queue) that stores the smallest elements encountered so far.
+int K: The k-th position we are interested in (e.g., 3rd largest, 4th largest).
+
+Constructor KthLargest(int k, int[] nums):
+Purpose: Initializes the KthLargest object with the k-th largest number in the stream.
+Parameters:
+k: The k-th largest element to maintain.
+nums: Initial array of numbers.
+
+Process:
+Set K to k.
+Iterate through each number in nums:
+Add the number to the minHeap.
+If the size of minHeap exceeds K, remove the smallest element (minHeap.poll()) to maintain only the largest K elements.
+
+Method int add(int val):
+Purpose: Adds a new value to the stream and returns the k-th largest element.
+Process:
+Add val to the minHeap.
+If the size of minHeap exceeds K, remove the smallest element to maintain only the largest K elements.
+Return the root of the minHeap (which is the k-th largest element in the stream).
+
+Core Idea:
+The minHeap maintains the largest K elements seen so far. The smallest of these K elements (i.e., the root of the heap) is the k-th largest element overall.
+*/
