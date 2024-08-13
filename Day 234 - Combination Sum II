@@ -1,0 +1,76 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);  // Sort the candidates
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> elem = new ArrayList<>();
+        int n = candidates.length;
+
+        backtrack(0, 0, elem, ans, candidates, target, n);
+        return ans;
+    }
+
+    private void backtrack(int idx, int curr_sum, List<Integer> elem, List<List<Integer>> ans, int[] candidates, int target, int n) {
+        if (curr_sum == target) {
+            ans.add(new ArrayList<>(elem));  // Add a copy of the current combination
+            return;
+        }
+        
+        if (idx == n || curr_sum > target) {
+            return;  // End of array or sum exceeded target
+        }
+        
+        elem.add(candidates[idx]);  // Include current candidate
+        backtrack(idx + 1, curr_sum + candidates[idx], elem, ans, candidates, target, n);
+        elem.remove(elem.size() - 1);  // Backtrack
+        
+        // Skip duplicates
+        while (idx + 1 < n && candidates[idx] == candidates[idx + 1]) {
+            idx++;
+        }
+        backtrack(idx + 1, curr_sum, elem, ans, candidates, target, n);  // Explore next candidate without the current one
+    }
+}
+
+/*
+Level - Medium (40)
+LOGIC: Explanation
+Example - Input: candidates = [10,1,2,7,6,1,5], target = 8
+Output: 
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+----------------------------------------------------------------------------
+Purpose: 
+The code defines a class Solution with a method combinationSum2 that finds all unique combinations in a list of candidate numbers where the chosen numbers sum up to a target value.
+
+Input:
+candidates: An array of integers representing possible numbers to use in combinations.
+target: The integer sum that combinations of numbers from candidates should equal.
+
+Output:
+Returns a list of lists (List<List<Integer>>) containing all unique combinations that sum up to target.
+
+Sorting:
+The candidates array is sorted to help with the efficient exploration of combinations and skipping duplicates.
+
+Helper Function:
+A private method backtrack is used to explore all possible combinations recursively.
+
+Backtracking:
+The backtrack function:
+Takes the current index idx, current sum curr_sum, current combination elem, the final answer list ans, the candidates array, the target value, and the array length n.
+Adds the current combination to ans if the sum equals the target.
+Stops exploring further if the sum exceeds the target or the end of the array is reached.
+Explores two possibilities:
+Including the current candidate.
+Excluding the current candidate and skipping duplicates to avoid redundant combinations.
+
+Avoiding Duplicates:
+The while loop inside backtrack skips over duplicate numbers by incrementing the index until the next distinct number is found.
+
+Returning the Result:
+After all possible combinations are explored, the method returns the list ans containing all valid combinations.
+ */
