@@ -1,0 +1,73 @@
+import java.util.Arrays;
+
+class Solution {
+    public int smallestDistancePair(int[] numbers, int k) {
+        Arrays.sort(numbers);
+        int minDistance = 0;
+        int maxDistance = numbers[numbers.length - 1] - numbers[0];
+        
+        while (minDistance < maxDistance) {
+            int midDistance = minDistance + (maxDistance - minDistance) / 2;
+            int pairsCount = countPairsWithinDistance(numbers, midDistance);
+            
+            if (pairsCount < k) {
+                minDistance = midDistance + 1;
+            } else {
+                maxDistance = midDistance;
+            }
+        }
+        
+        return minDistance;
+    }
+
+    private int countPairsWithinDistance(int[] numbers, int targetDistance) {
+        int count = 0;
+        int left = 0;
+        
+        for (int right = 1; right < numbers.length; right++) {
+            while (numbers[right] - numbers[left] > targetDistance) {
+                left++;
+            }
+            count += right - left;
+        }
+        
+        return count;
+    }
+}
+
+/*
+Level - Hard (719)
+LOGIC: Explanation
+Example - Input: nums = [1,3,1], k = 1
+Output: 0
+Explanation: Here are all the pairs:
+(1,3) -> 2
+(1,1) -> 0
+(3,1) -> 2
+Then the 1st smallest distance pair is (1,1), and its distance is 0.
+------------------------------------------------------------------------------
+Purpose: 
+The code aims to find the k-th smallest distance among all possible pairs of elements in an array.
+
+Key Method:
+The main method smallestDistancePair takes an array of integers numbers and an integer k as input.
+It first sorts the array numbers to simplify distance calculations.
+
+Binary Search Implementation:
+The algorithm uses binary search to efficiently determine the k-th smallest pair distance.
+minDistance is initialized to 0 (the smallest possible distance), and maxDistance is initialized to the difference between the largest and smallest elements in the sorted array (the largest possible distance).
+A loop runs until minDistance equals maxDistance, refining the search space.
+midDistance is calculated as the midpoint between minDistance and maxDistance.
+The helper method countPairsWithinDistance counts the number of pairs whose distance is less than or equal to midDistance.
+
+Counting Pairs:
+The countPairsWithinDistance method counts the number of pairs with a distance less than or equal to the specified targetDistance.
+A sliding window technique is used with two pointers (left and right) to count pairs.
+
+Decision:
+If the number of pairs with distances less than or equal to midDistance is less than k, the search space is adjusted by moving minDistance up (minDistance = midDistance + 1).
+Otherwise, maxDistance is adjusted down to continue the search (maxDistance = midDistance).
+
+Result:
+When the binary search completes, minDistance (or maxDistance) holds the k-th smallest pair distance, which is returned.
+ */
