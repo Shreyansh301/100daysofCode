@@ -1,0 +1,71 @@
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        Map<Integer, Integer> track = new HashMap<>();
+
+        for (int bill : bills) {
+            int change = bill - 5;
+
+            if (change == 5) {
+                if (track.getOrDefault(5, 0) == 0) {
+                    return false;
+                } else {
+                    track.put(5, track.get(5) - 1);
+                }
+            } else if (change == 15) {
+                if (track.getOrDefault(5, 0) >= 1 && track.getOrDefault(10, 0) >= 1) {
+                    track.put(5, track.get(5) - 1);
+                    track.put(10, track.get(10) - 1);
+                } else if (track.getOrDefault(5, 0) >= 3) {
+                    track.put(5, track.get(5) - 3);
+                } else {
+                    return false;
+                }
+            }
+
+            track.put(bill, track.getOrDefault(bill, 0) + 1);
+        }
+
+        return true;
+    }
+}
+
+/*
+Level - Easy (860)
+LOGIC: Explanation
+Example - Input: bills = [5,5,5,10,20]
+Output: true
+From the first 3 customers, we collect three $5 bills in order.
+From the fourth customer, we collect a $10 bill and give back a $5.
+From the fifth customer, we give a $10 bill and a $5 bill.
+Since all customers got correct change, we output true.
+--------------------------------------------------------------------------
+Purpose: 
+The lemonadeChange method determines if a lemonade seller can provide the correct change to every customer in line. The customers pay with $5, $10, or $20 bills.
+
+Input: 
+The method takes an integer array bills, where each element represents the bill a customer uses to pay.
+
+Tracking Change:
+A Map<Integer, Integer> named track is used to keep track of the number of $5 and $10 bills the seller has.
+
+Iterating Over Bills:
+For each bill in the bills array, the code calculates the change required by subtracting 5 from the bill amount.
+
+Processing a $10 Bill:
+If a customer pays with a $10 bill (change needed = $5):
+The code checks if there’s at least one $5 bill in the track.
+If yes, the $5 bill is used as change.
+If no, the function returns false (cannot provide correct change).
+
+Processing a $20 Bill:
+If a customer pays with a $20 bill (change needed = $15):
+The code first tries to give one $10 bill and one $5 bill as change.
+If this is not possible, it then checks if it can give three $5 bills instead.
+If neither option is possible, the function returns false.
+
+Update the Map:
+After processing each bill, the bill is added to the track map.
+
+Final Result:
+If the code successfully processes all customers, it returns true (able to provide correct change to all). Otherwise, it returns false.
+*/
