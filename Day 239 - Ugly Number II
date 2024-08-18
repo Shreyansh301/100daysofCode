@@ -1,0 +1,50 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+       int[] factor = {2,3,5};
+       PriorityQueue<Long> q = new PriorityQueue<>();
+       HashSet<Long> set = new HashSet<>();
+       q.offer(1L);
+       set.add(1L);
+       long temp=0;
+       for(int i=1;i<=n;i++){
+        temp = q.poll();
+        for(int j:factor){
+            if(!set.contains(temp*j))
+            q.offer(temp*j);
+            set.add(temp*j);
+        }
+       }
+       return (int)temp;
+    }
+}
+
+/*
+Level - Medium (264)
+LOGIC: Explanation
+Example - Input: n = 10
+Output: 12
+[1, 2, 3, 4, 5, 6, 8, 9, 10, 12] is the sequence of the first 10 ugly numbers.
+-----------------------------------------------------------------------------------
+Purpose: The code is designed to find the nth ugly number. An ugly number is a number whose prime factors only include 2, 3, and 5.
+
+Initialization:
+An array factor containing the values {2, 3, 5} is used to generate new ugly numbers.
+A PriorityQueue<Long> named q is used to store the generated ugly numbers in ascending order.
+A HashSet<Long> named set is used to keep track of the ugly numbers that have already been added to the priority queue to avoid duplicates.
+
+Starting Point:
+The number 1 is considered the first ugly number and is added to both the priority queue q and the set set.
+
+Main Loop:
+A loop runs n times to extract the smallest ugly number from the priority queue.
+In each iteration, the smallest element (temp) is polled from the priority queue.
+For each factor (2, 3, 5), the code calculates a new potential ugly number by multiplying temp by the factor.
+If this new number has not been added to the set, it is offered to the priority queue and added to the set.
+
+Final Step:
+After the loop completes, the last polled value temp is the nth ugly number.
+The method returns temp cast to an integer.
+
+Output:
+The function returns the nth ugly number as an integer.
+ */
