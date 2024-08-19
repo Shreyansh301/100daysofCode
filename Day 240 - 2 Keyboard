@@ -1,0 +1,55 @@
+class Solution {
+    private int targetLength;
+    
+    public int minSteps(int n) {
+        if (n == 1) return 0;
+        this.targetLength = n;
+        return 1 + findMinSteps(1, 1);
+    }
+    
+    private int findMinSteps(int currentLength, int clipboardLength) {
+        if (currentLength == targetLength) return 0;
+        if (currentLength > targetLength) return Integer.MAX_VALUE / 2;
+        
+        int copyAndPaste = 2 + findMinSteps(currentLength * 2, currentLength);
+        int pasteOnly = 1 + findMinSteps(currentLength + clipboardLength, clipboardLength);
+        
+        return Math.min(copyAndPaste, pasteOnly);
+    }
+}
+
+/*
+Level - Medium (650)
+LOGIC: Explanation 
+Example - Input: n = 3
+Output: 3
+Initially, we have one character 'A'.
+In step 1, we use Copy All operation.
+In step 2, we use Paste operation to get 'AA'.
+In step 3, we use Paste operation to get 'AAA'.
+-------------------------------------------------------
+Class Definition: 
+The class Solution contains methods to solve a problem that involves finding the minimum number of steps to reach a target length n using copy and paste operations.
+
+Field targetLength: 
+A private instance variable targetLength stores the target length n that needs to be achieved.
+
+Method minSteps(int n):
+This is the main method that calculates the minimum steps required to reach the target length n.
+If n is 1, it returns 0 since no steps are needed.
+Otherwise, it initializes the process by calling findMinSteps with an initial length of 1 (starting with one character) and a clipboard length of 1.
+
+Method findMinSteps(int currentLength, int clipboardLength):
+This is a recursive helper method that computes the minimum steps needed to reach targetLength starting from a given currentLength and using a clipboardLength.
+
+Base Case: If currentLength equals targetLength, it returns 0 because no further steps are required.
+Overstep Check: If currentLength exceeds targetLength, it returns a large number (Integer.MAX_VALUE / 2) to indicate an invalid or inefficient path.
+
+Recursive Cases:
+Copy and Paste: Simulates the action of copying the current content and pasting it, doubling the currentLength.
+Paste Only: Simulates the action of pasting the current clipboard content without copying again.
+It returns the minimum of these two recursive cases, representing the minimum steps required.
+
+Logic: 
+The algorithm explores different combinations of copy and paste operations to find the optimal (minimum steps) way to reach the desired length n from an initial length of 1.
+ */
