@@ -1,0 +1,55 @@
+class Solution {
+    public int stoneGameII(int[] piles) {
+        int n = piles.length;
+        for (int i = n - 2; i >= 0; i--)
+            piles[i] += piles[i+1];
+        dp = new int[n][n];
+        return solve(1, 0, piles);
+    }
+    private int[][] dp;
+    private int solve(int m, int index, int[] piles){
+        if (index == piles.length) return 0;
+        else if (index + 2 * m >= piles.length) return piles[index];
+        else if (dp[m][index] != 0) return dp[m][index];
+        int res = 0, take = 0;
+        for (int x = 1; x <= 2 * m && x + index < piles.length; x++){
+            take = piles[index] - piles[index + x];
+            res = Math.max(res, take + piles[index + x] - solve(Math.max(m, x), index + x, piles));
+        }
+        return dp[m][index] = res;
+    }
+}
+
+/*
+Level - Medium (1140)
+LOGIC: Explanation
+Example - Input: piles = [2,7,9,4,4]
+Output: 10
+If Alice takes one pile at the beginning, Bob takes two piles, then Alice takes 2 piles again. 
+Alice can get 2 + 4 + 4 = 10 piles in total. If Alice takes two piles at the beginning, then Bob can take all three piles left. 
+In this case, Alice get 2 + 7 = 9 piles in total. So we return 10 since it's larger. 
+--------------------------------------------------------------------------------------
+Purpose: 
+The code solves the "Stone Game II" problem, where two players take turns picking stones from piles. The goal is to maximize the number of stones picked.
+
+Method stoneGameII(int[] piles):
+Input: An array piles representing the number of stones in each pile.
+Step 1: The array piles is transformed so that each element piles[i] now represents the sum of stones from pile i to the last pile.
+Step 2: A 2D array dp is initialized to store intermediate results to avoid recomputation (dynamic programming).
+Step 3: The method solve() is called with initial parameters m = 1 and index = 0.
+Method solve(int m, int index, int[] piles):
+
+Base Case:
+If index is at the end of the array, it returns 0 (no more stones to pick).
+If index + 2 * m exceeds the number of piles, it returns piles[index] (all remaining stones can be picked).
+
+Memoization:
+If dp[m][index] is already computed (non-zero), it returns the stored result to avoid recomputation.
+
+Recursive Calculation:
+The method iterates over possible numbers of piles (x) that can be picked in the current move (from 1 to 2 * m).
+It calculates the maximum stones a player can guarantee to pick by taking x piles and then calling solve() recursively for the opponent's turn.
+The result for dp[m][index] is updated with the maximum stones the player can guarantee from the current state.
+
+Return: The stoneGameII method returns the result from solve(), which gives the maximum number of stones the first player can guarantee to pick.
+*/
