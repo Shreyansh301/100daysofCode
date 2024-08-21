@@ -1,0 +1,64 @@
+class Solution {
+    public int strangePrinter(String s) {
+        int n = s.length();
+        char[] sChar = s.toCharArray();
+        int[][] dp = new int[n][n];
+        for(int[] in : dp) Arrays.fill(in, -1);
+        return Util(0, n - 1, sChar, dp);
+    }
+    public int Util(int i, int j, char[] sChar, int[][] dp) {
+        if (i > j) {
+            return 0;
+        }
+
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        int firstLetter = sChar[i];
+        // in case, current character is not repeated in the rest of the string
+        int answer = 1 + Util(i + 1, j, sChar, dp);
+        for (int k = i + 1; k <= j; k++) {
+            // if repeated then update the answer
+            if (sChar[k] == firstLetter) {   
+                // splitting from i -> k - 1(remove the last character)
+                // and from k + 1 -> j             
+                int betterAnswer = Util(i, k - 1, sChar, dp) + Util(k + 1, j, sChar, dp);
+                answer = Math.min(answer, betterAnswer);
+            }
+        }
+        return dp[i][j] = answer;
+    }
+}
+
+/*
+Level - Hard (664)
+LOGIC: Explanation
+Example - Input: s = "aaabbb"
+Output: 2
+Print "aaa" first and then print "bbb".
+---------------------------------------------
+Purpose: 
+The code defines a solution for the "Strange Printer" problem, where a printer prints a string using the minimum number of operations. 
+Each operation prints a contiguous segment of identical characters.
+
+Class and Method:
+The Solution class contains the strangePrinter method, which takes a string s as input and returns the minimum number of operations needed to print the string.
+
+Dynamic Programming (DP) Setup:
+n is the length of the string s.
+sChar is the character array representation of the string.
+dp is a 2D array used for memoization, where dp[i][j] stores the minimum operations needed to print the substring s[i...j].
+The dp array is initially filled with -1 to indicate uncomputed values.
+
+Recursive Utility Function (Util):
+The Util function is a recursive helper function to calculate the minimum operations for a substring s[i...j].
+Base Case: If i > j, return 0 because an empty substring needs no operations.
+Memoization Check: If dp[i][j] is already computed, return the stored value.
+Initial Answer: The initial assumption is that the first character sChar[i] is not repeated, so the answer is 1 + Util(i + 1, j, sChar, dp).
+
+Optimization Loop:
+The loop iterates through the substring from i + 1 to j.
+If a repeated character sChar[k] is found (i.e., sChar[k] == sChar[i]), it considers splitting the string and combines the results of two smaller subproblems.
+The answer is updated to the minimum value between the current answer and the result of the split.
+Store and Return: The computed minimum operations are stored in dp[i][j] and returned.
+Overall Logic: The code aims to minimize the number of operations required to print the entire string by breaking down the problem into smaller subproblems and using memoization to avoid redundant calculations.
+ */
