@@ -1,0 +1,44 @@
+class Solution {
+    public int findComplement(int num) {
+        String str = Integer.toBinaryString(num);
+        String res = "";
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i) == '0'){
+                res += '1';
+            }
+            else{
+                res += '0';
+            }
+        }
+        return Integer.parseInt(res,2);
+    }
+}
+
+/*
+Level -
+LOGIC: Explanation
+Example - Input: num = 5
+Output: 2
+The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.
+-----------------------------------------------------------------------------------------------------------------------
+Purpose: 
+The code defines a method findComplement that calculates the bitwise complement of a given integer num.
+
+Binary Conversion:
+The method converts the integer num into its binary string representation using Integer.toBinaryString(num).
+The result is stored in the string str.
+
+Complement Calculation:
+A new empty string res is initialized to store the complement of the binary string.
+The code iterates over each character in the binary string str.
+If the character is '0', it appends '1' to res.
+If the character is '1', it appends '0' to res.
+This effectively flips the bits (0 to 1, and 1 to 0) in the binary representation.
+
+Convert Back to Integer:
+The complemented binary string res is then converted back to an integer using Integer.parseInt(res, 2).
+The 2 indicates that the string res is in binary format.
+
+Return Value:
+The method returns the integer value of the complemented binary string.
+ */
