@@ -1,0 +1,84 @@
+import java.math.BigInteger;
+
+class Solution {
+    public String fractionAddition(String expression) {
+        BigInteger num = BigInteger.ZERO;
+        BigInteger den = BigInteger.ONE;
+        int i = 0;
+        int n = expression.length();
+        
+        while (i < n) {
+            int sign = 1;
+            
+            // Determine the sign of the current fraction
+            if (expression.charAt(i) == '-') {
+                sign = -1;
+                i++;
+            } else if (expression.charAt(i) == '+') {
+                i++;
+            }
+            
+            // Extract the numerator
+            int j = i;
+            while (j < n && Character.isDigit(expression.charAt(j))) {
+                j++;
+            }
+            BigInteger numerator = new BigInteger(expression.substring(i, j)).multiply(BigInteger.valueOf(sign));
+            
+            // Move past the '/' character
+            i = j + 1;
+            
+            // Extract the denominator
+            j = i;
+            while (j < n && Character.isDigit(expression.charAt(j))) {
+                j++;
+            }
+            BigInteger denominator = new BigInteger(expression.substring(i, j));
+            
+            // Calculate the new denominator (LCM of current and new denominator)
+            BigInteger commonDen = den.multiply(denominator).divide(den.gcd(denominator));
+            
+            // Adjust the numerators to the new common denominator and add them
+            num = num.multiply(commonDen.divide(den)).add(numerator.multiply(commonDen.divide(denominator)));
+            den = commonDen;
+            
+            // Move to the next part of the expression
+            i = j;
+        }
+        
+        // Simplify the fraction
+        BigInteger gcd = num.gcd(den);
+        num = num.divide(gcd);
+        den = den.divide(gcd);
+        
+        return num.toString() + "/" + den.toString();
+    }
+}
+
+/*
+Level - Medium (592)
+LOGIC: Explanation
+Example - Input: expression = "-1/2+1/2"
+Output: "0/1"
+---------------------------------------------------
+Purpose: 
+The code defines a method fractionAddition that takes a string expression representing a sequence of fractions, and returns the result as a simplified fraction.
+
+Initialization:
+num and den are initialized to 0 and 1, representing the current fraction (num/den).
+i is used to traverse the input string expression.
+
+Loop Through Expression:
+The loop runs while i is less than the length of expression.
+Determine Sign: Checks if the current fraction is positive or negative.
+Extract Numerator: Extracts the numerator of the current fraction.
+Extract Denominator: Extracts the denominator after the '/' character.
+
+Calculate New Fraction:
+Computes the least common multiple (LCM) of the current denominator and the new denominator.
+Adjusts numerators to match the common denominator and adds them together.
+
+Simplify the Result:
+The greatest common divisor (GCD) of the numerator and denominator is used to simplify the fraction.
+Return: The simplified fraction is returned as a string in the format "numerator/denominator".
+ */
