@@ -1,0 +1,75 @@
+class Solution {
+    public String nearestPalindromic(String numberStr) {
+        long number = Long.parseLong(numberStr);
+        if (number <= 10) return String.valueOf(number - 1);
+        if (number == 11) return "9";
+
+        int length = numberStr.length();
+        long leftHalf = Long.parseLong(numberStr.substring(0, (length + 1) / 2));
+        
+        long[] palindromeCandidates = new long[5];
+        palindromeCandidates[0] = generatePalindromeFromLeft(leftHalf - 1, length % 2 == 0);
+        palindromeCandidates[1] = generatePalindromeFromLeft(leftHalf, length % 2 == 0);
+        palindromeCandidates[2] = generatePalindromeFromLeft(leftHalf + 1, length % 2 == 0);
+        palindromeCandidates[3] = (long)Math.pow(10, length - 1) - 1;
+        palindromeCandidates[4] = (long)Math.pow(10, length) + 1;
+
+        long nearestPalindrome = 0;
+        long minDifference = Long.MAX_VALUE;
+
+        for (long candidate : palindromeCandidates) {
+            if (candidate == number) continue;
+            long difference = Math.abs(candidate - number);
+            if (difference < minDifference || (difference == minDifference && candidate < nearestPalindrome)) {
+                minDifference = difference;
+                nearestPalindrome = candidate;
+            }
+        }
+
+        return String.valueOf(nearestPalindrome);
+    }
+
+    private long generatePalindromeFromLeft(long leftHalf, boolean isEvenLength) {
+        long palindrome = leftHalf;
+        if (!isEvenLength) leftHalf /= 10;
+        while (leftHalf > 0) {
+            palindrome = palindrome * 10 + leftHalf % 10;
+            leftHalf /= 10;
+        }
+        return palindrome;
+    }
+}
+
+/*
+Level - Hard (564)
+LOGIC: Explanation
+Example - Input: n = "123"
+Output: "121"
+-----------------------------------------
+Purpose: 
+The nearestPalindromic method finds the nearest palindrome number (as a string) to a given number string numberStr.
+
+Parsing and Handling Simple Cases:
+The input string numberStr is parsed into a long number.
+If number is 10 or less, the closest palindrome is either number - 1 or 9 if the number is 11.
+
+Main Logic:
+The code extracts the left half of numberStr to generate palindrome candidates.
+Depending on whether the length of the string is odd or even, it creates possible palindromes:
+palindromeCandidates[0]: Decreases the left half by 1 and generates a palindrome.
+palindromeCandidates[1]: Keeps the left half the same and generates a palindrome.
+palindromeCandidates[2]: Increases the left half by 1 and generates a palindrome.
+palindromeCandidates[3]: Represents the largest number with one less digit (e.g., 999 for a 3-digit number).
+palindromeCandidates[4]: Represents the smallest number with one more digit (e.g., 1001 for a 3-digit number).
+
+Finding the Nearest Palindrome:
+The code iterates over the palindrome candidates and calculates the absolute difference between each candidate and the original number.
+It selects the candidate with the smallest difference, preferring the smaller candidate if there is a tie.
+
+Helper Method (generatePalindromeFromLeft):
+This method generates a palindrome by mirroring the left half of the number.
+If the length of the number is odd, the middle digit is not mirrored.
+
+Return:
+The method returns the closest palindrome as a string.
+ */
