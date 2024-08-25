@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        help(list,root);
+        return list;
+    }
+    public void help(ArrayList<Integer> list,TreeNode root){
+        if(root==null){
+            return;
+        }
+        help(list,root.left);
+        help(list,root.right);
+        list.add(root.val);
+    }
+}
+
+/*
+Level - Easy (145)
+LOGIC: Explanation 
+Example - Input: root = [1,null,2,3]
+Output: [3,2,1]
+-----------------------------------------------
+Class Definition:
+The code defines a class Solution that contains a method for performing a postorder traversal on a binary tree.
+
+postorderTraversal Method:
+Purpose: Returns a list of integers representing the postorder traversal of a binary tree.
+Input: Takes a TreeNode (the root of the binary tree) as its parameter.
+Output: Returns a List<Integer> containing the values of the nodes in postorder sequence.
+
+help Method:
+Purpose: A helper method that recursively traverses the tree in postorder and adds the node values to a list.
+
+Parameters:
+ArrayList<Integer> list: The list that stores the node values in postorder.
+TreeNode root: The current node in the traversal.
+Functionality:
+If the current node (root) is null, it returns immediately (base case).
+Recursively calls itself to traverse the left subtree (help(list, root.left)).
+Recursively calls itself to traverse the right subtree (help(list, root.right)).
+After visiting both subtrees, it adds the value of the current node to the list (list.add(root.val)).
+
+Execution Flow:
+The traversal starts from the root node.
+It first recursively traverses the left subtree, then the right subtree.
+Finally, it visits the root node itself, which adheres to the postorder traversal pattern: Left -> Right -> Root.
+ */
