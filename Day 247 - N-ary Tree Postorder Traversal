@@ -1,0 +1,76 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+      private List<Integer> node=new ArrayList<>();
+    private void post(Node root)
+    {
+        if(root!=null)
+        {
+            int siz=root.children.size();
+            //System.out.println(siz);
+            for(int i=0;i<siz;i++)
+            {
+                post(root.children.get(i));
+            }
+            node.add(root.val);
+
+        }
+    }
+    public List<Integer> postorder(Node root) {
+        post(root);
+        return node;
+    }
+}
+
+/*
+Level - 590 (Easy)
+LOGIC: EXplanation
+Example - Input: root = [1,null,3,2,4,null,5,6]
+Output: [5,6,3,2,4,1]
+--------------------------------------------------
+Class Definition (Node):
+Represents a node in an N-ary tree.
+Each Node object has:
+An integer value val.
+A list of children nodes children.
+
+Class Definition (Solution):
+Implements a solution to traverse the N-ary tree in postorder.
+
+Instance Variable (node):
+A list of integers (node) is created to store the postorder traversal results.
+
+Recursive Helper Method (post(Node root)):
+This method is used to perform the postorder traversal recursively.
+Base Case: If the root is null, the method returns immediately, doing nothing.
+Recursive Case:
+The method iterates through all the children of the current node.
+For each child, it recursively calls the post method.
+After processing all children, it adds the value of the current node (root.val) to the node list.
+
+Public Method (postorder(Node root)):
+The postorder method is the entry point for the postorder traversal.
+It calls the post helper method with the root node to initiate the traversal.
+Finally, it returns the node list containing the postorder traversal of the tree.
+
+Postorder Traversal Explanation:
+Postorder traversal means visiting all the children of a node first, and then visiting the node itself.
+In this code, the traversal is performed recursively, and the result is stored in the node list.
+ */
