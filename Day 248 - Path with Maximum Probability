@@ -1,0 +1,58 @@
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
+        Map<Integer, List<int[]>> map = new HashMap<>();
+        for (int i = 0; i < edges.length; i++) {
+            map.computeIfAbsent(edges[i][0], k -> new ArrayList<>())
+                    .add(new int[] { edges[i][1], i });
+            map.computeIfAbsent(edges[i][1], k -> new ArrayList<>())
+                    .add(new int[] { edges[i][0], i });
+        }
+
+        Queue<Integer> q = new LinkedList<>(Arrays.asList(start_node));
+
+        double[] d = new double[n];
+        d[start_node] = 1d;
+        while (!q.isEmpty()) {
+            int top = q.remove();
+
+            for (int[] l : map.getOrDefault(top, Collections.emptyList())) {
+                int neig = l[0], idx = l[1];
+
+                double val = d[top] * succProb[idx];
+                if (val > d[neig]) {
+                    d[neig] = val;
+                    q.offer(neig);
+                }
+            }
+        }
+        return d[end_node];
+    }
+}
+
+/*
+Level - Medium (1514)
+LOGIC: Explanation
+Example - Input: n = 3, edges = [[0,1],[1,2],[0,2]], succProb = [0.5,0.5,0.2], start = 0, end = 2
+Output: 0.25000
+There are two paths from start to end, one having a probability of success = 0.2 and the other has 0.5 * 0.5 = 0.25.
+---------------------------------------------------------------------------------------------------------------------
+Problem Context: 
+The code is designed to solve a problem where you need to find the maximum probability of reaching a target node (end_node) from a starting node (start_node) in a graph. 
+The graph is defined by n nodes and edges between them, each with a success probability.
+
+Graph Representation:
+The graph is represented using an adjacency list stored in a Map<Integer, List<int[]>> where each node is a key, and the value is a list of edges. Each edge is represented as an array containing the neighboring node and the index of that edge in the succProb array.
+
+Initialization:
+The graph (map) is built using the edges and succProb arrays.
+A queue q is initialized with the start_node.
+An array d of size n is initialized to store the maximum probability of reaching each node. The start node's probability is set to 1 (d[start_node] = 1d).
+
+Breadth-First Search (BFS) with Probability Update:
+The algorithm uses a BFS approach to traverse the graph starting from start_node.
+For each node, it explores its neighbors. If reaching a neighboring node through the current node offers a higher probability than previously known, the probability is updated, and the neighbor is added to the queue for further exploration.
+
+Result:
+Finally, the algorithm returns the maximum probability of reaching the end_node from the start_node, which is stored in d[end_node]. 
+If there's no path, the probability would remain 0.
+ */
