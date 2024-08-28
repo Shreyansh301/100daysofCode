@@ -1,0 +1,74 @@
+class Solution {
+    public int countSubIslands(int[][] grid1, int[][] grid2) {
+        int n = grid2.length;
+        int m = grid2[0].length;
+        boolean[][] visited = new boolean[n][m];
+        int answer =0;
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid2[i][j]==1 && !visited[i][j]){
+                   
+                    if(dfs(grid2,grid1,visited,i,j)) answer++;
+                }
+            }
+        }
+        return answer;
+        
+    }
+    boolean dfs(int[][] grid2 , int[][] grid1 , boolean[][] visited , int row, int col){
+
+        if(grid1[row][col]==0) return false;
+        visited[row][col]=true;
+        int[] r = {0,0,1,-1};
+        int[] c = {1,-1,0,0};
+        boolean flag = true;
+        for(int i=0;i<4;i++){
+
+            int rr = row+r[i];
+            int cc = col+c[i];
+            if(rr>=0 && rr<grid1.length && cc>=0 && cc<grid1[0].length && visited[rr][cc]==false && grid2[rr][cc]==1){
+                
+                flag = dfs(grid2,grid1,visited,rr,cc) && flag;
+            }
+        }
+        return flag;
+    }
+}
+
+/*
+Level - Medium (1905)
+LOGIC: Explanation 
+Example - Input: grid1 = [[1,1,1,0,0],[0,1,1,1,1],[0,0,0,0,0],[1,0,0,0,0],[1,1,0,1,1]], grid2 = [[1,1,1,0,0],[0,0,1,1,1],[0,1,0,0,0],[1,0,1,1,0],[0,1,0,1,0]]
+Output: 3
+In the picture above, the grid on the left is grid1 and the grid on the right is grid2.
+The 1s colored red in grid2 are those considered to be part of a sub-island. There are three sub-islands.
+----------------------------------------------------------------------------------------------------------
+Purpose: 
+The code counts the number of "sub-islands" in grid2 that are fully contained within grid1. 
+A sub-island in grid2 is an island (a group of connected 1s) that also exists as an island in the same location in grid1.
+
+Function countSubIslands:
+Parameters: Takes two 2D integer arrays grid1 and grid2.
+Variables:
+n and m: Store the dimensions of grid2.
+visited: A 2D boolean array to track visited cells in grid2.
+answer: Counts the number of sub-islands.
+
+Logic:
+Loops through each cell in grid2.
+If the current cell in grid2 is 1 and hasn't been visited, it calls the dfs function.
+If dfs returns true, it increments the answer because it found a sub-island.
+
+Function dfs:
+Parameters: Takes grid2, grid1, the visited array, and the current cell's row and col.
+Base Case: If the corresponding cell in grid1 is 0, it returns false (indicating that this part of the island isn't in grid1).
+
+Logic:
+Marks the current cell as visited.
+Uses two arrays r and c to explore the four possible directions (right, left, down, up).
+Recursively calls dfs on all unvisited neighboring cells that are 1 in grid2.
+Returns true only if all parts of the island in grid2 correspond to an island in grid1.
+
+Return: The countSubIslands function returns the total number of sub-islands found.
+ */
