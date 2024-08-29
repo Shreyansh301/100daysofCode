@@ -1,0 +1,80 @@
+class Solution {
+    private void dfs(int node, List<List<Integer>> adj, Set<Integer> visited) {
+        visited.add(node);
+        for (int neighbor : adj.get(node)) {
+            if (!visited.contains(neighbor)) {
+                dfs(neighbor, adj, visited);
+            }
+        }
+    }
+    
+    public int removeStones(int[][] stones) {
+        int n = stones.length;
+        List<List<Integer>> adj = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        // Build the graph
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1]) {
+                    adj.get(i).add(j);
+                    adj.get(j).add(i);
+                }
+            }
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        int numComponents = 0;
+
+        // Find the number of connected components
+        for (int i = 0; i < n; i++) {
+            if (!visited.contains(i)) {
+                dfs(i, adj, visited);
+                numComponents++;
+            }
+        }
+
+        return n - numComponents;
+    }
+}
+
+/*
+Level - Medium (947)
+LOGIC: Explanation
+Example - Input: stones = [[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]
+Output: 5
+One way to remove 5 stones is as follows:
+1. Remove stone [2,2] because it shares the same row as [2,1].
+2. Remove stone [2,1] because it shares the same column as [0,1].
+3. Remove stone [1,2] because it shares the same row as [1,0].
+4. Remove stone [1,0] because it shares the same column as [0,0].
+5. Remove stone [0,1] because it shares the same row as [0,0].
+Stone [0,0] cannot be removed since it does not share a row/column with another stone still on the plane.
+---------------------------------------------------------------------------------------------------------
+Class Definition: 
+The code defines a class named Solution with two methods: dfs (a helper method) and removeStones (the main method).
+
+DFS Method:
+The dfs method performs a Depth-First Search (DFS) on a graph.
+It takes in the current node, an adjacency list adj, and a set visited.
+The current node is marked as visited by adding it to the visited set.
+The method recursively visits all unvisited neighbors of the current node.
+
+RemoveStones Method:
+The removeStones method aims to solve the problem of removing the maximum number of stones from a 2D plane, where each stone is represented by its (x, y) coordinates.
+Adjacency List Creation:
+It first initializes an adjacency list adj to represent the graph, where each node corresponds to a stone.
+It then builds the graph by adding an edge between two stones if they share the same row or column.
+
+Finding Connected Components:
+A visited set is initialized to keep track of visited nodes.
+The method iterates through all stones. For each unvisited stone, it performs a DFS to mark all stones in the same connected component.
+The number of connected components (numComponents) is counted.
+Result Calculation:
+The result is calculated as n - numComponents, where n is the total number of stones. This gives the maximum number of stones that can be removed while leaving at least one stone in each connected component.
+
+Return Value: The method returns the maximum number of stones that can be removed.
+ */
