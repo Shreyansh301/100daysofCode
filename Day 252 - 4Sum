@@ -1,0 +1,65 @@
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        if (nums == null || nums.length < 4) {
+            return new ArrayList<>();
+        }
+        Arrays.sort(nums);
+        HashSet<List<Integer>> result = new HashSet<>();
+        for (int i = 0; i < nums.length - 3; i++) {
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                int left = j + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    long sum = (long) nums[i] + (long) nums[j] + (long) nums[left] + (long) nums[right];
+                    if (sum == target) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        left++;
+                        right--;
+                        }
+                    else if (sum < target) {
+                        left++;
+                    } 
+                    else {
+                        right--;
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(result);
+    }
+}
+
+/*
+Level - Medium (18)
+LOGIC: Explanation
+Example - Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+--------------------------------------------------------
+Function Purpose: 
+The fourSum function finds all unique quadruplets (four numbers) in the array nums that sum up to a given target.
+
+Initial Checks:
+If nums is null or its length is less than 4, the function returns an empty list, since it's impossible to find a quadruplet.
+
+Sorting:
+The array nums is sorted to facilitate the use of two pointers (left and right) and avoid duplicate quadruplets.
+
+HashSet for Results:
+A HashSet<List<Integer>> named result is used to store the unique quadruplets. The use of HashSet ensures that no duplicate quadruplets are added.
+
+Nested Loops:
+Two nested loops iterate over the array with indices i and j, representing the first and second elements of the quadruplet.
+
+Two-Pointer Approach:
+For each pair of elements (i and j), two pointers (left and right) are used to find the remaining two elements (nums[left] and nums[right]) that make the sum equal to the target.
+The left pointer starts just after j and the right pointer starts at the end of the array.
+
+Sum Calculation:
+The sum of the four elements is calculated using (long) typecasting to prevent integer overflow.
+If the sum matches the target, the quadruplet is added to the result set, and both left and right pointers are adjusted.
+If the sum is less than the target, left is incremented to increase the sum.
+If the sum is greater than the target, right is decremented to decrease the sum.
+
+Return Statement:
+The function returns a new ArrayList containing all the unique quadruplets stored in the result set.
+ */
