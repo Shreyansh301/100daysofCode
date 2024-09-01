@@ -1,0 +1,45 @@
+class Solution {
+    public int[][] construct2DArray(int[] original, int m, int n) {
+        if (n * m != original.length) {
+            return new int[0][0];
+        }
+        int[][] answer = new int[m][n];
+        for (int i = 0; i < original.length; i++) {
+            answer[i / n][i % n] = original[i];
+        }
+        return answer;
+    }
+}
+
+/*
+Level - Easy (2022)
+LOGIC: Explanation 
+Example - Input: original = [1,2,3,4], m = 2, n = 2
+Output: [[1,2],[3,4]]
+The constructed 2D array should contain 2 rows and 2 columns.
+The first group of n=2 elements in original, [1,2], becomes the first row in the constructed 2D array.
+The second group of n=2 elements in original, [3,4], becomes the second row in the constructed 2D array.
+----------------------------------------------------------------------------------------------------------
+Purpose: 
+The code defines a method construct2DArray that takes a 1D array original and reshapes it into a 2D array with m rows and n columns.
+
+Input Parameters:
+original: The 1D array to be reshaped.
+m: The number of rows in the desired 2D array.
+n: The number of columns in the desired 2D array.
+
+Validation Check:
+The code first checks if the product of m and n (i.e., the total number of elements in the 2D array) equals the length of original.
+If not, it returns an empty 2D array (new int[0][0]) since reshaping isn't possible.
+
+Initialization:
+An empty 2D array answer with dimensions m x n is created.
+
+Filling the 2D Array:
+A loop iterates through each element in the original array.
+For each element at index i in original, it is placed into the answer array at position [i / n][i % n].
+This ensures that elements are filled row by row in the 2D array.
+
+Return Statement:
+After the loop, the method returns the populated 2D array answer.
+ */
