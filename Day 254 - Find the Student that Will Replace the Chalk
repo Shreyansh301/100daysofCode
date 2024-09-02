@@ -1,0 +1,58 @@
+class Solution {
+    public int chalkReplacer(int[] chalk, int k) {
+        int len = chalk.length;
+        long sum[] = new long[len];
+        sum[0] = chalk[0];
+        for(int i=1;i<len;i++){
+            sum[i]=chalk[i]+sum[i-1];
+        }
+        k = (int)(k%sum[len-1]);
+        
+        int i=0, j=len-1;
+        while(i<j){
+             int mid = (i + j) / 2;
+            if (sum[mid] > k) {
+                j = mid;
+            } else {
+                i = mid + 1;
+            }
+        }
+        return i;
+    }
+}
+
+/*
+Level - Medium (1894)
+LOGIC: Explanation
+Example - Input: chalk = [5,1,5], k = 22
+Output: 0
+The students go in turns as follows:
+- Student number 0 uses 5 chalk, so k = 17.
+- Student number 1 uses 1 chalk, so k = 16.
+- Student number 2 uses 5 chalk, so k = 11.
+- Student number 0 uses 5 chalk, so k = 6.
+- Student number 1 uses 1 chalk, so k = 5.
+- Student number 2 uses 5 chalk, so k = 0.
+Student number 0 does not have enough chalk, so they will have to replace it.
+-----------------------------------------------------------------------------------
+Purpose: 
+This method chalkReplacer determines which student will be the next to run out of chalk after a certain number of chalk pieces (k) have been distributed among students.
+
+Input:
+An integer array chalk[] where each element represents the amount of chalk each student needs to use.
+An integer k which represents the total amount of chalk available.
+
+Process:
+Sum Array Creation:
+The code initializes an array sum[] where sum[i] represents the total chalk required by all students from the first one up to the ith student.
+This array is built using a prefix sum, where each element is the sum of the previous elements plus the current element in the chalk array.
+
+Modulo Operation:
+k is reduced by taking the modulus with sum[len-1], the total chalk required by all students in one complete cycle. This reduces unnecessary iterations by eliminating complete cycles.
+
+Binary Search:
+A binary search is used to efficiently find the smallest index i where sum[i] > k. This index corresponds to the student who will run out of chalk after k pieces have been distributed.
+
+Output:
+The method returns the index i of the student who will run out of chalk next.
+ */
