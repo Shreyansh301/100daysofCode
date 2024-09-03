@@ -1,0 +1,56 @@
+class Solution {
+    public int getLucky(String s, int k) {
+        int num = 0;
+        for(char ch : s.toCharArray()) {
+            int val = ch - 'a' + 1;
+            int sum = 0;
+            while(val != 0) { 
+                sum += val % 10;
+                val /= 10;
+            }
+            num += sum;
+        }
+        int ans = num;
+        for(int i = 0; i < k - 1; i++) {
+            int sum = 0;
+            while(num != 0) {
+                sum += num % 10;
+                num /= 10;
+            }
+            ans = sum;
+            num = sum;
+        }
+
+        return ans;
+    }
+}
+
+/*
+Level - Easy (1945)
+LOGIC: Explanation
+Example - Input: s = "iiii", k = 1
+Output: 36
+The operations are as follows:
+- Convert: "iiii" ➝ "(9)(9)(9)(9)" ➝ "9999" ➝ 9999
+- Transform #1: 9999 ➝ 9 + 9 + 9 + 9 ➝ 36
+Thus the resulting integer is 36.
+-------------------------------------------------------------
+Method Definition:
+The method getLucky takes a string s and an integer k as input and returns an integer.
+
+Initial Transformation (String to Numeric Sum):
+The code initializes an integer num to 0, which will hold the sum of numeric values derived from the string s.
+For each character ch in the string s:
+Convert the character to its corresponding position in the alphabet (e.g., 'a' -> 1, 'b' -> 2, ..., 'z' -> 26).
+Sum the digits of the number obtained (e.g., for 'z' -> 26, sum of digits = 2 + 6 = 8).
+Add the resulting sum to num.
+
+Repeated Digit Sum Reduction (k times):
+The code initializes ans to num to store the ongoing result.
+For k-1 iterations:
+Sum the digits of num repeatedly until it reduces to a single-digit or a smaller number.
+Update ans with this sum and reset num to this new sum.
+
+Return Result:
+After the loop completes, return ans, which is the final reduced sum after k transformations.
+ */
