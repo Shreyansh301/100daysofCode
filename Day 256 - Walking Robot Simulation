@@ -1,0 +1,70 @@
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int robotSim(int[] commands, int[][] obstacles) {
+        int x=0,y=0,d=0;
+        int[][] direction={{0,1},{1,0},{0,-1},{-1,0}};
+        int maxDistance=0;
+        Set<String> obstacleSet=new HashSet<>();
+        for(int[] obstacle:obstacles){
+            obstacleSet.add(obstacle[0]+","+obstacle[1]);
+        }
+        for(int cmd:commands){
+            if(cmd==-1){
+                d=(d+1)%4;
+            }else if(cmd==-2){
+                d=(d+3)%4;
+            }else{
+                for(int i=0;i<cmd;i++){
+                    int nx=x+direction[d][0];
+                    int ny=y+direction[d][1];
+                    if(obstacleSet.contains(nx+","+ny)){
+                        break;
+                    }
+                    x=nx;
+                    y=ny;
+                    maxDistance=Math.max(maxDistance,x*x+y*y);
+                }
+            }
+        }
+        return maxDistance;
+    }
+}
+
+/*
+Level - Medium (874)
+LOGIC: Explanation
+Example - Input: commands = [4,-1,3], obstacles = []
+Output: 25
+The robot starts at (0, 0):
+1. Move north 4 units to (0, 4).
+2. Turn right.
+3. Move east 3 units to (3, 4).
+The furthest point the robot ever gets from the origin is (3, 4), which squared is 32 + 42 = 25 units away.
+---------------------------------------------------------------------------------------------------------------
+Purpose: 
+The code simulates the movement of a robot on a grid based on a series of commands and obstacles and calculates the maximum squared distance from the origin that the robot reaches.
+
+Initialization:
+Variables x and y represent the robot's current position, starting at the origin (0, 0).
+Variable d represents the robot's current direction (0: north, 1: east, 2: south, 3: west).
+direction[][] is a 2D array that maps the current direction to the change in coordinates (x, y) for north, east, south, and west.
+maxDistance is initialized to 0 and will store the maximum squared distance from the origin.
+obstacleSet is a HashSet used to store the coordinates of obstacles, represented as strings in the format "x,y".
+
+Obstacles Handling:
+The obstacles are added to obstacleSet for quick lookup.
+
+Command Processing:
+The code iterates through each command:
+If the command is -1, the robot turns right (increments the direction).
+If the command is -2, the robot turns left (decrements the direction).
+If the command is a positive number, the robot attempts to move forward step by step:
+For each step, the robot calculates the next position (nx, ny) based on the current direction.
+If the next position is an obstacle, the robot stops moving in that direction.
+Otherwise, the robot updates its position to (nx, ny) and calculates the squared distance from the origin, updating maxDistance if this distance is greater than the current maxDistance.
+
+Return Value:
+The method returns maxDistance, the maximum squared distance from the origin that the robot reaches during its movement.
+ */
