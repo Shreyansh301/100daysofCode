@@ -1,0 +1,67 @@
+class Solution {
+    public int[] missingRolls(int[] rolls, int mean, int n) {
+        int m=rolls.length;
+        int sum = (m+n) * mean;
+        int ans[]=new int[n];
+        for(int i=0; i<rolls.length; i++){
+            sum = sum-rolls[i];
+        }
+        
+        if(sum==0|| sum > (6*n) || sum<(n*1)){
+            int arr[]={};
+            return arr;
+        }
+        else{
+           int div = sum /n;
+           int rem = sum%n;
+           for(int i=0; i<n; i++){
+            ans[i] = div;
+            sum = sum -div;
+           }
+           int i=0;
+            while(sum!=0){
+                ans[i]=ans[i]+1;
+                sum=sum-1;
+                i++;
+            }
+        }
+
+        return ans;
+    }
+}
+
+/*
+Level - Medium (2028)
+LOGIC: Explanation
+Example - Input: rolls = [3,2,4,3], mean = 4, n = 2
+Output: [6,6]
+The mean of all n + m rolls is (3 + 2 + 4 + 3 + 6 + 6) / 6 = 4.
+----------------------------------------------------------------------
+Function Overview:
+This function calculates the missing dice rolls needed to achieve a given mean for an array of known rolls (rolls[]) and a target number of unknown rolls (n).
+
+Input Parameters:
+rolls[]: An array of integers representing known dice rolls.
+mean: The target mean for the entire set of rolls (both known and missing).
+n: The number of missing rolls that need to be determined.
+
+Calculating total sum needed:
+Calculate the total sum required for both the m known rolls and n missing rolls using the formula:
+sum = (m + n) * mean, where m = rolls.length.
+
+Adjusting sum:
+Subtract the sum of the known rolls[] from the total sum, leaving the sum that needs to be distributed among the n missing rolls.
+
+Edge Case Handling:
+If the remaining sum is 0 or if it’s impossible to divide sum into n rolls (i.e., sum > 6*n or sum < n), return an empty array since a valid solution isn’t possible (each dice roll must be between 1 and 6).
+
+Distribute sum among n rolls:
+Divide the sum evenly among the n missing rolls (div = sum / n).
+Place the value div in each element of the result array ans[].
+
+Handling Remainder:
+If the division leaves a remainder, distribute it by adding 1 to some elements until the remainder becomes 0 (ensuring that the sum of the result array equals the target sum).
+
+Final Output:
+Return the array ans[] representing the missing rolls.
+ */
