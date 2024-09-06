@@ -1,0 +1,49 @@
+class Solution {
+    public ListNode modifiedList(int[] excludeValues, ListNode head) {
+
+        java.util.BitSet excludeSet = new java.util.BitSet();
+        for (int val : excludeValues) {
+            excludeSet.set(val);
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = dummy;
+
+        while (curr.next != null) {
+            if (excludeSet.get(curr.next.val)) {
+                curr.next = curr.next.next;  
+            } else {
+                curr = curr.next;  
+            }
+        }
+
+        return dummy.next;
+    }
+}
+
+/*
+Level - Medium (3217)
+LOGIC: Explanation
+Example - Input: nums = [1,2,3], head = [1,2,3,4,5]
+Output: [4,5]
+----------------------------------------------------------
+Purpose: 
+The code modifies a linked list by removing nodes whose values are present in the excludeValues array.
+Step 1: Convert excludeValues to a BitSet:
+excludeSet is a BitSet, a space-efficient way to store the integers in excludeValues. Each value in excludeValues is set in the BitSet.
+
+Step 2: Initialize Dummy Node:
+A dummy node dummy is created with a value of 0, and its next pointer is set to head (the start of the original list). 
+This helps handle edge cases like removing the head of the list.
+
+Step 3: Traverse the Linked List:
+The curr pointer starts at the dummy node, and the code iterates through the list using curr.next.
+
+Step 4: Remove Excluded Values:
+For each node, the code checks if its value is in the excludeSet (via curr.next.val).
+If the value is found in the set, the node is skipped by updating curr.next to point to the next node (curr.next.next).
+Otherwise, the pointer curr moves to the next node.
+
+Step 5: Return the Modified List:
+Finally, the modified list is returned, starting from dummy.next (skipping the dummy node).
+*/
