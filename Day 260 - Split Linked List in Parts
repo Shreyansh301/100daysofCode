@@ -1,0 +1,74 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode[] splitListToParts(ListNode root, int k) {
+        ListNode cur = root;
+        int N = 0;
+        while (cur != null) {
+            cur = cur.next;
+            N++;
+        }
+
+        int width = N / k, rem = N % k;
+
+        ListNode[] ans = new ListNode[k];
+        cur = root;
+        for (int i = 0; i < k; ++i) {
+            ListNode head = new ListNode(0), write = head;
+            for (int j = 0; j < width + (i < rem ? 1 : 0); ++j) {
+                write = write.next = new ListNode(cur.val);
+                if (cur != null) cur = cur.next;
+            }
+            ans[i] = head.next;
+        }
+        return ans;
+    }
+}/*Time Complexity: O(N+k), where N is the number of nodes in the given list. If k is large, it could still require creating many new empty lists.
+
+Space Complexity: O(max(N,k)), the space used in writing the answer. */
+
+/*
+Level - Medium (725)
+LOGIC: Explanation 
+Example - Input: head = [1,2,3], k = 5
+Output: [[1],[2],[3],[],[]]
+The first element output[0] has output[0].val = 1, output[0].next = null.
+The last element output[4] is null, but its string representation as a ListNode is [].
+-----------------------------------------------------------------------------------------
+Function Definition: 
+The method splitListToParts takes in a root (head of a linked list) and an integer k (number of parts to split the list into).
+
+Calculate Length (N):
+It first calculates the total number of nodes (N) in the linked list by traversing through the list using a while loop.
+
+Determine Split Sizes:
+width is the base size of each part (equal to N/k).
+rem is the remainder when dividing the length by k, which indicates how many parts will have one extra node (N % k).
+
+Create the Result Array:
+An array ans of ListNode is created to store the resulting split parts.
+
+Split the List:
+The loop runs k times to create each part:
+For each part, a dummy ListNode (head) is created to simplify appending nodes.
+A nested loop runs to add nodes to the current part:
+It appends width nodes, and if there are remaining nodes (rem), it adds one more node to the first few parts.
+The nodes are appended to the current part (write) and moved along using cur to keep track of the next node in the original list.
+
+Store the Results:
+The head.next (ignoring the dummy node) is added to the result array ans.
+
+Return:
+The method returns the array ans containing the k split parts.
+Time and Space Complexity:
+Time Complexity: O(N + k) because the list is traversed once to find N, and then the list is split into k parts.
+Space Complexity: O(max(N, k)) since either the nodes of the linked list (N) or the number of parts (k) may determine the maximum space used.
+*/
