@@ -1,0 +1,108 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        int[][] spiral = new int[m][n];
+        for(int i=0;i<m;i++) Arrays.fill(spiral[i],-1);
+        ListNode curr = head;
+        if(curr==null) return spiral;
+        for(int i = 0; i<m;i++){
+            int j=0;
+            for(j=i;j<n;j++){
+                if(spiral[i][j]==-1){
+                    spiral[i][j]=curr.val;
+                    curr = curr.next;
+                    if(curr==null) return spiral;
+                }
+                else{
+                    j=j-1;
+                    break;
+                }
+                if(j==n-1)break;
+            }
+            int k=0;
+            for( k=i+1;k<m;k++){
+                if(spiral[k][j]==-1){
+                    spiral[k][j]=curr.val;
+                    curr = curr.next;
+                    if(curr==null) return spiral;
+                }
+                else{
+                     k=k-1;
+                     break;
+                }
+                if(k==m-1)break;
+            }
+            int l=0;
+            for( l=j-1;l>=0;l--){
+                if(spiral[k][l]==-1){
+                    spiral[k][l]=curr.val;
+                    curr = curr.next;
+                    if(curr==null) return spiral;
+                }
+                else{
+                    l=l+1;
+                    break;
+                }
+                if(l==0)break;
+            }
+            int o = 0;
+            for(o=k-1;o>=0;o--){
+                if(spiral[o][l]==-1){
+                    spiral[o][l]=curr.val;
+                    curr = curr.next;
+                    if(curr==null) return spiral;
+                }
+                else{
+                    o=o+1;
+                    break;
+                }
+                if(o==0)break;
+            }
+        }
+        return spiral;
+        
+    }
+}
+
+/*
+Level - Medium (2326)
+LOGIC: Explanation
+Example - Input: m = 3, n = 5, head = [3,0,2,6,8,1,7,9,4,2,5,5,0]
+Output: [[3,0,2,6,8],[5,0,-1,-1,1],[5,2,4,9,7]]
+The diagram above shows how the values are printed in the matrix.
+Note that the remaining spaces in the matrix are filled with -1.
+------------------------------------------------------------------------
+Class & Method Definition:
+A class Solution is defined with a method spiralMatrix(int m, int n, ListNode head) that returns a 2D array (spiral matrix) of size m x n filled with values from a linked list.
+
+Matrix Initialization:
+A 2D array spiral of size m x n is initialized, and each element is set to -1 to indicate an unfilled position using Arrays.fill.
+
+Linked List Initialization:
+A ListNode variable curr is initialized to point to the head of the linked list. If curr is null, the method immediately returns the initialized matrix.
+
+Outer Loop:
+A for loop starts with index i, representing layers of the spiral.
+
+Filling the Spiral Matrix:
+First for loop (i, j): Fills the top row of the current spiral layer from left to right.
+Second for loop (i, k): Fills the right column of the current spiral layer from top to bottom.
+Third for loop (k, l): Fills the bottom row of the current spiral layer from right to left.
+Fourth for loop (l, o): Fills the left column of the current spiral layer from bottom to top.
+
+Boundary Conditions:
+Each loop checks if the next element in the current direction is -1 (i.e., not filled). If it’s already filled, it breaks out of the current direction and moves to the next direction.
+If the ListNode becomes null (i.e., the linked list ends), the method returns the matrix immediately.
+
+Final Return:
+Once the entire matrix is filled or the linked list is exhausted, the method returns the 2D array spiral containing the matrix in a spiral order.
+*/
