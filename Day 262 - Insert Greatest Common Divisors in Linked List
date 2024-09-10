@@ -1,0 +1,48 @@
+class Solution {
+    // GCD Function
+    private int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    public ListNode insertGreatestCommonDivisors(ListNode head) {
+        var curr = head;
+        while(curr.next != null) {
+            var newNode = new ListNode(gcd(curr.val, curr.next.val), curr.next);
+            curr.next = newNode;
+            curr = newNode.next;
+        }
+        return head;
+    }
+    
+}
+
+/*
+Level - Medium (2807)
+LOGIC: Explanation
+Example - Input: head = [18,6,10,3]
+Output: [18,6,6,2,10,1,3]
+The 1st diagram denotes the initial linked list and the 2nd diagram denotes the linked list after inserting the new nodes (nodes in blue are the inserted nodes).
+- We insert the greatest common divisor of 18 and 6 = 6 between the 1st and the 2nd nodes.
+- We insert the greatest common divisor of 6 and 10 = 2 between the 2nd and the 3rd nodes.
+- We insert the greatest common divisor of 10 and 3 = 1 between the 3rd and the 4th nodes.
+There are no more adjacent nodes, so we return the linked list.
+------------------------------------------------------------------------------
+Purpose: 
+The code inserts nodes into a linked list, where each new node contains the greatest common divisor (GCD) of two adjacent nodes' values.
+
+GCD Function:
+The method gcd(int a, int b) calculates the greatest common divisor (GCD) using recursion.
+It repeatedly applies the formula gcd(a, b) = gcd(b, a % b) until b becomes 0, at which point it returns a as the GCD.
+
+insertGreatestCommonDivisors Method:
+Input: A linked list represented by the head node (ListNode object).
+Curr Pointer: A curr pointer is initialized to the head of the list.
+Iteration: The code iterates through the linked list until curr.next is null (end of the list).
+New Node Creation: At each step, a new node is created:
+The value of the new node is the GCD of the current node's value (curr.val) and the next node's value (curr.next.val).
+The new node is inserted between the current node (curr) and the next node (curr.next).
+Pointer Update: The pointer curr is then updated to skip over the newly inserted node and move to the next original node.
+
+Return: The method returns the modified linked list with the GCD nodes inserted between the original nodes.
+ */
