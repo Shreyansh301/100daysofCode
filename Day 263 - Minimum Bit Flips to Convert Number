@@ -1,0 +1,48 @@
+class Solution {
+    private static final byte[] BIT_COUNT_TABLE = new byte[256];
+    
+    static {
+        for (int i = 0; i < 256; i++) {
+            BIT_COUNT_TABLE[i] = (byte) Integer.bitCount(i);
+        }
+    }
+    
+    public int minBitFlips(int start, int goal) {
+        int xor = start ^ goal;
+        return (BIT_COUNT_TABLE[xor & 0xff] +
+                BIT_COUNT_TABLE[(xor >>> 8) & 0xff] +
+                BIT_COUNT_TABLE[(xor >>> 16) & 0xff] +
+                BIT_COUNT_TABLE[(xor >>> 24) & 0xff]);
+    }
+}
+
+/*
+Level - Easy (2220)
+LOGIC: Explanaton 
+Example - Input: start = 10, goal = 7
+Output: 3
+The binary representation of 10 and 7 are 1010 and 0111 respectively. We can convert 10 to 7 in 3 steps:
+- Flip the first bit from the right: 1010 -> 1011.
+- Flip the third bit from the right: 1011 -> 1111.
+- Flip the fourth bit from the right: 1111 -> 0111.
+It can be shown we cannot convert 10 to 7 in less than 3 steps. Hence, we return 3.
+-----------------------------------------------------------------------------------------
+Purpose: 
+The Solution class provides a method, minBitFlips, to calculate the minimum number of bit flips required to convert an integer start into another integer goal.
+
+BIT_COUNT_TABLE Array:
+A byte[] array of size 256 (BIT_COUNT_TABLE) is precomputed in the static block.
+Each element of the array stores the number of 1-bits in its index value (from 0 to 255). For example, BIT_COUNT_TABLE[3] will be 2 (since 3 in binary is 11, which has two 1-bits).
+
+Static Block:
+A loop runs from 0 to 255, populating the BIT_COUNT_TABLE using the built-in Integer.bitCount(i), which returns the number of 1-bits in the integer i.
+
+minBitFlips Method:
+Takes two integers start and goal as input.
+XORs the two integers (xor = start ^ goal) to find the positions where the bits differ.
+The XOR result is broken into 4 bytes (each 8 bits), and the number of differing bits in each byte is looked up using BIT_COUNT_TABLE.
+Adds the bit counts from each byte together to return the total number of bit flips needed.
+
+Efficiency:
+The use of BIT_COUNT_TABLE improves performance by avoiding recalculating the number of 1-bits for each byte of the XOR result.
+ */
