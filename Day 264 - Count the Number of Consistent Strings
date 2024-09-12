@@ -1,0 +1,42 @@
+class Solution {
+  public int countConsistentStrings(String allowed, String[] words) {
+    var map = new boolean[26];
+    var res = words.length;
+
+    for (var c : allowed.toCharArray())
+      map[c - 'a'] = true;
+
+    for (var word : words) {
+      for (var c : word.toCharArray()) {
+        if (!map[c - 'a']) {
+          res--;
+          break;
+        }
+      }
+    }
+    return res;
+  }
+} 
+
+/*
+Level - Easy (1684)
+LOGIC: Explanation
+Example - Input: allowed = "ab", words = ["ad","bd","aaab","baa","badab"]
+Output: 2
+Strings "aaab" and "baa" are consistent since they only contain characters 'a' and 'b'.
+------------------------------------------------------------------------------------------
+Purpose: 
+The code counts how many words from the words array only contain characters from the allowed string.
+
+Step-by-Step Process:
+Create a boolean array map[26] to represent allowed characters. Each index corresponds to a letter ('a' to 'z').
+Initialize res to the total number of words (since each word is initially assumed to be valid).
+Mark allowed characters:
+Iterate through each character in allowed and set map[c - 'a'] to true to mark it as allowed.
+
+Check each word:
+For each word in words, iterate through its characters.
+If a character in the word is not marked as allowed (map[c - 'a'] == false), decrement res and break the loop for that word (i.e., move on to the next word).
+
+Return res: The final value of res will be the number of words containing only allowed characters.
+*/
