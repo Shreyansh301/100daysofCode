@@ -1,0 +1,56 @@
+class Solution {
+    public int[] xorQueries(int[] arr, int[][] queries) {
+        int size = arr.length;
+        int prefXor[] = new int[size];
+        for(int indx = 0; indx < size; indx++){
+            if(indx == 0)prefXor[indx] = arr[indx];
+            else prefXor[indx] = prefXor[indx - 1] ^ arr[indx];
+        }
+        int res[] = new int[queries.length];
+        int indx = 0;
+        for(var quer : queries){
+            int left = quer[0], right = quer[1];
+            res[indx++] = prefXor[right] ^ ((left == 0) ? 0 : prefXor[left - 1]);
+        }
+        return res;
+    }
+}
+
+/*
+Level - Medium (1310)
+LOGIC: Explanation 
+Example - Input: arr = [1,3,4,8], queries = [[0,1],[1,2],[0,3],[3,3]]
+Output: [2,7,14,8] 
+The binary representation of the elements in the array are:
+1 = 0001 
+3 = 0011 
+4 = 0100 
+8 = 1000 
+The XOR values for queries are:
+[0,1] = 1 xor 3 = 2 
+[1,2] = 3 xor 4 = 7 
+[0,3] = 1 xor 3 xor 4 xor 8 = 14 
+[3,3] = 8
+----------------------------------------------------------------------------------
+Functionality: 
+The code defines a method xorQueries that computes the XOR of a subarray from arr for each query in queries.
+
+Input:
+arr: an array of integers.
+queries: a 2D array where each element is a pair [left, right], representing the subarray range [left, right].
+Output: The method returns an array where each element is the XOR of the elements in arr for the subarray range [left, right] for each query.
+
+Key Steps:
+Prefix XOR Array:
+prefXor[] is used to store the cumulative XOR of the array arr.
+It builds up the XOR value progressively, so prefXor[i] holds the XOR of elements from arr[0] to arr[i].
+prefXor[i] = prefXor[i - 1] ^ arr[i] is used to calculate the XOR up to the i-th index.
+
+Processing Queries:
+For each query [left, right], it computes the XOR for the range arr[left] to arr[right] by using:
+prefXor[right] ^ prefXor[left - 1] if left > 0
+If left == 0, it simply uses prefXor[right] since there’s no earlier element to XOR with.
+
+Final Result:
+The results for each query are stored in the res[] array and returned.
+*/
